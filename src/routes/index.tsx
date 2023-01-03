@@ -1,7 +1,7 @@
 import { Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { BillingNavBar } from "../container/header";
-import { routersList } from "../utils/constant";
+import { BillingNavBar } from "../layout/header";
+import { routersList } from "../utils/constants";
 
 export const AppRoutes = () => {
 

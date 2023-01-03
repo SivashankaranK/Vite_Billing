@@ -1,1 +1,0 @@
-export const GET_CUSTOMERS_LIST = 'customer/getCustomerList';

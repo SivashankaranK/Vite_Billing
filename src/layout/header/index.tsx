@@ -1,5 +1,5 @@
 import { Navbar, Text, Avatar, Dropdown } from '@nextui-org/react';
-import { navBarItems } from '../../utils/constant';
+import { navBarItems } from '../../utils/constants';
 import { useLocation, useNavigate } from 'react-router';
 
 export const BillingNavBar = () => {
@@ -49,7 +49,7 @@ export const BillingNavBar = () => {
                   Signed in as
                 </Text>
                 <Text b color='inherit' css={{ d: 'flex' }}>
-                  zoey@example.com
+                  Developer
                 </Text>
               </Dropdown.Item>
               <Dropdown.Item key='logout' withDivider color='error'>

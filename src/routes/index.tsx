@@ -19,7 +19,7 @@ export const AppRoutes = () => {
       <BillingNavBar />
       <Container fluid>
         <Row>
-          <Col>
+          <Col className="m-3">
             <Routes>
               {routersList.map((it, index) => {
                 const ActiveComponent = it.component;

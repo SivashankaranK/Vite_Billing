@@ -17,7 +17,7 @@ export const AppRoutes = () => {
   return (
     <BrowserRouter>
       <BillingNavBar />
-      <Container>
+      <Container fluid>
         <Row>
           <Col>
             <Routes>

@@ -1,4 +1,4 @@
-import { Navbar, Text, Avatar, Dropdown } from '@nextui-org/react';
+import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { navBarItems } from '../../utils/constants';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -7,58 +7,34 @@ export const BillingNavBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
-
-    <Navbar isBordered css={{ background: 'none' }} variant='floating'>
-      <Navbar.Brand>
-        <Text b color='inherit' hideIn='xs'>
-          VITE JS
-        </Text>
-      </Navbar.Brand>
-      <Navbar.Content hideIn='xs' variant='highlight'>
-        {navBarItems.map((it, index) => {
-          return (
-            <Navbar.Link
-              key={index}
-              css={{ cursor: 'pointer' }}
-              isActive={location.pathname === `/${it.value}`}
-              onClick={() => navigate(`/${it.value}`)}
-            >
-              {it.label}
-            </Navbar.Link>
-          )
-        })}
-      </Navbar.Content>
-      <Navbar.Content>
-        <Navbar.Item>
-          <Dropdown placement='bottom-right'>
-            <Dropdown.Trigger>
-              <Avatar
-                bordered
-                as='button'
-                size='md'
-                src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
-              />
-            </Dropdown.Trigger>
-            <Dropdown.Menu
-              aria-label='User menu actions'
-              color='secondary'
-              onAction={(actionKey) => console.log({ actionKey })}
-            >
-              <Dropdown.Item key='profile' css={{ height: '$18' }}>
-                <Text b color='inherit' css={{ d: 'flex' }}>
-                  Signed in as
-                </Text>
-                <Text b color='inherit' css={{ d: 'flex' }}>
-                  Developer
-                </Text>
-              </Dropdown.Item>
-              <Dropdown.Item key='logout' withDivider color='error'>
-                Log Out
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Navbar.Item>
-      </Navbar.Content>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#features">Features</Nav.Link>
+            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+          <Nav>
+            <Nav.Link href="#deets">More deets</Nav.Link>
+            <Nav.Link eventKey={2} href="#memes">
+              Dank memes
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   )
 }

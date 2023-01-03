@@ -2,11 +2,17 @@ import { AppRoutes } from './routes'
 import { Provider } from 'react-redux'
 import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Container, Row, ThemeProvider } from 'react-bootstrap'
 
 const App = () => {
   return (
     <Provider store={store}>
-      <AppRoutes />
+      <ThemeProvider
+        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+        minBreakpoint="xxs"
+      >
+        <AppRoutes />
+      </ThemeProvider>
     </Provider>
   )
 }

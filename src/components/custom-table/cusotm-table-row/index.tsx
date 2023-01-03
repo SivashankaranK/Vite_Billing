@@ -1,39 +1,27 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ICustomIndexedTableBody, ICustomTableColumn } from "../../../types"
 import { CustomTableColumn } from "../custom-table-column";
 
-interface ICustomTableRowProps<T> extends ICustomTableEmptyRowProps {
+interface ICustomTableRowProps<T> {
   data: T
   identifiers: ICustomTableColumn[];
   rowIndex: number
 }
-interface ICustomTableEmptyRowProps {
-  emptyRow?: boolean;
-  emptyRowDisplayText?: string;
-}
-export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identifiers, rowIndex, emptyRow, emptyRowDisplayText }: ICustomTableRowProps<T>) => {
-  const [addNew, setAddNew] = useState();
+
+export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identifiers, rowIndex }: ICustomTableRowProps<T>) => {
   return (
-    <tr key={`tr${rowIndex}`}>
+    <tr>
       {
-        emptyRow ? (
-          <CustomTableColumn
-            key={`td${rowIndex}${-1}`}
-            columnkey={`td${rowIndex}${-1}`}
-            value={emptyRowDisplayText}
-            readonly={true}
-            colSpan={identifiers.length}
-            className={'text-center'}
-          />
-        ) : (identifiers.map((col, colIndex) => {
+        identifiers.map((col, colIndex) => {
           return (
             <CustomTableColumn
-              key={`td${rowIndex}${colIndex}`}
-              columnkey={`td${rowIndex}${colIndex}`}
-              value={data[col.identifier]}
-              readonly={col.identifier === 'id'} />
+              key={`CustomTableColumn${colIndex}`}
+              columnkey={colIndex}
+              value={rowIndex === -1 ? colIndex ? col.label : '' : data[col.identifier] || ''}
+              isCreateCell={rowIndex === -1}
+            />
           )
-        }))
+        })
       }
     </tr>
   )

@@ -2,10 +2,10 @@ import React from "react";
 
 export interface ICustomTableColumn {
   identifier: string;
-  label: React.ReactNode;
+  label: string;
 }
 
 export interface ICustomIndexedTableBody {
-  [key: string]: React.ReactNode;
+  [key: string]: number | string | undefined;
   className?: string;
 }

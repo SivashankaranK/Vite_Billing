@@ -22,17 +22,19 @@ export const CustomTable = <T extends ICustomIndexedTableBody>({ data, headers }
       </thead>
       <tbody>
         <CustomTableRow
-          key={-1}
-          data={{}}
           identifiers={headers}
+          data={{}}
           rowIndex={-1}
-          emptyRow={true}
-          emptyRowDisplayText='+ Add Customer'
         />
         {
           data.map((row, rowIndex) => {
             return (
-              <CustomTableRow key={rowIndex} data={row} identifiers={headers} rowIndex={rowIndex} />
+              <CustomTableRow
+                key={`CustomTableRow${rowIndex}`}
+                identifiers={headers}
+                data={row}
+                rowIndex={rowIndex}
+              />
             )
           })
         }

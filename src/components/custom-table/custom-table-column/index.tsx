@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form, OverlayTrigger, Popover } from "react-bootstrap";
 
 interface ICustomTableColumn {
-  value: React.ReactNode;
-  columnkey: string;
-  readonly: boolean;
+  value: string | number;
+  columnkey: number;
+  isCreateCell: boolean;
   colSpan?: number;
   className?: string;
 
 }
-export const CustomTableColumn = ({ value, columnkey, readonly, colSpan, className }: ICustomTableColumn) => {
-  const [editable, setEditable] = useState(false);
-  const [inputValue, setInputValue] = useState(`${value}`);
+
+export const CustomTableColumn = ({ value, columnkey, isCreateCell, colSpan, className }: ICustomTableColumn) => {
+
+  const [activeColValue, setActiveCol] = useState<string>('');
+
+  const inputRef: any = useRef(null);
+
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.click();
+    }
+  }, [activeColValue]);
 
   const inputActions = (popOverKey: string) => {
     return (
@@ -26,27 +37,36 @@ export const CustomTableColumn = ({ value, columnkey, readonly, colSpan, classNa
   }
 
   const CustomInput = ({ inputKey }: any) => {
+
     return (
       <OverlayTrigger trigger={'click'} placement={'top'} overlay={inputActions(inputKey)} key={`overLay${inputKey}`} >
         <Form.Control
+          ref={inputRef}
+          size="sm"
           type="text"
-          value={inputValue}
+          placeholder={activeColValue}
+          value={isCreateCell ? '' : activeColValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputValue(e.target.value)
+            setActiveCol(e.target.value)
           }}
           onBlur={() => {
-            setEditable(false)
+            setActiveCol('')
           }}
         />
       </OverlayTrigger>
     )
   }
   return (
-    <td key={columnkey} colSpan={colSpan} className={className}>
+    <td colSpan={colSpan} className={className} >
       {
-        editable && !readonly ?
-          (<CustomInput inputKey={columnkey} />) :
-          (<span onClick={() => setEditable(true)}>{inputValue}</span>)
+        activeColValue ?
+          <CustomInput inputKey={columnkey} /> :
+          <span
+            className={isCreateCell ? 'opacity-50' : ''}
+            onClick={() => { setActiveCol(`${value}`) }}
+          >
+            {`${isCreateCell && value ? 'Add ' : ''}`}{value}
+          </span>
       }
     </td>
   )

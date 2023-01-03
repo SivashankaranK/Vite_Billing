@@ -4,7 +4,7 @@ import { customerListRequest } from "../../reducers";
 import { Col, Container, Row } from 'react-bootstrap';
 import { CustomTable } from '../../components';
 import { ICustomTableColumn } from '../../types/custom-table';
-import { ICustomers } from '../../types';
+import { ICustomerResponse } from '../../types';
 
 const Customers = () => {
 
@@ -17,10 +17,10 @@ const Customers = () => {
     const headerColumns: ICustomTableColumn[] = [
         { label: "Id", identifier: "id" },
         { label: "Name", identifier: "name" },
-        { label: "MobileNumber", identifier: "mobileNumber" },
+        { label: "Mobile Number", identifier: "mobileNumber" },
     ];
 
-    const customersData: ICustomers[] = [
+    const customersData: ICustomerResponse[] = [
         {
             id: 1,
             name: "Aximsoft India PVT LTD",
@@ -44,7 +44,7 @@ const Customers = () => {
     ]
 
     return (
-        <Container className='mt-3'>
+        <Container>
             <Row>
                 <Col>
                     <h3>Customers</h3>

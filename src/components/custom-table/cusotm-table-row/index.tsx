@@ -44,8 +44,8 @@ export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identi
             <CustomTableColumn
               key={`CustomTableColumn${colIndex}`}
               columnkey={colIndex}
-              value={rowIndex === -1 ? colIndex ? col.label : '' : data[col.identifier] || ''}
-              isCreateCell={rowIndex === -1}
+              columnValue={rowIndex === -1 ? colIndex ? col.label : '' : data[col.identifier] || ''}
+              isAddData={rowIndex === -1}
               headerId={col.identifier}
               updateFunction={updateFunction}
               setActiveColValue={(obj) => setRowData({ ...rowData, ...obj })}

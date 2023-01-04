@@ -3,55 +3,54 @@ import { Button, Form, OverlayTrigger, Popover } from "react-bootstrap";
 import { useDebounce } from "../../../utils";
 
 interface ICustomTableColumn {
-  value: string | number;
+  columnValue: string | number;
   columnkey: number;
-  isCreateCell: boolean;
+  isAddData: boolean;
   headerId: string;
   updateFunction: () => void;
-  colSpan?: number;
   className?: string;
   setActiveColValue: (obj: { [key: string]: string }) => void
   isFinalColumn: boolean
 }
 
 export const CustomTableColumn = ({
-  value,
+  columnValue,
   columnkey,
-  isCreateCell,
+  isAddData,
   headerId,
   updateFunction,
-  colSpan,
   className,
   setActiveColValue,
   isFinalColumn
 }: ICustomTableColumn) => {
 
-  const [activeColValue, setActiveCol] = useState<string>('');
-  const [newData, setNewData] = useState<{ [key: string]: string }>({});
+  const [inputValue, setInputValue] = useState<string | number | null>(null);
+  const [newInputValue, setNewInputValue] = useState<{ [key: string]: string }>({});
 
   const inputRef: any = useRef(null);
 
-  const debouncedSearchTerm = useDebounce(activeColValue, 500);
+  const isDeBounced = useDebounce(inputValue, 500);
 
   useEffect(() => {
-    if (debouncedSearchTerm) {
+    if (isDeBounced) {
       inputRef.current.focus();
       inputRef.current.click();
     }
-  }, [debouncedSearchTerm])
+  }, [isDeBounced])
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, [activeColValue]);
+  }, [inputValue]);
 
   const inputActions = (popOverKey: string) => {
-    return (
+    const isShowPopOver = columnValue !== inputValue;
+    return isShowPopOver ? (
       <Popover key={`popover${popOverKey}`}>
         <Popover.Header>Actions</Popover.Header>
         <Popover.Body>
-          <Button variant="outline-secondary" size="sm" onMouseDown={() => { setActiveCol(''); setNewData({}) }} >Cancel</Button>
+          <Button variant="outline-secondary" size="sm" onMouseDown={() => { setInputValue(''); setNewInputValue({}) }} >Cancel</Button>
           <Button
             variant="outline-success"
             size="sm"
@@ -61,7 +60,7 @@ export const CustomTableColumn = ({
           </Button>
         </Popover.Body>
       </Popover>
-    )
+    ) : <></>
   }
 
   const renderFormControl = () => (
@@ -69,41 +68,41 @@ export const CustomTableColumn = ({
       ref={inputRef}
       size="sm"
       type="text"
-      placeholder={activeColValue}
-      value={isCreateCell ? newData[headerId] : activeColValue}
+      placeholder={`${inputValue}`}
+      value={isAddData ? newInputValue[headerId] : inputValue || ''}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        if (isCreateCell) {
-          setNewData({
+        if (isAddData) {
+          setNewInputValue({
             [headerId]: e.target.value
           })
         }
-        setActiveCol(e.target.value)
+        setInputValue(e.target.value)
       }}
       onBlur={() => {
-        setActiveColValue({ [headerId]: activeColValue })
-        !isCreateCell && setActiveCol('');
+        setActiveColValue({ [headerId]: `${inputValue}`.trim() })
+        !isAddData ? setInputValue(null) : !newInputValue[headerId] && setInputValue(null);
       }}
     />
   )
 
   const CustomInput = ({ inputKey }: any) => {
-    return isCreateCell && !isFinalColumn ? renderFormControl() : (
-      <OverlayTrigger trigger={'click'} placement={!isFinalColumn ? 'top' : 'right-end'} overlay={inputActions(inputKey)} >
+    return isAddData && !isFinalColumn ? renderFormControl() : (
+      <OverlayTrigger trigger={'click'} placement={!isAddData ? 'top' : 'right-end'} overlay={inputActions(inputKey)} >
         {renderFormControl()}
       </OverlayTrigger>
     )
   }
 
   return (
-    <td colSpan={colSpan} className={className} >
+    <td className={className} >
       {
-        activeColValue ?
+        inputValue ?
           <CustomInput inputKey={columnkey} /> :
           <div
-            className={`${isCreateCell ? 'opacity-50' : ''} ${headerId !== 'id' ? 'cur-pointer' : ''}`}
-            onClick={() => { if (headerId !== 'id') { setActiveCol(`${value}`); } }}
+            className={`${isAddData ? 'opacity-50' : ''} ${headerId !== 'id' ? 'cur-pointer' : ''}`}
+            onClick={() => { if (headerId !== 'id') { setInputValue(`${columnValue}`); } }}
           >
-            {`${isCreateCell && value && !newData[headerId] ? 'Add ' : ''}`}{newData[headerId] || value}
+            {`${isAddData && columnValue && !newInputValue[headerId] ? 'Add ' : ''}`}{newInputValue[headerId] || columnValue}
           </div>
       }
     </td>

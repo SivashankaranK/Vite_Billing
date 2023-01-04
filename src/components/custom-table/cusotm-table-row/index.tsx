@@ -9,6 +9,11 @@ interface ICustomTableRowProps<T> {
 }
 
 export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identifiers, rowIndex }: ICustomTableRowProps<T>) => {
+
+  const updateFunction = (key: string, value: string) => {
+    console.log({ [key]: value });
+  }
+
   return (
     <tr>
       {
@@ -19,6 +24,8 @@ export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identi
               columnkey={colIndex}
               value={rowIndex === -1 ? colIndex ? col.label : '' : data[col.identifier] || ''}
               isCreateCell={rowIndex === -1}
+              headerId={col.identifier}
+              updateFunction={updateFunction}
             />
           )
         })

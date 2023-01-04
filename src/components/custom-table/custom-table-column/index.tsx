@@ -5,17 +5,19 @@ interface ICustomTableColumn {
   value: string | number;
   columnkey: number;
   isCreateCell: boolean;
+  headerId: string;
+  updateFunction: (key: string, value: string) => void;
   colSpan?: number;
   className?: string;
 
 }
 
-export const CustomTableColumn = ({ value, columnkey, isCreateCell, colSpan, className }: ICustomTableColumn) => {
+export const CustomTableColumn = ({ value, columnkey, isCreateCell, headerId, updateFunction, colSpan, className }: ICustomTableColumn) => {
 
   const [activeColValue, setActiveCol] = useState<string>('');
+  const [createCell, setCreateCell] = useState<{ [key: string]: string }>({});
 
   const inputRef: any = useRef(null);
-
 
   useEffect(() => {
     if (inputRef.current) {
@@ -29,8 +31,8 @@ export const CustomTableColumn = ({ value, columnkey, isCreateCell, colSpan, cla
       <Popover key={`popover${popOverKey}`}>
         <Popover.Header>Actions</Popover.Header>
         <Popover.Body>
-          <Button variant="outline-secondary" size="sm" key={`popoverCancel${popOverKey}`}>Cancel</Button>
-          <Button variant="outline-success" size="sm" key={`popoverSave${popOverKey}`}>Save</Button>
+          <Button variant="outline-secondary" size="sm" >Cancel</Button>
+          <Button variant="outline-success" size="sm" onMouseDown={() => updateFunction(headerId, activeColValue)}>Save</Button>
         </Popover.Body>
       </Popover>
     )
@@ -39,34 +41,41 @@ export const CustomTableColumn = ({ value, columnkey, isCreateCell, colSpan, cla
   const CustomInput = ({ inputKey }: any) => {
 
     return (
-      <OverlayTrigger trigger={'click'} placement={'top'} overlay={inputActions(inputKey)} key={`overLay${inputKey}`} >
+      <OverlayTrigger trigger={'click'} placement={'top'} overlay={inputActions(inputKey)} >
         <Form.Control
           ref={inputRef}
           size="sm"
           type="text"
           placeholder={activeColValue}
-          value={isCreateCell ? '' : activeColValue}
+          value={isCreateCell ? createCell[headerId] : activeColValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            if (isCreateCell) {
+              setCreateCell({
+                ...createCell,
+                [headerId]: e.target.value
+              })
+            }
             setActiveCol(e.target.value)
           }}
           onBlur={() => {
-            setActiveCol('')
+            setActiveCol('');
           }}
         />
       </OverlayTrigger>
     )
   }
+
   return (
     <td colSpan={colSpan} className={className} >
       {
         activeColValue ?
           <CustomInput inputKey={columnkey} /> :
-          <span
-            className={isCreateCell ? 'opacity-50' : ''}
-            onClick={() => { setActiveCol(`${value}`) }}
+          <div
+            className={`${isCreateCell ? 'opacity-50' : ''} ${headerId !== 'id' ? 'cur-pointer' : ''}`}
+            onClick={() => { if (headerId !== 'id') { setActiveCol(`${value}`); } }}
           >
             {`${isCreateCell && value ? 'Add ' : ''}`}{value}
-          </span>
+          </div>
       }
     </td>
   )

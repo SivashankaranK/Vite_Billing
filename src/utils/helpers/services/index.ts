@@ -1,6 +1,6 @@
 import axios from "axios"
-import { IApiCallProps } from "../../types";
-import { envConfig } from "../constants";
+import { IApiCallProps } from "../../../types";
+import { envConfig } from "../../constants";
 
 export const apiCall = (props: IApiCallProps) => {
 

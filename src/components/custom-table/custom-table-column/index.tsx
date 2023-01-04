@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, OverlayTrigger, Popover } from "react-bootstrap";
+import { useDebounce } from "../../../utils";
 
 interface ICustomTableColumn {
   value: string | number;
@@ -16,11 +17,17 @@ export const CustomTableColumn = ({ value, columnkey, isCreateCell, colSpan, cla
 
   const inputRef: any = useRef(null);
 
+  const debouncedSearchTerm = useDebounce(activeColValue, 500);
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      inputRef.current.focus();
+      inputRef.current.click();
+    }
+  }, [debouncedSearchTerm])
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
-      inputRef.current.click();
     }
   }, [activeColValue]);
 

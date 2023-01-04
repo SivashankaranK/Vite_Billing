@@ -10,8 +10,8 @@ interface ICustomTableRowProps<T> {
 
 export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identifiers, rowIndex }: ICustomTableRowProps<T>) => {
 
-  const updateFunction = (key: string, value: string) => {
-    console.log({ [key]: value });
+  const updateFunction = (prop: { [key: string]: string }) => {
+    console.log(prop);
   }
 
   return (

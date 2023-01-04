@@ -15,31 +15,31 @@ const Customers = () => {
     }, [])
 
     const headerColumns: ICustomTableColumn[] = [
-        { label: "Id", identifier: "id" },
-        { label: "Name", identifier: "name" },
-        { label: "Mobile Number", identifier: "mobileNumber" },
+        { label: "Id", identifier: "id", type: 'number', visible: false },
+        { label: "Name", identifier: "name", type: 'string', visible: true },
+        { label: "Mobile Number", identifier: "mobileNumber", type: 'number', visible: true },
     ];
 
     const customersData: ICustomerResponse[] = [
         {
             id: 1,
             name: "Aximsoft India PVT LTD",
-            mobileNumber: "+917904172088"
+            mobileNumber: 7904172088
         },
         {
             id: 2,
             name: "Aximsoft India PVT",
-            mobileNumber: "+917904172088"
+            mobileNumber: 7904172088
         },
         {
             id: 3,
             name: "Aximsoft India",
-            mobileNumber: "+917904172088"
+            mobileNumber: 7904172088
         },
         {
             id: 4,
             name: "Aximsoft",
-            mobileNumber: "+917904172088"
+            mobileNumber: 7904172088
         }
     ]
 

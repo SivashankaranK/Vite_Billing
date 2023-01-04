@@ -3,6 +3,8 @@ import React from "react";
 export interface ICustomTableColumn {
   identifier: string;
   label: string;
+  type: string;
+  visible: boolean;
 }
 
 export interface ICustomIndexedTableBody {

@@ -1,28 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, OverlayTrigger, Popover } from "react-bootstrap";
 import { useDebounce } from "../../../utils";
+import { ICustomTableColumn } from "../../../types";
 
-interface ICustomTableColumn {
+interface ICustomTableColumnProps {
   columnValue: string | number;
   columnkey: number;
   isAddData: boolean;
-  headerId: string;
   updateFunction: () => void;
   className?: string;
   setActiveColValue: (obj: { [key: string]: string }) => void
   isFinalColumn: boolean
+  currentHeader: ICustomTableColumn
 }
 
 export const CustomTableColumn = ({
   columnValue,
   columnkey,
   isAddData,
-  headerId,
   updateFunction,
   className,
   setActiveColValue,
-  isFinalColumn
-}: ICustomTableColumn) => {
+  isFinalColumn,
+  currentHeader
+}: ICustomTableColumnProps) => {
 
   const [inputValue, setInputValue] = useState<string | number | null>(null);
   const [newInputValue, setNewInputValue] = useState<{ [key: string]: string }>({});
@@ -67,20 +68,20 @@ export const CustomTableColumn = ({
     <Form.Control
       ref={inputRef}
       size="sm"
-      type="text"
+      type={currentHeader.type}
       placeholder={`${inputValue}`}
-      value={isAddData ? newInputValue[headerId] : inputValue || ''}
+      value={isAddData ? newInputValue[currentHeader.identifier] : inputValue || ''}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         if (isAddData) {
           setNewInputValue({
-            [headerId]: e.target.value
+            [currentHeader.identifier]: e.target.value.trimStart()
           })
         }
         setInputValue(e.target.value)
       }}
       onBlur={() => {
-        setActiveColValue({ [headerId]: `${inputValue}`.trim() })
-        !isAddData ? setInputValue(null) : !newInputValue[headerId] && setInputValue(null);
+        setActiveColValue({ [currentHeader.identifier]: `${inputValue}`.trim() })
+        !isAddData ? setInputValue(null) : !newInputValue[currentHeader.identifier] && setInputValue(null);
       }}
     />
   )
@@ -96,13 +97,14 @@ export const CustomTableColumn = ({
   return (
     <td className={className} >
       {
-        inputValue ?
+        inputValue !== null ?
           <CustomInput inputKey={columnkey} /> :
           <div
-            className={`${isAddData ? 'opacity-50' : ''} ${headerId !== 'id' ? 'cur-pointer' : ''}`}
-            onClick={() => { if (headerId !== 'id') { setInputValue(`${columnValue}`); } }}
+            className={`${isAddData ? 'opacity-50' : ''} ${currentHeader.visible ? 'cur-pointer' : ''}`}
+            onClick={() => { if (currentHeader.visible) { setInputValue(`${columnValue}`); } }}
           >
-            {`${isAddData && columnValue && !newInputValue[headerId] ? 'Add ' : ''}`}{newInputValue[headerId] || columnValue}
+            {`${isAddData && columnValue && !newInputValue[currentHeader.identifier] ? 'Add ' : ''}`}
+            {newInputValue[currentHeader.identifier] || columnValue}
           </div>
       }
     </td>

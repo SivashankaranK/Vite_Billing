@@ -37,7 +37,7 @@ export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identi
   }
 
   return (
-    <tr>
+    <tr style={{ height: '50px' }}>
       {
         identifiers.map((col, colIndex) => {
           return (
@@ -46,7 +46,7 @@ export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identi
               columnkey={colIndex}
               columnValue={rowIndex === -1 ? colIndex ? col.label : '' : data[col.identifier] || ''}
               isAddData={rowIndex === -1}
-              headerId={col.identifier}
+              currentHeader={col}
               updateFunction={updateFunction}
               setActiveColValue={(obj) => setRowData({ ...rowData, ...obj })}
               isFinalColumn={colIndex - identifiers.length === -1 ? true : false}

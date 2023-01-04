@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ICustomIndexedTableBody, ICustomTableColumn } from "../../../types"
 import { CustomTableColumn } from "../custom-table-column";
 
@@ -9,9 +9,31 @@ interface ICustomTableRowProps<T> {
 }
 
 export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identifiers, rowIndex }: ICustomTableRowProps<T>) => {
+  const [rowData, setRowData] = useState<T>(data);
 
-  const updateFunction = (prop: { [key: string]: string }) => {
-    console.log(prop);
+  const updateFunction = () => {
+    if (doValidate()) {
+      console.log('rowData-->', rowData)
+      alert('updated')
+    } else {
+      alert('invalid')
+    }
+  }
+
+  const doValidate = () => {
+    let isValid = false;
+    if ((identifiers.length - 1) === Object.keys(rowData).length) {
+      Object.keys(rowData).map((key) => {
+        if (!rowData[key]) {
+          isValid = false;
+        } else {
+          isValid = true;
+        }
+      })
+    } else {
+      isValid = false;
+    }
+    return isValid
   }
 
   return (
@@ -26,6 +48,8 @@ export const CustomTableRow = <T extends ICustomIndexedTableBody>({ data, identi
               isCreateCell={rowIndex === -1}
               headerId={col.identifier}
               updateFunction={updateFunction}
+              setActiveColValue={(obj) => setRowData({ ...rowData, ...obj })}
+              isFinalColumn={colIndex - identifiers.length === -1 ? true : false}
             />
           )
         })

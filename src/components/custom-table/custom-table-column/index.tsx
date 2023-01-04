@@ -7,13 +7,24 @@ interface ICustomTableColumn {
   columnkey: number;
   isCreateCell: boolean;
   headerId: string;
-  updateFunction: (props: { [key: string]: string }) => void;
+  updateFunction: () => void;
   colSpan?: number;
   className?: string;
-
+  setActiveColValue: (obj: { [key: string]: string }) => void
+  isFinalColumn: boolean
 }
 
-export const CustomTableColumn = ({ value, columnkey, isCreateCell, headerId, updateFunction, colSpan, className }: ICustomTableColumn) => {
+export const CustomTableColumn = ({
+  value,
+  columnkey,
+  isCreateCell,
+  headerId,
+  updateFunction,
+  colSpan,
+  className,
+  setActiveColValue,
+  isFinalColumn
+}: ICustomTableColumn) => {
 
   const [activeColValue, setActiveCol] = useState<string>('');
   const [newData, setNewData] = useState<{ [key: string]: string }>({});
@@ -40,11 +51,11 @@ export const CustomTableColumn = ({ value, columnkey, isCreateCell, headerId, up
       <Popover key={`popover${popOverKey}`}>
         <Popover.Header>Actions</Popover.Header>
         <Popover.Body>
-          <Button variant="outline-secondary" size="sm" >Cancel</Button>
+          <Button variant="outline-secondary" size="sm" onMouseDown={() => { setActiveCol(''); setNewData({}) }} >Cancel</Button>
           <Button
             variant="outline-success"
             size="sm"
-            onMouseDown={() => updateFunction(isCreateCell ? newData : { [headerId]: activeColValue })}
+            onMouseDown={updateFunction}
           >
             Save
           </Button>
@@ -53,29 +64,32 @@ export const CustomTableColumn = ({ value, columnkey, isCreateCell, headerId, up
     )
   }
 
-  const CustomInput = ({ inputKey }: any) => {
+  const renderFormControl = () => (
+    <Form.Control
+      ref={inputRef}
+      size="sm"
+      type="text"
+      placeholder={activeColValue}
+      value={isCreateCell ? newData[headerId] : activeColValue}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+        if (isCreateCell) {
+          setNewData({
+            [headerId]: e.target.value
+          })
+        }
+        setActiveCol(e.target.value)
+      }}
+      onBlur={() => {
+        setActiveColValue({ [headerId]: activeColValue })
+        !isCreateCell && setActiveCol('');
+      }}
+    />
+  )
 
-    return (
-      <OverlayTrigger trigger={'click'} placement={'top'} overlay={inputActions(inputKey)} >
-        <Form.Control
-          ref={inputRef}
-          size="sm"
-          type="text"
-          placeholder={activeColValue}
-          value={isCreateCell ? newData[headerId] : activeColValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (isCreateCell) {
-              setNewData({
-                ...newData,
-                [headerId]: e.target.value
-              })
-            }
-            setActiveCol(e.target.value)
-          }}
-          onBlur={() => {
-            setActiveCol('');
-          }}
-        />
+  const CustomInput = ({ inputKey }: any) => {
+    return isCreateCell && !isFinalColumn ? renderFormControl() : (
+      <OverlayTrigger trigger={'click'} placement={!isFinalColumn ? 'top' : 'right-end'} overlay={inputActions(inputKey)} >
+        {renderFormControl()}
       </OverlayTrigger>
     )
   }
@@ -89,7 +103,7 @@ export const CustomTableColumn = ({ value, columnkey, isCreateCell, headerId, up
             className={`${isCreateCell ? 'opacity-50' : ''} ${headerId !== 'id' ? 'cur-pointer' : ''}`}
             onClick={() => { if (headerId !== 'id') { setActiveCol(`${value}`); } }}
           >
-            {`${isCreateCell && value ? 'Add ' : ''}`}{value}
+            {`${isCreateCell && value && !newData[headerId] ? 'Add ' : ''}`}{newData[headerId] || value}
           </div>
       }
     </td>

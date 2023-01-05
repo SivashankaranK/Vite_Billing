@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { customerListRequest } from "../../reducers";
 import { Col, Container, Row } from 'react-bootstrap';
 import { CustomTable } from '../../components';
-import { ICustomTableColumn } from '../../types/custom-table';
 import { ICustomerResponse } from '../../types';
+import { headerColumns } from '../../utils/constants/customers';
 
 const Customers = () => {
 
@@ -13,12 +13,6 @@ const Customers = () => {
     useEffect(() => {
         dispatch(customerListRequest())
     }, [])
-
-    const headerColumns: ICustomTableColumn[] = [
-        { label: "Id", identifier: "id" },
-        { label: "Name", identifier: "name" },
-        { label: "Mobile Number", identifier: "mobileNumber" },
-    ];
 
     const customersData: ICustomerResponse[] = [
         {

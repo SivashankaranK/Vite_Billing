@@ -1,14 +1,16 @@
+import { useState } from "react";
 import { Table } from "react-bootstrap"
-import { ICustomIndexedTableBody, ICustomTableColumn } from "../../types/custom-table"
-import { CustomTableRow } from "./cusotm-table-row";
+import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from "../../types/custom-table"
+import { CustomRow } from "./custom-row";
 
 interface ICustomTableProps<T> {
-  headers: ICustomTableColumn[];
+  headers: ICustomTableHeaderTypes[];
   data: T[];
 }
 export const CustomTable = <T extends ICustomIndexedTableBody>({ data, headers }: ICustomTableProps<T>) => {
+
   return (
-    <Table striped bordered hover>
+    <Table striped bordered>
       <thead>
         <tr>
           {
@@ -21,23 +23,16 @@ export const CustomTable = <T extends ICustomIndexedTableBody>({ data, headers }
         </tr>
       </thead>
       <tbody>
-        <CustomTableRow
-          identifiers={headers}
-          data={{}}
-          rowIndex={-1}
-        />
-        {
-          data.map((row, rowIndex) => {
-            return (
-              <CustomTableRow
-                key={`CustomTableRow${rowIndex}`}
-                identifiers={headers}
-                data={row}
-                rowIndex={rowIndex}
-              />
-            )
-          })
-        }
+
+        {/* New Row */}
+        <CustomRow isCreateNewRow headers={headers} data={{}} />
+
+        {/* Data  Binding */}
+        {data.map((iterate, dIndex) => {
+          return (
+            <CustomRow<T> data={iterate} headers={headers} key={dIndex} />
+          )
+        })}
       </tbody>
     </Table>
   )

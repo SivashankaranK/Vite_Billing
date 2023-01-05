@@ -4,3 +4,7 @@ export interface IApiCallProps {
   paramsObj?: { [key: string]: any };
   dataObj?: { [key: string]: any };
 }
+
+export interface ICommonReducerPorops {
+  tableValue: { [key: string]: string | number }
+}

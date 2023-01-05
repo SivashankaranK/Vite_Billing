@@ -1,8 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, OverlayTrigger, Popover, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { updateTableValue } from "../../../reducers";
 import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from "../../../types";
 import { useDebounce } from '../../../utils';
 
@@ -25,9 +22,6 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
 
   const [enablePopOver, setPopOverState] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const tableValue = useSelector((state: any) => state.common.tableValue);
 
   const isDebounceValid = useDebounce(activeFieldValue, 600);
 
@@ -72,19 +66,10 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
         </Button>
         <Button
           onMouseDown={() => {
-            if (isNewCell) {
-              handleColumnUpdate({
-                ...data,
-                ...tableValue,
-                [activeInputField]: activeFieldValue
-              });
-            } else {
-              handleColumnUpdate({
-                ...data,
-                [activeInputField]: activeFieldValue
-              });
-            }
-
+            handleColumnUpdate({
+              ...data,
+              [activeInputField]: activeFieldValue
+            });
             stateReset();
           }}>
           Save
@@ -134,7 +119,6 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
 
               if (isNewCell && activeFieldValue) {
                 setNewData({ [activeInputField]: activeFieldValue });
-                // dispatch(updateTableValue({ ...tableValue, [activeInputField]: activeFieldValue }))
               }
             }
             }

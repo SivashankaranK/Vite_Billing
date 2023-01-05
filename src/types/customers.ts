@@ -9,5 +9,5 @@ export interface ICustomerState {
 export interface ICustomerResponse extends ICustomIndexedTableBody {
   id: number;
   name: string;
-  mobileNumber: number;
+  mobileNumber: string;
 }

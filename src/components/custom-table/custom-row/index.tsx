@@ -13,9 +13,8 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
   const [resetData, setResetData] = useState(false);
 
   const [newData, setNewData] = useState({});
-  const handleColumnUpdate = (data: T) => {
-    console.log('data', data);
-    console.log('newData', newData);
+  const handleColumnUpdate = (props: T) => {
+    console.log('props', { ...data, ...props, ...newData });
     setResetData(true);
   }
 

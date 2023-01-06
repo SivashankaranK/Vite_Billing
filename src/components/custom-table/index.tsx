@@ -9,16 +9,18 @@ interface ICustomTableProps<T> {
   handleApiCall: (dataObj: any) => void
 }
 export const CustomTable = <T extends ICustomIndexedTableBody>({ data, headers, handleApiCall }: ICustomTableProps<T>) => {
-  return (
-    <Table striped bordered>
-      <thead>
+  return data && data.length === 0 ? (
+    <div className='no-data'>No data Found...</div>
+  ) : (
+    <Table className='common-table'>
+      <thead className='table-head'>
         <tr>
           {headers.map((col, index) => {
             return <th key={`tableHeader${index}`}>{col.label}</th>
           })}
         </tr>
       </thead>
-      <tbody>
+      <tbody className='table-body'>
         {/* New Row */}
         <CustomRow isCreateNewRow headers={headers} data={{}} handleApiCall={handleApiCall} />
 

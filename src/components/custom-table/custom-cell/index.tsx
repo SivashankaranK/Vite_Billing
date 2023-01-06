@@ -8,7 +8,7 @@ interface ICustomCellProps<T> {
   header: ICustomTableHeaderTypes
   data: T
   handleColumnUpdate: (props: T) => void
-  isDataReset: boolean
+  isDataResetEnabled: boolean
   setResetData: () => void
   setNewData: React.Dispatch<React.SetStateAction<{}>>
 }
@@ -24,11 +24,15 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
 }: ICustomCellProps<T>) => {
   const [activeInputField, setInputFieldState] = useState('')
 
-  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('')
+export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, header, data, handleColumnUpdate, isDataResetEnabled, setResetData, setNewData }: ICustomCellProps<T>) => {
 
   const [enablePopOver, setPopOverState] = useState(false)
 
-  const isDebounceValid = useDebounce(activeFieldValue, 600)
+  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('');
+
+  const [enablePopOver, setPopOverState] = useState(false);
+
+  const isDebounceValid = useDebounce(activeFieldValue, 600);
 
   useEffect(() => {
     if (activeInputField) {
@@ -53,16 +57,18 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
   }
 
   useEffect(() => {
-    if (isDataReset) {
-      stateReset()
-      setResetData()
+    if (isDataResetEnabled) {
+      stateReset();
+      setResetData();
     }
-  }, [isDataReset])
+  }, [isDataResetEnabled])
 
   const popover = (
     <Popover id='popover-basic'>
-      <Popover.Body>
+      <Popover.Body className='popover-body'>
         <Button
+          className='popover_button'
+          variant='light'
           onMouseDown={() => {
             stateReset()
           }}
@@ -70,6 +76,8 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
           Cancel
         </Button>
         <Button
+          className='popover_button'
+          variant='success'
           onMouseDown={() => {
             handleColumnUpdate({
               ...data,
@@ -86,6 +94,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
 
   return (
     <OverlayTrigger show={enablePopOver} trigger='click' placement={header.isLastColumn && isNewCell ? 'right' : 'top'} overlay={popover}>
+
       <td
         className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
         onClick={() => {

@@ -10,13 +10,13 @@ export const BillingNavBar = () => {
   const userTitle = (
     <span>
       <Image
-        src={'https://via.placeholder.com/28?text=S'}
+        src={'https://via.placeholder.com/28?text=D'}
         roundedCircle
         width={40}
         height={40}
         className='p-2'
       />
-      {'Suriya'}
+      {'Developer'}
     </span>
   )
   return (
@@ -44,7 +44,8 @@ export const BillingNavBar = () => {
               <NavDropdown.Item>My Profile</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => alert('logout')}>
-                <i className='bi bi-box-arrow-left'></i> Logout
+                <i className='bi bi-box-arrow-left'/>
+                 Logout
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

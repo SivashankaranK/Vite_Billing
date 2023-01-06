@@ -6,25 +6,30 @@ interface ICustomRowProsp<T> {
   isCreateNewRow?: boolean
   headers: ICustomTableHeaderTypes[]
   data: T
-  handleApiCall: (dataObj: any) => void
+  handleUpdate: (dataObj: any) => void
 }
 
-export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNewRow, headers, handleApiCall }: ICustomRowProsp<T>) => {
-  const [isNewDataReseted, setResetData] = useState(false)
-  const [newData, setNewData] = useState({})
+export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNewRow, headers, handleUpdate }: ICustomRowProsp<T>) => {
+  const [isNewDataReseted, setResetData] = useState(false);
+  const [newData, setNewData] = useState({});
 
   const handleColumnUpdate = (value: T) => {
-    const dataObj = { ...value, ...newData }
+    const dataObj = { ...value, ...newData };
+
+
 
     const inputValidation = headers.filter((it) => {
-      return dataObj[it.value] === undefined && !it.isReadOnly
-    })
+      return dataObj[it.value] === undefined && !it.isReadOnly;
+    });
+
+
+
     if (inputValidation.length) {
-      console.log('Error Occured', inputValidation)
+      console.log('All input field must be filled');
     } else {
-      handleApiCall(dataObj)
-      setResetData(true)
-      setNewData({})
+      handleUpdate(dataObj);
+      setResetData(true);
+      setNewData({});
     }
   }
 
@@ -38,8 +43,10 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
             header={hIt}
             data={data}
             handleColumnUpdate={handleColumnUpdate}
+            // For reset New Cell after submit
             isDataResetEnabled={isNewDataReseted}
             setResetData={() => setResetData(false)}
+            // For New column
             setNewData={setNewData}
           />
         )

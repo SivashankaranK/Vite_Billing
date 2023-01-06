@@ -57,7 +57,7 @@ const Customers = () => {
       </Row>
       <Row>
         <Col>
-          <CustomEditableTable<ICustomer> data={customers.length ? customers : []} headers={headerColumns} handleApiCall={createUpdateCustomer} />
+          <CustomEditableTable<ICustomer> data={customersData} headers={headerColumns} handleUpdate={createUpdateCustomer} />
         </Col>
       </Row>
     </Container>

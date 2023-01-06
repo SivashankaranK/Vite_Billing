@@ -4,13 +4,13 @@ import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types
 import { useDebounce } from '../../../utils'
 
 interface ICustomCellProps<T> {
-  isNewCell?: boolean
-  header: ICustomTableHeaderTypes
-  data: T
-  handleColumnUpdate: (props: T) => void
-  isDataResetEnabled: boolean
-  setResetData: () => void
-  setNewData: React.Dispatch<React.SetStateAction<{}>>
+  isNewCell?: boolean;
+  header: ICustomTableHeaderTypes;
+  data: T;
+  handleColumnUpdate: (props: T) => void;
+  isDataResetEnabled: boolean;
+  setResetData: () => void;
+  setNewData: React.Dispatch<React.SetStateAction<{}>>;
 }
 
 export const CustomCell = <T extends ICustomIndexedTableBody>({
@@ -22,16 +22,17 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
   setResetData,
   setNewData,
 }: ICustomCellProps<T>) => {
-  const [activeInputField, setInputFieldState] = useState('')
 
-  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('')
+  const [isFieldActive, setActiveField] = useState(false);
 
-  const [enablePopOver, setPopOverState] = useState(false)
+  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('');
 
-  const isDebounceValid = useDebounce(activeFieldValue, 600)
+  const [enablePopOver, setPopOverState] = useState(false);
+
+  const isDebounceValid = useDebounce(activeFieldValue, 600);
 
   useEffect(() => {
-    if (activeInputField) {
+    if (isFieldActive) {
       if (data[header.value] === activeFieldValue || (!data[header.value] && !activeFieldValue)) {
         setPopOverState(false)
       } else {
@@ -44,10 +45,10 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
         }
       }
     }
-  }, [isDebounceValid, activeInputField])
+  }, [isDebounceValid, isFieldActive])
 
   const stateReset = () => {
-    setInputFieldState('')
+    setActiveField(false)
     setActiveFieldValue('')
     setPopOverState(false)
   }
@@ -77,7 +78,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
           onMouseDown={() => {
             handleColumnUpdate({
               ...data,
-              [activeInputField]: activeFieldValue,
+              [header.value]: activeFieldValue,
             })
             stateReset()
           }}
@@ -93,14 +94,17 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
       <td
         className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
         onClick={() => {
-          if (!header.isReadOnly && !activeInputField) {
-            setInputFieldState(header.value)
+          if (!header.isReadOnly && !isFieldActive) {
+            setActiveField(true)
             setActiveFieldValue(data[header.value] || '')
             setPopOverState(true)
           }
+          if (isNewCell && activeFieldValue && header.isLastColumn) {
+            setPopOverState(true);
+          }
         }}
       >
-        {activeInputField ? (
+        {isFieldActive ? (
           <Form.Control
             type={header.fieldType}
             autoFocus
@@ -126,7 +130,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
               }
 
               if (isNewCell && activeFieldValue) {
-                setNewData({ [activeInputField]: activeFieldValue })
+                setNewData({ [header.value]: activeFieldValue })
               }
             }}
           />

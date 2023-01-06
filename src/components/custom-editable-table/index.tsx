@@ -9,9 +9,7 @@ interface ICustomTableProps<T> {
   handleUpdate: (dataObj: any) => void
 }
 export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, headers, handleUpdate }: ICustomTableProps<T>) => {
-  return data && data.length === 0 ? (
-    <div className='no-data'>No data Found...</div>
-  ) : (
+  return (
     <Table className='common-table'>
       <thead className='table-head'>
         <tr>
@@ -25,13 +23,19 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
         </tr>
       </thead>
       <tbody className='table-body'>
-        {/* New Row */}
         <CustomRow isCreateNewRow headers={headers} data={{}} handleUpdate={handleUpdate} />
 
-        {/* Data  Binding */}
-        {data.map((iterate, dIndex) => {
-          return <CustomRow<T> key={`tablRow${dIndex}`} data={iterate} headers={headers} handleUpdate={handleUpdate} />
-        })}
+        <>
+          {data && data.length === 0 ? <tr className='table-row'>
+            <td colSpan={headers.length} className='text-center'>
+              No data found...
+            </td>
+          </tr> :
+            data.map((iterate, dIndex) => {
+              return <CustomRow<T> key={`tablRow${dIndex}`} data={iterate} headers={headers} handleUpdate={handleUpdate} />
+            })
+          }
+        </>
       </tbody>
     </Table>
   )

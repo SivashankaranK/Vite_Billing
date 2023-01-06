@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { createUpdateCustomerRequest, customerListRequest } from '../../reducers'
 import { Col, Container, Row } from 'react-bootstrap'
-import { CustomTable } from '../../components'
+import { CustomEditableTable } from '../../components'
 import { ICustomer } from '../../types'
 import { headerColumns } from '../../utils/constants/customers'
 import { IApiRequest, IApiRequestCallBack, IStore } from '../../types/store'
@@ -57,7 +57,7 @@ const Customers = () => {
       </Row>
       <Row>
         <Col>
-          <CustomTable data={customers.length ? customers : []} headers={headerColumns} handleApiCall={createUpdateCustomer} />
+          <CustomEditableTable<ICustomer> data={customers.length ? customers : []} headers={headerColumns} handleApiCall={createUpdateCustomer} />
         </Col>
       </Row>
     </Container>

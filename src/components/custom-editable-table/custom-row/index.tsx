@@ -13,8 +13,8 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
   const [isNewDataReseted, setResetData] = useState(false)
   const [newData, setNewData] = useState({})
 
-  const handleColumnUpdate = (props: T) => {
-    const dataObj = { ...props, ...newData }
+  const handleColumnUpdate = (value: T) => {
+    const dataObj = { ...value, ...newData }
 
     const inputValidation = headers.filter((it) => {
       return dataObj[it.value] === undefined && !it.isReadOnly

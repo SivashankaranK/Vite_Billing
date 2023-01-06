@@ -9,7 +9,7 @@ const initialState: ICustomerState = {
   customerListResponse: [],
 }
 
-export const CustomerReducer = createSlice({
+export const customerReducer = createSlice({
   name: 'customers',
   initialState,
   reducers: {
@@ -51,4 +51,4 @@ export const {
   createUpdateCustomerRequest,
   createUpdateCustomerFailure,
   createUpdateCustomerResponse,
-} = CustomerReducer.actions
+} = customerReducer.actions

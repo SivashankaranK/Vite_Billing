@@ -1,2 +1,2 @@
-export * from './custom-table';
+export * from './custom-editable-table';
 export * from './toaster';

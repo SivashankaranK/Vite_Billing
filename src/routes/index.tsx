@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { BillingNavBar } from "../layout/header";
+import { BillingNavBar } from "../containers/header";
 import { routersList } from "../utils/constants";
 import { Col, Container, Row } from "react-bootstrap";
 

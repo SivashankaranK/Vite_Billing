@@ -6,7 +6,7 @@ const initialState: ICommonReducerState = {
   tableValue: {},
 }
 
-export const CommonReducer = createSlice({
+export const commonReducer = createSlice({
   name: 'common',
   initialState,
   reducers: {
@@ -19,4 +19,4 @@ export const CommonReducer = createSlice({
   },
 })
 
-export const { updateTableValue } = CommonReducer.actions
+export const { updateTableValue } = commonReducer.actions

@@ -8,7 +8,7 @@ interface ICustomTableProps<T> {
   data: T[]
   handleApiCall: (dataObj: any) => void
 }
-export const CustomTable = <T extends ICustomIndexedTableBody>({ data, headers, handleApiCall }: ICustomTableProps<T>) => {
+export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, headers, handleApiCall }: ICustomTableProps<T>) => {
   return data && data.length === 0 ? (
     <div className='no-data'>No data Found...</div>
   ) : (

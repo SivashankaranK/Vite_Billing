@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Form, OverlayTrigger, Popover, Button } from "react-bootstrap";
-import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from "../../../types";
+import { useEffect, useState } from 'react';
+import { Form, OverlayTrigger, Popover, Button } from 'react-bootstrap';
+import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types';
 import { useDebounce } from '../../../utils';
 
 interface ICustomCellProps<T> {
@@ -8,20 +8,19 @@ interface ICustomCellProps<T> {
   header: ICustomTableHeaderTypes;
   data: T;
   handleColumnUpdate: (props: T) => void;
-  isDataReset: boolean;
+  isDataResetEnabled: boolean;
   setResetData: () => void;
   setNewData: React.Dispatch<React.SetStateAction<{}>>
 }
 
 
-export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, header, data, handleColumnUpdate, isDataReset, setResetData, setNewData }: ICustomCellProps<T>) => {
+export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, header, data, handleColumnUpdate, isDataResetEnabled, setResetData, setNewData }: ICustomCellProps<T>) => {
 
   const [activeInputField, setInputFieldState] = useState('');
 
   const [activeFieldValue, setActiveFieldValue] = useState<string | number>('');
 
   const [enablePopOver, setPopOverState] = useState(false);
-
 
   const isDebounceValid = useDebounce(activeFieldValue, 600);
 
@@ -49,22 +48,26 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
   }
 
   useEffect(() => {
-    if (isDataReset) {
+    if (isDataResetEnabled) {
       stateReset();
       setResetData();
     }
-  }, [isDataReset])
+  }, [isDataResetEnabled])
 
   const popover = (
-    <Popover id="popover-basic">
-      <Popover.Body>
+    <Popover id='popover-basic'>
+      <Popover.Body className='popover-body'>
         <Button
+          className='popover_button'
+          variant='light'
           onMouseDown={() => {
             stateReset();
           }}>
           Cancel
         </Button>
         <Button
+          className='popover_button'
+          variant='success'
           onMouseDown={() => {
             handleColumnUpdate({
               ...data,
@@ -79,7 +82,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
   );
 
   return (
-    <OverlayTrigger show={enablePopOver} trigger="click" placement={header.isLastColumn && isNewCell ? 'right' : 'top'} overlay={popover}>
+    <OverlayTrigger show={enablePopOver} trigger='click' placement={header.isLastColumn && isNewCell ? 'right' : 'top'} overlay={popover}>
 
       <td
         className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
@@ -95,7 +98,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
           <Form.Control
             type={header.fieldType}
             autoFocus
-            size="sm"
+            size='sm'
             value={activeFieldValue}
             onChange={(e) => {
               const re = /^[+0-9\b]+$/;

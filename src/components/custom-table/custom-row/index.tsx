@@ -10,16 +10,25 @@ interface ICustomRowProsp<T> {
 
 export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNewRow, headers }: ICustomRowProsp<T>) => {
 
-  const [resetData, setResetData] = useState(false);
-
+  const [isNewDataReseted, setResetData] = useState(false);
   const [newData, setNewData] = useState({});
+
   const handleColumnUpdate = (props: T) => {
-    console.log('props', { ...data, ...props, ...newData });
-    setResetData(true);
+    const dataObj = { ...props, ...newData };
+
+    const inputValidation = headers.filter((it) => {
+      return dataObj[it.value] === undefined && !it.isReadOnly;
+    })
+    if (inputValidation.length) {
+      console.log('Error Occured', inputValidation);
+    } else {
+      setResetData(true);
+      setNewData({});
+    }
   }
 
   return (
-    <tr>
+    <tr className="table-row">
 
       {headers.map((hIt, hIndex) => {
         return (
@@ -29,13 +38,12 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
             header={hIt}
             data={data}
             handleColumnUpdate={handleColumnUpdate}
-            isDataReset={resetData}
+            isDataResetEnabled={isNewDataReseted}
             setResetData={() => setResetData(false)}
             setNewData={setNewData}
           />
         )
       })}
-
     </tr>
   )
 }

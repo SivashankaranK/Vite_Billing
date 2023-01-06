@@ -20,9 +20,9 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
       return dataObj[it.value] === undefined && !it.isReadOnly
     })
     if (inputValidation.length) {
-      handleApiCall(dataObj)
       console.log('Error Occured', inputValidation)
     } else {
+      handleApiCall(dataObj)
       setResetData(true)
       setNewData({})
     }

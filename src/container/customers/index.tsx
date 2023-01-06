@@ -17,6 +17,7 @@ const Customers = () => {
   }, [])
 
   const createUpdateCustomer = (dataObj: ICustomer) => {
+    console.log('dataObj', dataObj)
     const dataRequest: IApiRequest<ICustomer> = {
       value: dataObj,
     }

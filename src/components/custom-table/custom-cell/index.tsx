@@ -18,21 +18,17 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
   header,
   data,
   handleColumnUpdate,
-  isDataReset,
+  isDataResetEnabled,
   setResetData,
   setNewData,
 }: ICustomCellProps<T>) => {
   const [activeInputField, setInputFieldState] = useState('')
 
-export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, header, data, handleColumnUpdate, isDataResetEnabled, setResetData, setNewData }: ICustomCellProps<T>) => {
+  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('')
 
   const [enablePopOver, setPopOverState] = useState(false)
 
-  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('');
-
-  const [enablePopOver, setPopOverState] = useState(false);
-
-  const isDebounceValid = useDebounce(activeFieldValue, 600);
+  const isDebounceValid = useDebounce(activeFieldValue, 600)
 
   useEffect(() => {
     if (activeInputField) {
@@ -58,8 +54,8 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
 
   useEffect(() => {
     if (isDataResetEnabled) {
-      stateReset();
-      setResetData();
+      stateReset()
+      setResetData()
     }
   }, [isDataResetEnabled])
 
@@ -94,7 +90,6 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, heade
 
   return (
     <OverlayTrigger show={enablePopOver} trigger='click' placement={header.isLastColumn && isNewCell ? 'right' : 'top'} overlay={popover}>
-
       <td
         className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
         onClick={() => {

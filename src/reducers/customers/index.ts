@@ -33,10 +33,8 @@ export const CustomerReducer = createSlice({
       state.responseMessage = ''
     },
     createUpdateCustomerResponse: (state: ICustomerState, action: IActionWithpayload<ICustomer>) => {
-      debugger
       state.isFetching = false
       state.responseMessage = ''
-      console.log(state.customerListResponse.push(action.payload))
       state.customerListResponse.push(action.payload)
     },
     createUpdateCustomerFailure: (state: ICustomerState, action: IActionWithpayload<string>) => {

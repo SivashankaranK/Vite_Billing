@@ -1,13 +1,12 @@
-import axios from "axios"
-import { IApiCallProps } from "../../../types";
-import { envConfig } from "../../constants";
+import axios, { AxiosError, AxiosResponse } from 'axios'
+import { IApiCallProps } from '../../../types'
+import { envConfig } from '../../constants'
 
 export const apiCall = (props: IApiCallProps) => {
+  const { method, path, paramsObj, dataObj } = props
 
-  const { method, path, paramsObj, dataObj } = props;
-
-  const baseURL = `${envConfig.baseUrl}:${envConfig.basePort}/`;
-  const url = `${envConfig.versionPath}${path}`;
+  const baseURL = `${envConfig.baseUrl}:${envConfig.basePort}/`
+  const url = `${envConfig.versionPath}${path}`
 
   return axios({
     baseURL,
@@ -16,12 +15,13 @@ export const apiCall = (props: IApiCallProps) => {
     params: paramsObj,
     data: dataObj,
     headers: {
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  }).then((response) => {
-    return response;
+      'X-Requested-With': 'XMLHttpRequest',
+    },
   })
-    .catch((error) => {
-      console.info('error', error);
+    .then((response: AxiosResponse<any, IApiCallProps>) => {
+      return response
+    })
+    .catch((error: AxiosError<any, IApiCallProps>) => {
+      console.info('error', error)
     })
 }

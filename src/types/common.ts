@@ -5,6 +5,6 @@ export interface IApiCallProps {
   dataObj?: { [key: string]: any };
 }
 
-export interface ICommonReducerPorops {
+export interface ICommonReducerState {
   tableValue: { [key: string]: string | number }
 }

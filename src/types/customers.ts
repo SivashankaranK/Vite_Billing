@@ -1,13 +1,14 @@
-import { ICustomIndexedTableBody } from "./custom-table";
+import { ICustomIndexedTableBody } from './custom-table'
 
 export interface ICustomerState {
-  isCustomerListFetching: boolean;
-  customerListFetchingError: string;
-  customerListResposne: ICustomerResponse[];
+  isFetching: boolean
+  responseMessage: string
+  responseStatus: number
+  customerListResponse: ICustomer[]
 }
 
-export interface ICustomerResponse extends ICustomIndexedTableBody {
-  id: number;
-  name: string;
-  mobileNumber: string;
+export interface ICustomer extends ICustomIndexedTableBody {
+  id: number
+  name: string
+  mobileNumber: string
 }

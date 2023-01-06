@@ -1,23 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { ICommonReducerPorops } from "../../types";
+import { createSlice } from '@reduxjs/toolkit'
+import { ICommonReducerState } from '../../types'
+import { IActionWithpayload } from '../../types/store'
 
-
-
-const initialState: ICommonReducerPorops = {
-    tableValue:{}
+const initialState: ICommonReducerState = {
+  tableValue: {},
 }
 
-const CommonReducer = createSlice({
-    name: 'common',
-    initialState,
-    reducers: {
-        updateTableValue: (state, action) => {
-            state.tableValue = action.payload
-        }
-    }
-
+export const CommonReducer = createSlice({
+  name: 'common',
+  initialState,
+  reducers: {
+    updateTableValue: (
+      state: ICommonReducerState,
+      action: IActionWithpayload<any>,
+    ) => {
+      state.tableValue = action.payload
+    },
+  },
 })
 
-export const { updateTableValue } = CommonReducer.actions;
-
-export default CommonReducer.reducer;
+export const { updateTableValue } = CommonReducer.actions

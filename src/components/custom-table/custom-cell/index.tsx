@@ -1,133 +1,135 @@
-import { useEffect, useState } from "react";
-import { Form, OverlayTrigger, Popover, Button } from "react-bootstrap";
-import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from "../../../types";
-import { useDebounce } from '../../../utils';
+import { useEffect, useState } from 'react'
+import { Form, OverlayTrigger, Popover, Button } from 'react-bootstrap'
+import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types'
+import { useDebounce } from '../../../utils'
 
 interface ICustomCellProps<T> {
-  isNewCell?: boolean;
-  header: ICustomTableHeaderTypes;
-  data: T;
-  handleColumnUpdate: (props: T) => void;
-  isDataReset: boolean;
-  setResetData: () => void;
+  isNewCell?: boolean
+  header: ICustomTableHeaderTypes
+  data: T
+  handleColumnUpdate: (props: T) => void
+  isDataReset: boolean
+  setResetData: () => void
   setNewData: React.Dispatch<React.SetStateAction<{}>>
 }
 
+export const CustomCell = <T extends ICustomIndexedTableBody>({
+  isNewCell,
+  header,
+  data,
+  handleColumnUpdate,
+  isDataReset,
+  setResetData,
+  setNewData,
+}: ICustomCellProps<T>) => {
+  const [activeInputField, setInputFieldState] = useState('')
 
-export const CustomCell = <T extends ICustomIndexedTableBody>({ isNewCell, header, data, handleColumnUpdate, isDataReset, setResetData, setNewData }: ICustomCellProps<T>) => {
+  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('')
 
-  const [activeInputField, setInputFieldState] = useState('');
+  const [enablePopOver, setPopOverState] = useState(false)
 
-  const [activeFieldValue, setActiveFieldValue] = useState<string | number>('');
-
-  const [enablePopOver, setPopOverState] = useState(false);
-
-
-  const isDebounceValid = useDebounce(activeFieldValue, 600);
+  const isDebounceValid = useDebounce(activeFieldValue, 600)
 
   useEffect(() => {
     if (activeInputField) {
       if (data[header.value] === activeFieldValue || (!data[header.value] && !activeFieldValue)) {
-        setPopOverState(false);
-      }
-      else {
+        setPopOverState(false)
+      } else {
         if (isNewCell && header.isLastColumn) {
-          setPopOverState(true);
+          setPopOverState(true)
         } else if (!isNewCell) {
-          setPopOverState(true);
+          setPopOverState(true)
         } else {
-          setPopOverState(false);
+          setPopOverState(false)
         }
       }
     }
   }, [isDebounceValid, activeInputField])
 
   const stateReset = () => {
-    setInputFieldState('');
-    setActiveFieldValue('');
-    setPopOverState(false);
+    setInputFieldState('')
+    setActiveFieldValue('')
+    setPopOverState(false)
   }
 
   useEffect(() => {
     if (isDataReset) {
-      stateReset();
-      setResetData();
+      stateReset()
+      setResetData()
     }
   }, [isDataReset])
 
   const popover = (
-    <Popover id="popover-basic">
+    <Popover id='popover-basic'>
       <Popover.Body>
         <Button
           onMouseDown={() => {
-            stateReset();
-          }}>
+            stateReset()
+          }}
+        >
           Cancel
         </Button>
         <Button
           onMouseDown={() => {
             handleColumnUpdate({
               ...data,
-              [activeInputField]: activeFieldValue
-            });
-            stateReset();
-          }}>
+              [activeInputField]: activeFieldValue,
+            })
+            stateReset()
+          }}
+        >
           Save
         </Button>
       </Popover.Body>
     </Popover>
-  );
+  )
 
   return (
-    <OverlayTrigger show={enablePopOver} trigger="click" placement={header.isLastColumn && isNewCell ? 'right' : 'top'} overlay={popover}>
-
+    <OverlayTrigger show={enablePopOver} trigger='click' placement={header.isLastColumn && isNewCell ? 'right' : 'top'} overlay={popover}>
       <td
         className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
         onClick={() => {
           if (!header.isReadOnly && !activeInputField) {
-            setInputFieldState(header.value);
-            setActiveFieldValue(data[header.value] || '');
-            setPopOverState(true);
+            setInputFieldState(header.value)
+            setActiveFieldValue(data[header.value] || '')
+            setPopOverState(true)
           }
         }}
       >
-        {activeInputField ?
+        {activeInputField ? (
           <Form.Control
             type={header.fieldType}
             autoFocus
-            size="sm"
+            size='sm'
             value={activeFieldValue}
             onChange={(e) => {
-              const re = /^[+0-9\b]+$/;
-              setPopOverState(false);
+              const re = /^[+0-9\b]+$/
+              setPopOverState(false)
               if (re.test(e.target.value) && header.isNumberOnly) {
-                setActiveFieldValue(e.target.value);
-              }
-              else if (!header.isNumberOnly) {
-                setActiveFieldValue(e.target.value);
+                setActiveFieldValue(e.target.value)
+              } else if (!header.isNumberOnly) {
+                setActiveFieldValue(e.target.value)
               }
             }}
             placeholder={header.palceHolder}
             onBlur={() => {
               if (isNewCell && activeFieldValue) {
                 if (header.isLastColumn) {
-                  setPopOverState(false);
+                  setPopOverState(false)
                 }
               } else {
-                stateReset();
+                stateReset()
               }
 
               if (isNewCell && activeFieldValue) {
-                setNewData({ [activeInputField]: activeFieldValue });
+                setNewData({ [activeInputField]: activeFieldValue })
               }
-            }
-            }
+            }}
           />
-          : <div>
-            {isNewCell ? header.palceHolder : data[header.value]}
-          </div>}
+        ) : (
+          <div>{isNewCell ? header.palceHolder : data[header.value]}</div>
+        )}
       </td>
-
     </OverlayTrigger>
   )
 }

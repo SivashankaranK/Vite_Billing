@@ -33,7 +33,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
       {headers.map((hIt, hIndex) => {
         return (
           <CustomCell<T>
-            key={`table cell${hIndex}`}
+            key={`tableCell${hIndex}`}
             isNewCell={isCreateNewRow}
             header={hIt}
             data={data}

@@ -1,12 +1,11 @@
-import { Suspense, useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { BillingNavBar } from "../containers/header";
-import { routersList } from "../utils/constants";
-import { Col, Container, Row } from "react-bootstrap";
+import { Suspense, useEffect } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BillingNavBar } from '../containers/header'
+import { routersList } from '../utils/constants'
+import { Col, Container, Row } from 'react-bootstrap'
 
 export const AppRoutes = () => {
-
-  const location = window.location;
+  const location = window.location
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -19,13 +18,13 @@ export const AppRoutes = () => {
       <BillingNavBar />
       <Container fluid>
         <Row>
-          <Col className="m-3">
+          <Col className='m-3'>
             <Routes>
               {routersList.map((it, index) => {
-                const ActiveComponent = it.component;
+                const ActiveComponent = it.component
                 return (
                   <Route
-                    key={index}
+                    key={`route${index}`}
                     path={it.path}
                     element={
                       <Suspense fallback='Loading...'>

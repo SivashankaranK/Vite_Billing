@@ -26,7 +26,7 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
 
         {/* Data  Binding */}
         {data.map((iterate, dIndex) => {
-          return <CustomRow<T> data={iterate} headers={headers} key={dIndex} handleApiCall={handleApiCall} />
+          return <CustomRow<T> key={`tablRow${dIndex}`} data={iterate} headers={headers} handleApiCall={handleApiCall} />
         })}
       </tbody>
     </Table>

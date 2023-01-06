@@ -7,7 +7,7 @@ import { ICustomer } from '../../types'
 import { IActionWithpayload, IApiRequest } from '../../types/store'
 import { AxiosError, AxiosResponse } from 'axios'
 
-function* getCustomersList(): Generator<Promise<ICustomer[] | any> | PutEffect, void, ICustomer[] | any> {
+function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
   try {
     const response: AxiosResponse = yield apiCall({
       method: apiProps.customersList.method,
@@ -23,7 +23,9 @@ function* getCustomersList(): Generator<Promise<ICustomer[] | any> | PutEffect, 
   }
 }
 
-function* createUpdateCustomerRequest({ payload }: IActionWithpayload<IApiRequest<ICustomer>>): Generator<Promise<any> | PutEffect, void, any> {
+function* createUpdateCustomerRequest({
+  payload,
+}: IActionWithpayload<IApiRequest<ICustomer>>): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
   try {
     const apiPath = `${payload.value.id ? apiProps.updateCustomer.path.replace(':id', `${payload.value.id}`) : apiProps.createCustomer.path}`
 

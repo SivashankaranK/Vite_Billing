@@ -7,10 +7,7 @@ import { Container, Row, ThemeProvider } from 'react-bootstrap'
 const App = () => {
   return (
     <Provider store={store}>
-      <ThemeProvider
-        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-        minBreakpoint="xxs"
-      >
+      <ThemeProvider breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']} minBreakpoint='xxs'>
         <AppRoutes />
       </ThemeProvider>
     </Provider>

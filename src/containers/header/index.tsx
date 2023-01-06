@@ -1,25 +1,23 @@
-import { Container, Nav, NavDropdown, Navbar, Image } from 'react-bootstrap';
-import { navBarItems } from '../../utils/constants';
-import { useLocation, useNavigate } from 'react-router';
+import { Container, Nav, NavDropdown, Navbar, Image } from 'react-bootstrap'
+import { navBarItems } from '../../utils/constants'
+import { useLocation, useNavigate } from 'react-router'
 
 export const BillingNavBar = () => {
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
+  const location = useLocation()
+  const navigate = useNavigate()
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Container fluid>
         <Navbar.Brand>Billing</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
+        <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+        <Navbar.Collapse id='responsive-navbar-nav'>
+          <Nav className='me-auto'>
             {navBarItems.map((it, index) => {
               return (
                 <Nav.Link
                   className='cur-pointer'
-                  key={index}
+                  key={`nav${index}`}
                   active={location.pathname === `/${it.value}`}
                   onClick={() => navigate(`/${it.value}`)}
                 >
@@ -29,9 +27,7 @@ export const BillingNavBar = () => {
             })}
           </Nav>
           <Nav>
-            <div className='text-white'>
-              Developer
-            </div>
+            <div className='text-white'>Developer</div>
           </Nav>
           {/* <Nav>
             <NavDropdown title={userTitle} menuVariant='light'>
@@ -45,6 +41,6 @@ export const BillingNavBar = () => {
           </Nav> */}
         </Navbar.Collapse>
       </Container>
-    </Navbar >
+    </Navbar>
   )
 }

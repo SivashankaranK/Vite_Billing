@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
 export interface ICustomTableHeaderTypes {
-  value: string;
-  label: string;
-  fieldType: string;
-  palceHolder: string;
-  isReadOnly?: boolean;
-  isNumberOnly?: boolean;
-  isLastColumn?: boolean;
+	value: string;
+	label: string;
+	fieldType: string;
+	palceHolder: string;
+	isReadOnly?: boolean;
+	isNumberOnly?: boolean;
+	isLastColumn?: boolean;
 }
 
 export interface ICustomIndexedTableBody {
-  [key: string]: number | string | undefined;
-  className?: string;
+	[key: string]: number | string | boolean | undefined;
+	className?: string;
 }

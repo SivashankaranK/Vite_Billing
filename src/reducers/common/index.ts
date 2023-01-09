@@ -1,22 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { ICommonReducerState } from '../../types'
-import { IActionWithpayload } from '../../types/store'
+import { createSlice } from '@reduxjs/toolkit';
+import { ICommonReducerState } from '../../types';
+import { IActionWithpayload } from '../../types/store';
 
 const initialState: ICommonReducerState = {
-  tableValue: {},
-}
+	tableValue: {},
+};
 
 export const commonReducer = createSlice({
-  name: 'common',
-  initialState,
-  reducers: {
-    updateTableValue: (
-      state: ICommonReducerState,
-      action: IActionWithpayload<any>,
-    ) => {
-      state.tableValue = action.payload
-    },
-  },
-})
+	name: 'common',
+	initialState,
+	reducers: {
+		updateTableValue: (state: ICommonReducerState, action: IActionWithpayload<any>) => {
+			state.tableValue = action.payload;
+		},
+	},
+});
 
-export const { updateTableValue } = commonReducer.actions
+export const { updateTableValue } = commonReducer.actions;

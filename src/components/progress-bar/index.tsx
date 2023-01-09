@@ -1,18 +1,18 @@
 import { ProgressBar as Loader } from 'reprogressbars';
 
 interface IProgressBarProps {
-  isLoading: boolean;
-  customizeProgressBar?: string;
+	isLoading: boolean;
+	customizeProgressBar?: string;
 }
 
 export const ProgressBar = ({ customizeProgressBar, isLoading }: IProgressBarProps) => {
-  return (
-    <Loader
-      height={'5px'}
-      isLoading={isLoading}
-      color='#64d8ef'
-      useBoxShadow={false}
-      className={`progress-bar ${customizeProgressBar}`}
-    />
-  )
-}
+	return (
+		<Loader
+			height={'3px'}
+			isLoading={isLoading}
+			color='#e53f31'
+			useBoxShadow={false}
+			className={`progress-bar ${customizeProgressBar}`}
+		/>
+	);
+};

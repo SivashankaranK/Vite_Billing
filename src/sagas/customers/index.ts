@@ -1,28 +1,27 @@
-import { PutEffect, put, takeLatest } from '@redux-saga/core/effects'
-import { CREATE_UPDATE_CUSTOMER, GET_CUSTOMERS_LIST } from '../../actions-types/customers'
-import { apiProps } from '../../utils/constants'
-import { apiCall } from '../../utils/helpers/services'
-import { customerListResponse, customerListFailure, createUpdateCustomerResponse, updateCustomerFetchingState, updateToasterMessage } from '../../reducers'
-import { ICustomer } from '../../types'
-import { IActionWithpayload, IApiRequest } from '../../types/store'
-import { AxiosError, AxiosResponse } from 'axios'
+import { PutEffect, put, takeLatest } from '@redux-saga/core/effects';
+import { CREATE_UPDATE_CUSTOMER, GET_CUSTOMERS_LIST } from '../../actions-types/customers';
+import { apiProps } from '../../utils/constants';
+import { apiCall } from '../../utils/helpers/services';
+import { customerListResponse, createUpdateCustomerResponse, updateCustomerFetchingState, updateToasterMessage } from '../../reducers';
+import { ICustomer } from '../../types';
+import { IActionWithpayload, IApiRequest } from '../../types/store';
+import { AxiosError, AxiosResponse } from 'axios';
 
 function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
-  try {
-    const response: AxiosResponse = yield apiCall({
-      method: apiProps.customersList.method,
-      path: apiProps.customersList.path,
-    })
-    if (response && response.status >= 200 && response.status <= 300) {
-      yield put(customerListResponse(response.data))
-    } else {
-      yield put(updateCustomerFetchingState())
-      yield put(updateToasterMessage('Error Occured in Customer Request'));
-
-    }
-  } catch (error) {
-    yield put(updateToasterMessage('Error Occured in Customer Request'));
-  }
+	try {
+		const response: AxiosResponse = yield apiCall({
+			method: apiProps.customersList.method,
+			path: apiProps.customersList.path,
+		});
+		if (response && response.status >= 200 && response.status <= 300) {
+			yield put(customerListResponse(response.data));
+		} else {
+			yield put(updateCustomerFetchingState());
+			yield put(updateToasterMessage('Error Occured in Customer Request'));
+		}
+	} catch (error) {
+		yield put(updateToasterMessage('Error Occured in Customer Request'));
+	}
 }
 
 function* createUpdateCustomerRequest({
@@ -37,15 +36,15 @@ function* createUpdateCustomerRequest({
 			dataObj: payload.value,
 		});
 
-    if (response && response.status >= 200 && response.status <= 300) {
-      yield put(createUpdateCustomerResponse(response.data))
-    } else {
-      yield put(updateCustomerFetchingState());
-      yield put(updateToasterMessage('Error Occured in Customer Request'));
-    }
-  } catch (error) {
-    yield put(updateToasterMessage('Error Occured in Customer Request'));
-  }
+		if (response && response.status >= 200 && response.status <= 300) {
+			yield put(createUpdateCustomerResponse(response.data));
+		} else {
+			yield put(updateCustomerFetchingState());
+			yield put(updateToasterMessage('Error Occured in Customer Request'));
+		}
+	} catch (error) {
+		yield put(updateToasterMessage('Error Occured in Customer Request'));
+	}
 }
 
 export function* handleCustomerData() {

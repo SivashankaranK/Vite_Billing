@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { PutEffect, put, takeLatest } from 'redux-saga/effects';
 import { apiCall, apiProps } from '../../utils';
-import { setItems, updateItemsFetchingState } from '../../reducers';
+import { setItems, updateItemsFetchingState, updateToasterMessage } from '../../reducers';
 import { CREATE_UPDATE_ITEM, GET_ITEMS } from '../../actions-types';
 import { IActionWithpayload, IApiRequest, IItem } from '../../types';
 import store from '../../store';
@@ -15,13 +15,12 @@ function* getItems(): Generator<Promise<AxiosResponse | void> | PutEffect, void,
 		if (response && response.status >= 200 && response.status <= 300) {
 			yield put(setItems(response.data));
 		} else {
-			console.log('api error:unable to get response');
-
+			yield put(updateToasterMessage('Error Occured in Items Request'));
 			yield put(updateItemsFetchingState());
 		}
 	} catch (error) {
+		yield put(updateToasterMessage('Error Occured in Items Request'));
 		yield put(updateItemsFetchingState());
-		console.log('error occured on getItems');
 	}
 }
 
@@ -50,12 +49,12 @@ function* createUpdateItem({
 			});
 			yield put(setItems(items));
 		} else {
-			console.log('api error:unable to get response');
+			yield put(updateToasterMessage('Error Occured in Items Request'));
 			yield put(updateItemsFetchingState());
 		}
 	} catch (error) {
+		yield put(updateToasterMessage('Error Occured in Items Request'));
 		yield put(updateItemsFetchingState());
-		console.log('error occured on createUpdateItem');
 	}
 }
 

@@ -1,74 +1,77 @@
 @font-face {
-  font-family: monda;
-  src: url(../fonts/IBMPlexSerif-Medium.ttf);
+	font-family: monda;
+	src: url(../fonts/IBMPlexSerif-Medium.ttf);
 }
 
 body {
-  margin: 0;
-  font-family: monda;
-  letter-spacing: 0.05rem;
-  background-color: #F0F2F5;
+	margin: 0;
+	font-family: monda;
+	letter-spacing: 0.05rem;
+	background-color: #f0f2f5;
 }
 
 .cur-pointer {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .no-data {
-  display: flex;
-  justify-content: center;
-  margin: 3rem;
+	display: flex;
+	justify-content: center;
+	margin: 3rem;
 }
 
 .common-table {
+	// border-collapse: collapse;
+	// border: none;
 
-  // border-collapse: collapse;
-  // border: none;
+	.table-head {
+		height: 4rem;
+		background-color: #dae6f5;
+	}
 
-  .table-head {
-    height: 4rem;
-    background-color: #DAE6F5;
-  }
-
-  .table-body {
-
-    .table-row {
-      height: 3rem;
-      background-color: #fff;
-    }
-
-  }
+	.table-body {
+		.table-row {
+			height: 3rem;
+			background-color: #fff;
+		}
+	}
 }
 
 .popover-body {
-  padding: 0;
+	padding: 0;
 
-  .popover_button {
-    margin: 0.4rem;
-    border-color: #746e6e;
-    width: 5.5rem;
-  }
+	.popover_button {
+		margin: 0.4rem;
+		border-color: #746e6e;
+		width: 5.5rem;
+	}
 }
 
 .toaster__container {
-  border: none;
+	border: none;
 
-  .toaster {
-    border-color: #DAE6F5;
+	.toaster {
+		border-color: #dae6f5;
 
-    .toaster-body {
-      background-color: #DAE6F5;
+		.toaster-body {
+			background-color: #dae6f5;
 
-      .toast__body-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+			.toast__body-content {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
 
-        .toaster__close-icon {
-          height: 2rem
-        }
-      }
-    }
-  }
+				.toaster__close-icon {
+					height: 2rem;
+				}
+			}
+		}
+	}
+}
 
+.reprogressbar {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
 }

@@ -14,7 +14,6 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
   const [rowData, setRowData] = useState(data)
 
   const handleColumnUpdate = (colValue: { [key: string]: string | number }) => {
-    // setRowData({ ...rowData, ...colValue }) state not updating
     const dataObj = { ...rowData, ...colValue }
     const inputValidation = headers.filter((it) => {
       return dataObj[it.value] === undefined && !it.isReadOnly
@@ -27,6 +26,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
       setResetData(true)
     }
   }
+
   return (
     <tr className='table-row'>
       {headers.map((hIt, hIndex) => {

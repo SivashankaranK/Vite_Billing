@@ -12,34 +12,34 @@ export const customerReducer = createSlice({
   initialState,
   reducers: {
     customerListRequest: (state: ICustomerState, _action: IActionWithOutPayload) => {
-      state.isFetching = true
-      state.customerListResponse = []
+      state.isFetching = true;
+      state.customerListResponse = [];
     },
     customerListResponse: (state: ICustomerState, action: IActionWithpayload<ICustomer[]>) => {
-      state.isFetching = false
-      state.customerListResponse = action.payload
+      state.isFetching = false;
+      state.customerListResponse = action.payload;
     },
     customerListFailure: (state: ICustomerState, action: IActionWithpayload<string>) => {
-      state.isFetching = false
-      state.customerListResponse = []
+      state.isFetching = false;
+      state.customerListResponse = [];
     },
     createUpdateCustomerRequest: (state: ICustomerState, _action: IActionWithpayload<IApiRequest<ICustomer>>) => {
-      state.isFetching = true
+      state.isFetching = true;
     },
     createUpdateCustomerResponse: (state: ICustomerState, action: IActionWithpayload<ICustomer>) => {
-      state.isFetching = false
-      const findIndex = state.customerListResponse.findIndex((obj) => obj.id === action.payload.id)
+      state.isFetching = false;
+      const findIndex = state.customerListResponse.findIndex((obj) => obj.id === action.payload.id);
       if (findIndex) {
-        state.customerListResponse[findIndex] = action.payload
+        state.customerListResponse[findIndex] = action.payload;
       } else {
-        state.customerListResponse.push(action.payload)
+        state.customerListResponse.push(action.payload);
       }
     },
     createUpdateCustomerFailure: (state: ICustomerState, action: IActionWithpayload<string>) => {
-      state.isFetching = false
+      state.isFetching = false;
     },
     stopCustomerFetching: (state: ICustomerState, _action: IActionWithOutPayload) => {
-      state.isFetching = false
+      state.isFetching = false;
     },
   },
 })

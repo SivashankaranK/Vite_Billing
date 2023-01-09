@@ -6,7 +6,7 @@ export interface ICustomerState {
 }
 
 export interface ICustomer extends ICustomIndexedTableBody {
-  id: number
+  id?: number
   name: string
   mobileNumber: string
 }

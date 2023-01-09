@@ -73,7 +73,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
         <Button
           className='popover_button'
           variant='success'
-          onMouseDown={(e) => {
+          onMouseDown={() => {
             handleColumnUpdate({ [header.value]: activeFieldValue })
             stateReset()
           }}>
@@ -117,7 +117,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
               }
             }}
             placeholder={header.palceHolder}
-            onBlur={(e) => {
+            onBlur={() => {
               if (isNewCell && activeFieldValue) {
                 setRowData({ [header.value]: activeFieldValue })
                 if (header.isLastColumn) {

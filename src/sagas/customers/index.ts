@@ -31,7 +31,7 @@ function* createUpdateCustomerRequest({
     const apiPath = `${payload.value.id ? apiProps.updateCustomer.path.replace(':id', `${payload.value.id}`) : apiProps.createCustomer.path}`
 
     const response: AxiosResponse = yield apiCall({
-      method: payload.value.id ? apiProps.updateCustomer.method : apiProps.createCustomer.method,
+      method: payload.value?.id ? apiProps.updateCustomer.method : apiProps.createCustomer.method,
       path: apiPath,
       dataObj: payload.value,
     })

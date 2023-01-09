@@ -1,8 +1,8 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import { commonReducer, customerReducer } from "../reducers";
-
+import { combineReducers } from '@reduxjs/toolkit';
+import { commonReducer, customerReducer, itemsReducers } from '../reducers';
 
 export const rootReducer = combineReducers({
-  customers: customerReducer.reducer,
-  common: commonReducer.reducer
+	customers: customerReducer.reducer,
+	common: commonReducer.reducer,
+	items: itemsReducers.reducer,
 });

@@ -26,16 +26,16 @@ function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffec
 }
 
 function* createUpdateCustomerRequest({
-  payload,
+	payload,
 }: IActionWithpayload<IApiRequest<ICustomer>>): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
-  try {
-    const apiPath = `${payload.value.id ? apiProps.updateCustomer.path.replace(':id', `${payload.value.id}`) : apiProps.createCustomer.path}`
+	try {
+		const apiPath = `${payload.value.id ? apiProps.updateCustomer.path.replace(':id', `${payload.value.id}`) : apiProps.createCustomer.path}`;
 
-    const response: AxiosResponse = yield apiCall({
-      method: payload.value?.id ? apiProps.updateCustomer.method : apiProps.createCustomer.method,
-      path: apiPath,
-      dataObj: payload.value,
-    })
+		const response: AxiosResponse = yield apiCall({
+			method: payload.value?.id ? apiProps.updateCustomer.method : apiProps.createCustomer.method,
+			path: apiPath,
+			dataObj: payload.value,
+		});
 
     if (response && response.status >= 200 && response.status <= 300) {
       yield put(createUpdateCustomerResponse(response.data))
@@ -49,6 +49,6 @@ function* createUpdateCustomerRequest({
 }
 
 export function* handleCustomerData() {
-  yield takeLatest(GET_CUSTOMERS_LIST, getCustomersList)
-  yield takeLatest(CREATE_UPDATE_CUSTOMER, createUpdateCustomerRequest)
+	yield takeLatest(GET_CUSTOMERS_LIST, getCustomersList);
+	yield takeLatest(CREATE_UPDATE_CUSTOMER, createUpdateCustomerRequest);
 }

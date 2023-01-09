@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { ICommonReducerState } from '../../types'
-import { IActionWithpayload } from '../../types/store'
+import { createSlice } from '@reduxjs/toolkit';
+import { ICommonReducerState } from '../../types';
+import { IActionWithpayload } from '../../types/store';
 
 const initialState: ICommonReducerState = {
   toasterMessage: ''

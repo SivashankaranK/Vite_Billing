@@ -1,11 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { ICustomer, ICustomerState } from '../../types'
-import { IActionWithOutPayload, IActionWithpayload, IApiRequest } from '../../types/store'
+import { createSlice } from '@reduxjs/toolkit';
+import { ICustomer, ICustomerState } from '../../types';
+import { IActionWithOutPayload, IActionWithpayload, IApiRequest } from '../../types/store';
 
 const initialState: ICustomerState = {
-  isFetching: true,
-  customerListResponse: [],
-}
+	isFetching: true,
+	customerListResponse: [],
+};
 
 export const customerReducer = createSlice({
   name: 'customers',

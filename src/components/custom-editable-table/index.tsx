@@ -16,10 +16,10 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
     }
     return Obj
   }
-  return data && data.length === 0 ? (
-    <div className='no-data'>No data Found...</div>
-  ) : (
-    <Table className='common-table' bordered>
+  return (
+    <Table
+      className='common-table'
+      bordered>
       <thead className='table-head'>
         <tr>
           {headers.map((col, index) => {
@@ -29,12 +29,35 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
       </thead>
       <tbody className='table-body'>
         {/* New Row */}
-        <CustomRow isCreateNewRow headers={headers} data={ObjForCreateNewData()} handleUpdate={handleUpdate} />
+        <CustomRow
+          isCreateNewRow
+          headers={headers}
+          data={ObjForCreateNewData()}
+          handleUpdate={handleUpdate}
+        />
 
-        {/* Data  Binding */}
-        {data.map((rowData, rowIndex) => {
-          return <CustomRow<T> key={`tablRow${rowIndex}`} data={rowData} headers={headers} handleUpdate={handleUpdate} />
-        })}
+        <>
+          {data && data.length === 0 ? (
+            <tr className='table-row'>
+              <td
+                colSpan={headers.length}
+                className='text-center'>
+                No data found...
+              </td>
+            </tr>
+          ) : (
+            data.map((iterate, dIndex) => {
+              return (
+                <CustomRow<T>
+                  key={`tablRow${dIndex}`}
+                  data={iterate}
+                  headers={headers}
+                  handleUpdate={handleUpdate}
+                />
+              )
+            })
+          )}
+        </>
       </tbody>
     </Table>
   )

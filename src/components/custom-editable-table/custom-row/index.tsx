@@ -41,7 +41,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
             isDataResetEnabled={isNewDataReseted}
             setResetData={() => setResetData(false)}
             // For New column
-            setRowData={(colValue) => setRowData({ ...rowData, ...colValue })}
+            setRowData={(colValue) => setRowData((prev)=>({ ...prev, ...colValue }))}
           />
         )
       })}

@@ -3,20 +3,19 @@ import { ICommonReducerState } from '../../types'
 import { IActionWithpayload } from '../../types/store'
 
 const initialState: ICommonReducerState = {
-  tableValue: {},
+  toasterMessage: ''
 }
 
 export const commonReducer = createSlice({
   name: 'common',
   initialState,
   reducers: {
-    updateTableValue: (
+    updateToasterMessage: (
       state: ICommonReducerState,
-      action: IActionWithpayload<any>,
-    ) => {
-      state.tableValue = action.payload
-    },
+      action: IActionWithpayload<string>) => {
+      state.toasterMessage = action.payload;
+    }
   },
 })
 
-export const { updateTableValue } = commonReducer.actions
+export const { updateToasterMessage } = commonReducer.actions

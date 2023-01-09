@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "dist/index",
+  "typings": "dist/index",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -20,7 +22,8 @@
     "react-router": "^6.6.1",
     "react-router-dom": "^6.6.1",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^1.2.2"
+    "redux-saga": "^1.2.2",
+    "reprogressbars": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

@@ -22,6 +22,7 @@ export const CustomCell = <T extends ICustomIndexedTableBody>({
   setResetData,
   setRowData,
 }: ICustomCellProps<T>) => {
+
   const [isFieldActive, setActiveField] = useState(false)
 
   const [activeFieldValue, setActiveFieldValue] = useState<string | number>(data)

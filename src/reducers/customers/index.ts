@@ -19,7 +19,7 @@ export const customerReducer = createSlice({
       state.isFetching = false;
       state.customerListResponse = action.payload;
     },
-    customerListFailure: (state: ICustomerState, action: IActionWithpayload<string>) => {
+    customerListFailure: (state: ICustomerState, _action: IActionWithpayload<string>) => {
       state.isFetching = false;
       state.customerListResponse = [];
     },
@@ -35,10 +35,10 @@ export const customerReducer = createSlice({
         state.customerListResponse.push(action.payload);
       }
     },
-    createUpdateCustomerFailure: (state: ICustomerState, action: IActionWithpayload<string>) => {
+    createUpdateCustomerFailure: (state: ICustomerState, _action: IActionWithpayload<string>) => {
       state.isFetching = false;
     },
-    stopCustomerFetching: (state: ICustomerState, _action: IActionWithOutPayload) => {
+    updateCustomerFetchingState: (state: ICustomerState, _action: IActionWithOutPayload) => {
       state.isFetching = false;
     },
   },
@@ -51,5 +51,5 @@ export const {
   createUpdateCustomerRequest,
   createUpdateCustomerFailure,
   createUpdateCustomerResponse,
-  stopCustomerFetching,
+  updateCustomerFetchingState,
 } = customerReducer.actions

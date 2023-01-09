@@ -3,9 +3,17 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { BillingNavBar } from '../containers/header'
 import { routersList } from '../utils/constants'
 import { Col, Container, Row } from 'react-bootstrap'
+import { ProgressBar, Toastifier } from '../components'
+import { useSelector } from 'react-redux'
+import { IStore } from '../types/store'
+import { useDispatch } from 'react-redux'
+import { updateToasterMessage } from '../reducers'
 
 export const AppRoutes = () => {
   const location = window.location
+  const dispatch = useDispatch();
+
+  const toasterMessage = useSelector((state: IStore) => state.common.toasterMessage);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -27,7 +35,7 @@ export const AppRoutes = () => {
                     key={`route${index}`}
                     path={it.path}
                     element={
-                      <Suspense fallback='Loading...'>
+                      <Suspense fallback={<ProgressBar isLoading={true} />}>
                         <ActiveComponent />
                       </Suspense>
                     }
@@ -38,6 +46,7 @@ export const AppRoutes = () => {
           </Col>
         </Row>
       </Container>
+      <Toastifier enabled={!!toasterMessage} message={toasterMessage} setToasterState={() => dispatch(updateToasterMessage(''))} />
     </BrowserRouter>
   )
 }

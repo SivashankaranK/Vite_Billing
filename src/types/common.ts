@@ -6,5 +6,5 @@ export interface IApiCallProps {
 }
 
 export interface ICommonReducerState {
-  tableValue: { [key: string]: string | number }
+  toasterMessage: string;
 }

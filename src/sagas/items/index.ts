@@ -28,7 +28,6 @@ function* createUpdateItem({
 	payload,
 }: IActionWithpayload<IApiRequest<IItem>>): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
-		debugger;
 		const method = payload.value.id ? apiProps.updateItem.method : apiProps.createItem.method;
 		const path = payload.value.id ? apiProps.updateItem.path.replace(':id', `${payload.value.id}`) : apiProps.createItem.path;
 		const response: AxiosResponse<IItem, IItem> = yield apiCall({

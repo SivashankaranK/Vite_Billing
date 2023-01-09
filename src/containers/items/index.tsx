@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { CustomEditableTable } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { IApiRequest, ICustomer, IItem, IStore } from '../../types';
+import { IApiRequest, IItem, IStore } from '../../types';
 import { useEffect } from 'react';
 import { ItemsTableHeaders } from '../../utils';
 import { getItems, createUpdateItem } from '../../reducers';
@@ -24,11 +24,15 @@ const ItemsList = () => {
 	const menuItems: IItem[] = [
 		{
 			id: 1,
-			name: 'Home',
+			name: 'Chicken Briyani',
+			price: 200,
+			gst: 2.5,
 		},
 		{
 			id: 2,
-			name: 'Customers',
+			name: 'Mutton Briyani',
+			price: 400,
+			gst: 3.5,
 		},
 	];
 

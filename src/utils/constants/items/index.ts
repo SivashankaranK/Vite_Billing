@@ -1,5 +1,4 @@
 import { ICustomTableHeaderTypes } from '../../../types';
-
 export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'Id',
@@ -13,6 +12,18 @@ export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 		value: 'name',
 		fieldType: 'string',
 		palceHolder: 'Enter Menu Name',
+	},
+	{
+		label: 'Price',
+		value: 'price',
+		fieldType: 'number',
+		palceHolder: 'Enter Item Price',
+	},
+	{
+		label: 'GST %',
+		value: 'gst',
+		fieldType: 'number',
+		palceHolder: 'Enter GST %',
 		isLastColumn: true,
 	},
 ];

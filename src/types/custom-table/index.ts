@@ -1,7 +1,9 @@
+export type IfieldType = 'string' | 'number';
+
 export interface ICustomTableHeaderTypes {
 	value: string;
 	label: string;
-	fieldType: string;
+	fieldType: IfieldType;
 	palceHolder: string;
 	isReadOnly?: boolean;
 	isNumberOnly?: boolean;
@@ -9,6 +11,6 @@ export interface ICustomTableHeaderTypes {
 }
 
 export interface ICustomIndexedTableBody {
-	[key: string]: number | string | boolean | undefined;
+	[key: string]: number | string | undefined;
 	className?: string;
 }

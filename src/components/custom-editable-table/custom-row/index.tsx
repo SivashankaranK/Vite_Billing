@@ -1,32 +1,33 @@
-import { useState, useTransition } from 'react'
-import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types'
-import { CustomCell } from '../custom-cell'
+import { useState, useTransition } from 'react';
+import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types';
+import { CustomCell } from '../custom-cell';
 
 interface ICustomRowProsp<T> {
-  isCreateNewRow?: boolean
-  headers: ICustomTableHeaderTypes[]
-  data: T
-  handleUpdate: (dataObj: any) => void
+  isCreateNewRow?: boolean;
+  headers: ICustomTableHeaderTypes[];
+  data: T;
+  handleUpdate: (dataObj: any) => void;
 }
 
 export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNewRow, headers, handleUpdate }: ICustomRowProsp<T>) => {
-  const [isNewDataReseted, setResetData] = useState(false)
-  const [rowData, setRowData] = useState(data)
+  const [isNewDataReseted, setResetData] = useState(false);
+  const [rowData, setRowData] = useState(data);
 
-  const handleColumnUpdate = (colValue: { [key: string]: string | number }) => {
-    // setRowData({ ...rowData, ...colValue }) state not updating
-    const dataObj = { ...rowData, ...colValue }
+  const handleColumnUpdate = async (colValue: { [key: string]: string | number }) => {
+    // setRowData({ ...rowData, ...colValue }); //state not updating
+    const dataObj = { ...rowData, ...colValue };
     const inputValidation = headers.filter((it) => {
-      return dataObj[it.value] === undefined && !it.isReadOnly
-    })
+      return dataObj[it.value] === undefined && !it.isReadOnly;
+    });
 
     if (inputValidation.length) {
-      console.log('All input field must be filled')
+      console.log('All input field must be filled');
     } else {
-      handleUpdate(dataObj)
-      setResetData(true)
+      handleUpdate(dataObj);
+      setResetData(true);
     }
-  }
+  };
+
   return (
     <tr className='table-row'>
       {headers.map((hIt, hIndex) => {
@@ -43,8 +44,8 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
             // For New column
             setRowData={(colValue) => setRowData({ ...rowData, ...colValue })}
           />
-        )
+        );
       })}
     </tr>
-  )
-}
+  );
+};

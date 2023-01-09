@@ -1,28 +1,27 @@
-import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { createUpdateCustomerRequest, customerListRequest } from '../../reducers'
-import { Col, Container, Row } from 'react-bootstrap'
-import { CustomEditableTable } from '../../components'
-import { ICustomer } from '../../types'
-import { headerColumns } from '../../utils/constants/customers'
-import { IApiRequest, IApiRequestCallBack, IStore } from '../../types/store'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { createUpdateCustomerRequest, customerListRequest } from '../../reducers';
+import { Col, Container, Row } from 'react-bootstrap';
+import { CustomEditableTable } from '../../components';
+import { ICustomer } from '../../types';
+import { headerColumns } from '../../utils/constants/customers';
+import { IApiRequest, IApiRequestCallBack, IStore } from '../../types/store';
+import { useSelector } from 'react-redux';
 
 const Customers = () => {
-  const dispatch = useDispatch()
-  const customers = useSelector((state: IStore) => state.customers.customerListResponse)
+  const dispatch = useDispatch();
+  const customers = useSelector((state: IStore) => state.customers.customerListResponse);
 
   useEffect(() => {
-    dispatch(customerListRequest())
-  }, [])
+    dispatch(customerListRequest());
+  }, []);
 
   const createUpdateCustomer = (dataObj: ICustomer) => {
     const dataRequest: IApiRequest<ICustomer> = {
       value: dataObj,
-    }
-    dispatch(createUpdateCustomerRequest(dataRequest))
-  }
-
+    };
+    dispatch(createUpdateCustomerRequest(dataRequest));
+  };
 
   const customersData: ICustomer[] = [
     {
@@ -45,7 +44,7 @@ const Customers = () => {
       name: 'Aximsoft',
       mobileNumber: '+917904172088',
     },
-  ]
+  ];
 
   return (
     <Container>
@@ -65,7 +64,7 @@ const Customers = () => {
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default Customers
+export default Customers;

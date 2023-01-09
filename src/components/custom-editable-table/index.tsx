@@ -1,21 +1,21 @@
-import { useState } from 'react'
-import { Table } from 'react-bootstrap'
-import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../types/custom-table'
-import { CustomRow } from './custom-row'
+import { useState } from 'react';
+import { Table } from 'react-bootstrap';
+import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../types/custom-table';
+import { CustomRow } from './custom-row';
 
 interface ICustomTableProps<T> {
-  headers: ICustomTableHeaderTypes[]
-  data: T[]
-  handleUpdate: (dataObj: any) => void
+  headers: ICustomTableHeaderTypes[];
+  data: T[];
+  handleUpdate: (dataObj: any) => void;
 }
 export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, headers, handleUpdate }: ICustomTableProps<T>) => {
   const ObjForCreateNewData = () => {
-    let Obj: any = {}
+    let Obj: any = {};
     for (const key of headers) {
-      Obj[key.value] = ''
+      Obj[key.value] = '';
     }
-    return Obj
-  }
+    return Obj;
+  };
   return (
     <Table
       className='common-table'
@@ -23,7 +23,7 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
       <thead className='table-head'>
         <tr>
           {headers.map((col, index) => {
-            return <th key={`tableHeader${index}`}>{col.label}</th>
+            return <th key={`tableHeader${index}`}>{col.label}</th>;
           })}
         </tr>
       </thead>
@@ -54,11 +54,11 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
                   headers={headers}
                   handleUpdate={handleUpdate}
                 />
-              )
+              );
             })
           )}
         </>
       </tbody>
     </Table>
-  )
-}
+  );
+};

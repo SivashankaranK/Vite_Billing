@@ -4,8 +4,6 @@ import { IActionWithOutPayload, IActionWithpayload, IApiRequest } from '../../ty
 
 const initialState: ICustomerState = {
   isFetching: true,
-  responseMessage: '',
-  responseStatus: 0,
   customerListResponse: [],
 }
 
@@ -15,31 +13,33 @@ export const customerReducer = createSlice({
   reducers: {
     customerListRequest: (state: ICustomerState, _action: IActionWithOutPayload) => {
       state.isFetching = true
-      state.responseMessage = ''
       state.customerListResponse = []
     },
     customerListResponse: (state: ICustomerState, action: IActionWithpayload<ICustomer[]>) => {
       state.isFetching = false
-      state.responseMessage = ''
       state.customerListResponse = action.payload
     },
     customerListFailure: (state: ICustomerState, action: IActionWithpayload<string>) => {
-      state.isFetching = true
-      state.responseMessage = action.payload
+      state.isFetching = false
       state.customerListResponse = []
     },
     createUpdateCustomerRequest: (state: ICustomerState, _action: IActionWithpayload<IApiRequest<ICustomer>>) => {
       state.isFetching = true
-      state.responseMessage = ''
     },
     createUpdateCustomerResponse: (state: ICustomerState, action: IActionWithpayload<ICustomer>) => {
       state.isFetching = false
-      state.responseMessage = ''
-      state.customerListResponse.push(action.payload)
+      const findIndex = state.customerListResponse.findIndex((obj) => obj.id === action.payload.id)
+      if (findIndex) {
+        state.customerListResponse[findIndex] = action.payload
+      } else {
+        state.customerListResponse.push(action.payload)
+      }
     },
     createUpdateCustomerFailure: (state: ICustomerState, action: IActionWithpayload<string>) => {
       state.isFetching = false
-      state.responseMessage = action.payload
+    },
+    stopCustomerFetching: (state: ICustomerState, _action: IActionWithOutPayload) => {
+      state.isFetching = false
     },
   },
 })
@@ -51,4 +51,5 @@ export const {
   createUpdateCustomerRequest,
   createUpdateCustomerFailure,
   createUpdateCustomerResponse,
+  stopCustomerFetching,
 } = customerReducer.actions

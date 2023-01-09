@@ -2,7 +2,7 @@ import { PutEffect, put, takeLatest } from '@redux-saga/core/effects'
 import { CREATE_UPDATE_CUSTOMER, GET_CUSTOMERS_LIST } from '../../actions-types/customers'
 import { apiProps } from '../../utils/constants'
 import { apiCall } from '../../utils/helpers/services'
-import { customerListResponse, customerListFailure, createUpdateCustomerResponse, createUpdateCustomerFailure } from '../../reducers'
+import { customerListResponse, customerListFailure, createUpdateCustomerResponse, stopCustomerFetching } from '../../reducers'
 import { ICustomer } from '../../types'
 import { IActionWithpayload, IApiRequest } from '../../types/store'
 import { AxiosError, AxiosResponse } from 'axios'
@@ -13,13 +13,14 @@ function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffec
       method: apiProps.customersList.method,
       path: apiProps.customersList.path,
     })
-    if (response.status === 200) {
+    if (response && response.status >= 200 && response.status <= 300) {
       yield put(customerListResponse(response.data))
     } else {
-      yield put(customerListFailure('Error Occured'))
+      yield put(stopCustomerFetching())
+      console.log('api error:unable to get response')
     }
   } catch (error) {
-    yield put(customerListFailure('Error Occured on getCustomersList'))
+    console.log('error occured on createUpdateCustomerRequest')
   }
 }
 
@@ -35,13 +36,14 @@ function* createUpdateCustomerRequest({
       dataObj: payload.value,
     })
 
-    if (response.status >= 200 && response.status <= 300) {
+    if (response && response.status >= 200 && response.status <= 300) {
       yield put(createUpdateCustomerResponse(response.data))
     } else {
-      yield put(createUpdateCustomerFailure('Error Occured'))
+      yield put(stopCustomerFetching())
+      console.log('api error:unable to get response')
     }
   } catch (error) {
-    yield put(createUpdateCustomerFailure('Error occured on createUpdateCustomerRequest'))
+    console.log('error occured on createUpdateCustomerRequest')
   }
 }
 

@@ -2,8 +2,6 @@ import { ICustomIndexedTableBody } from './custom-table'
 
 export interface ICustomerState {
   isFetching: boolean
-  responseMessage: string
-  responseStatus: number
   customerListResponse: ICustomer[]
 }
 

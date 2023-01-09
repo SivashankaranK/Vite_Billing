@@ -17,12 +17,12 @@ const Customers = () => {
   }, [])
 
   const createUpdateCustomer = (dataObj: ICustomer) => {
-    console.log('dataObj', dataObj)
     const dataRequest: IApiRequest<ICustomer> = {
       value: dataObj,
     }
     dispatch(createUpdateCustomerRequest(dataRequest))
   }
+
 
   const customersData: ICustomer[] = [
     {
@@ -57,7 +57,11 @@ const Customers = () => {
       </Row>
       <Row>
         <Col>
-          <CustomEditableTable<ICustomer> data={customersData} headers={headerColumns} handleUpdate={createUpdateCustomer} />
+          <CustomEditableTable<ICustomer>
+            data={customersData}
+            headers={headerColumns}
+            handleUpdate={createUpdateCustomer}
+          />
         </Col>
       </Row>
     </Container>

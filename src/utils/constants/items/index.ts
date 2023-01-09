@@ -1,6 +1,6 @@
 import { ICustomTableHeaderTypes } from '../../../types';
 
-export const CustomerTableHeaders: ICustomTableHeaderTypes[] = [
+export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'Id',
 		value: 'id',
@@ -12,14 +12,7 @@ export const CustomerTableHeaders: ICustomTableHeaderTypes[] = [
 		label: 'Name',
 		value: 'name',
 		fieldType: 'string',
-		palceHolder: 'Add Name',
-	},
-	{
-		label: 'Mobile Number',
-		value: 'mobileNumber',
-		fieldType: 'string',
-		palceHolder: 'Add Mobile Number',
-		isNumberOnly: true,
+		palceHolder: 'Enter Menu Name',
 		isLastColumn: true,
 	},
 ];

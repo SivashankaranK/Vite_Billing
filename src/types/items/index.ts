@@ -1,7 +1,11 @@
 import { ICustomIndexedTableBody } from '../custom-table';
 
-export interface IItems extends ICustomIndexedTableBody {
+export interface IItem extends ICustomIndexedTableBody {
 	id?: number;
 	name: string;
-	isActive: boolean;
+}
+
+export interface IItemState {
+	isFetching: boolean;
+	itemList: IItem[];
 }

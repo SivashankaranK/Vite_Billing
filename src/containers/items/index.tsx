@@ -1,36 +1,34 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { CustomEditableTable } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { IApiRequest, ICustomer, IItems, IStore } from '../../types';
+import { IApiRequest, ICustomer, IItem, IStore } from '../../types';
 import { useEffect } from 'react';
-import { headerColumns } from '../../utils/constants/customers';
-import { createUpdateCustomerRequest, customerListRequest } from '../../reducers';
+import { ItemsTableHeaders } from '../../utils';
+import { getItems, createUpdateItem } from '../../reducers';
 
 const ItemsList = () => {
 	const dispatch = useDispatch();
-	const customers = useSelector((state: IStore) => state.customers.customerListResponse);
+	const itemList = useSelector((state: IStore) => state.items.itemList);
 
 	useEffect(() => {
-		dispatch(customerListRequest());
+		dispatch(getItems());
 	}, []);
 
-	const createUpdateCustomer = (dataObj: ICustomer) => {
-		const dataRequest: IApiRequest<ICustomer> = {
+	const createUpdateItems = (dataObj: IItem) => {
+		const dataRequest: IApiRequest<IItem> = {
 			value: dataObj,
 		};
-		dispatch(createUpdateCustomerRequest(dataRequest));
+		dispatch(createUpdateItem(dataRequest));
 	};
 
-	const menuItems: IItems[] = [
+	const menuItems: IItem[] = [
 		{
 			id: 1,
 			name: 'Home',
-			isActive: true,
 		},
 		{
 			id: 2,
 			name: 'Customers',
-			isActive: true,
 		},
 	];
 
@@ -44,10 +42,10 @@ const ItemsList = () => {
 			</Row>
 			<Row>
 				<Col>
-					<CustomEditableTable<IItems>
+					<CustomEditableTable<IItem>
 						data={menuItems}
-						headers={headerColumns}
-						handleUpdate={createUpdateCustomer}
+						headers={ItemsTableHeaders}
+						handleUpdate={createUpdateItems}
 					/>
 				</Col>
 			</Row>

@@ -1,5 +1,6 @@
 import { ICommonReducerState } from '../common';
 import { ICustomerState } from '../customers';
+import { IItemState } from '../items';
 
 export interface IActionWithpayload<T> {
 	type: string;
@@ -23,4 +24,5 @@ export interface IApiRequest<T> {
 export interface IStore {
 	customers: ICustomerState;
 	common: ICommonReducerState;
+	items: IItemState;
 }

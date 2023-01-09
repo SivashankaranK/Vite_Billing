@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface ICustomTableHeaderTypes {
 	value: string;
 	label: string;

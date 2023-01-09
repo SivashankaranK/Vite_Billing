@@ -1,11 +1,10 @@
+import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { createUpdateCustomerRequest, customerListRequest } from '../../reducers';
-import { Col, Container, Row } from 'react-bootstrap';
 import { CustomEditableTable } from '../../components';
-import { ICustomer } from '../../types';
-import { headerColumns } from '../../utils/constants/customers';
-import { IApiRequest, IApiRequestCallBack, IStore } from '../../types/store';
+import { ICustomer, IApiRequest, IStore } from '../../types';
+import { CustomerTableHeaders } from '../../utils';
 import { useSelector } from 'react-redux';
 
 const Customers = () => {
@@ -58,7 +57,7 @@ const Customers = () => {
 				<Col>
 					<CustomEditableTable<ICustomer>
 						data={customersData}
-						headers={headerColumns}
+						headers={CustomerTableHeaders}
 						handleUpdate={createUpdateCustomer}
 					/>
 				</Col>

@@ -2,8 +2,8 @@ import { ICustomTableHeaderTypes } from '../../../types';
 
 export const CustomerTableHeaders: ICustomTableHeaderTypes[] = [
 	{
-		label: 'Id',
-		value: 'id',
+		label: 'S.No',
+		value: 'sno',
 		fieldType: 'number',
 		isReadOnly: true,
 		palceHolder: '',
@@ -17,7 +17,7 @@ export const CustomerTableHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'Mobile Number',
 		value: 'mobileNumber',
-		fieldType: 'number',
+		fieldType: 'string',
 		palceHolder: 'Add Mobile Number',
 		regexPattern: /^\+?\d*$/,
 		isLastColumn: true,

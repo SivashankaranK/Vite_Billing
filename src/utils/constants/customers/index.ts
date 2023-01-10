@@ -17,7 +17,7 @@ export const CustomerTableHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'Mobile Number',
 		value: 'mobileNumber',
-		fieldType: 'string',
+		fieldType: 'number',
 		palceHolder: 'Add Mobile Number',
 		isNumberOnly: true,
 		isLastColumn: true,

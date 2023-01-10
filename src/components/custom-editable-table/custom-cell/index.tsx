@@ -110,7 +110,7 @@ export const CustomCell = ({
 						size='sm'
 						value={activeFieldValue}
 						onChange={(e) => {
-							const pattern = /^[+0-9\b]+$/;
+							const pattern = /^\+?\d*$/;
 							setPopOverState(false);
 							if (pattern.test(e.target.value) && header.isNumberOnly) {
 								setActiveFieldValue(e.target.value);

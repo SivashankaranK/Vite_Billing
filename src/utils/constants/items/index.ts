@@ -18,6 +18,8 @@ export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 		value: 'price',
 		fieldType: 'number',
 		palceHolder: 'Enter Item Price',
+		isNumberOnly: true,
+		isReadOnly: true,
 	},
 	{
 		label: 'GST %',
@@ -25,5 +27,7 @@ export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 		fieldType: 'number',
 		palceHolder: 'Enter GST %',
 		isLastColumn: true,
+		isNumberOnly: true,
+		isReadOnly: true,
 	},
 ];

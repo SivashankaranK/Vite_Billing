@@ -22,28 +22,28 @@ const Customers = () => {
 		dispatch(createUpdateCustomerRequest(dataRequest));
 	};
 
-	// const customersData: ICustomer[] = [
-	// 	{
-	// 		id: 1,
-	// 		name: 'Aximsoft India PVT LTD',
-	// 		mobileNumber: '+917904172088',
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		name: 'Aximsoft India PVT',
-	// 		mobileNumber: '+917904172088',
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		name: 'Aximsoft India',
-	// 		mobileNumber: '+917904172088',
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		name: 'Aximsoft',
-	// 		mobileNumber: '+917904172088',
-	// 	},
-	// ];
+	const customersData: ICustomer[] = [
+		{
+			id: 1,
+			name: 'Aximsoft India PVT LTD',
+			mobileNumber: '+917904172088',
+		},
+		{
+			id: 2,
+			name: 'Aximsoft India PVT',
+			mobileNumber: '+917904172088',
+		},
+		{
+			id: 3,
+			name: 'Aximsoft India',
+			mobileNumber: '+917904172088',
+		},
+		{
+			id: 4,
+			name: 'Aximsoft',
+			mobileNumber: '+917904172088',
+		},
+	];
 
 	return (
 		<Container>
@@ -56,7 +56,7 @@ const Customers = () => {
 			<Row>
 				<Col>
 					<CustomEditableTable<ICustomer>
-						data={customers}
+						data={customersData}
 						headers={CustomerTableHeaders}
 						handleUpdate={createUpdateCustomer}
 					/>

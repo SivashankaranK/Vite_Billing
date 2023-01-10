@@ -7,21 +7,12 @@ interface ICustomCellProps {
 	isNewCell?: boolean;
 	header: ICustomTableHeaderTypes;
 	data: string | number;
-	handleColumnUpdate: (props: { [key: string]: string | number }) => void;
+	setColumnValues: (colValue: { [key: string]: string | number }, saveData: boolean) => void;
 	isDataResetEnabled: boolean;
 	setResetData: () => void;
-	setRowData: React.Dispatch<React.SetStateAction<{}>>;
 }
 
-export const CustomCell = ({
-	isNewCell,
-	header,
-	data,
-	handleColumnUpdate,
-	isDataResetEnabled,
-	setResetData,
-	setRowData,
-}: ICustomCellProps) => {
+export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataResetEnabled, setResetData }: ICustomCellProps) => {
 	const [isFieldActive, setActiveField] = useState(false);
 
 	const [activeFieldValue, setActiveFieldValue] = useState<string | number>(data);
@@ -76,8 +67,7 @@ export const CustomCell = ({
 					className='popover_button'
 					variant='success'
 					onMouseDown={() => {
-						// setRowData({ [header.value]: activeFieldValue });
-						handleColumnUpdate({ [header.value]: activeFieldValue });
+						setColumnValues({ [header.value]: activeFieldValue }, true);
 					}}>
 					Save
 				</Button>
@@ -94,8 +84,8 @@ export const CustomCell = ({
 			<td
 				className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
 				onClick={() => {
-
-					if ((!header.isReadOnly || (isNewCell && header.palceHolder)) && !isFieldActive) {	// (isNewCell && header.palceHolder) ->to find ID cell and New Column
+					if ((!header.isReadOnly || (isNewCell && header.palceHolder)) && !isFieldActive) {
+						// (isNewCell && header.palceHolder) ->to find ID cell and New Column
 						setActiveField(true);
 						setActiveFieldValue(data || '');
 						setPopOverState(true);
@@ -104,7 +94,6 @@ export const CustomCell = ({
 					if (isNewCell && activeFieldValue && header.isLastColumn) {
 						setPopOverState(true);
 					}
-
 				}}>
 				{isFieldActive ? (
 					<Form.Control
@@ -123,7 +112,7 @@ export const CustomCell = ({
 						placeholder={header.palceHolder}
 						onBlur={() => {
 							if (isNewCell && activeFieldValue) {
-								setRowData({ [header.value]: activeFieldValue });
+								setColumnValues({ [header.value]: activeFieldValue }, false);
 								if (header.isLastColumn) {
 									setPopOverState(false);
 								}

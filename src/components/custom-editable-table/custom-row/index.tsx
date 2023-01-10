@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateToasterMessage } from '../../../reducers';
 import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types';
 import { CustomCell } from '../custom-cell';
+import produce from 'immer';
 
 interface ICustomRowProsp<T> {
 	isCreateNewRow?: boolean;
@@ -12,29 +13,35 @@ interface ICustomRowProsp<T> {
 	handleUpdate: (dataObj: any) => void;
 }
 
-export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNewRow, headers, handleUpdate, currentIndex }: ICustomRowProsp<T>) => {
+export const CustomRow = <T extends ICustomIndexedTableBody>({
+	data,
+	isCreateNewRow,
+	headers,
+	handleUpdate,
+	currentIndex,
+}: ICustomRowProsp<T>) => {
 	const [isNewDataReseted, setResetData] = useState(false);
 	const [rowData, setRowData] = useState(data);
 
 	const dispatch = useDispatch();
 
-	// useEffect(()=>{setRowData(data)},[data])
-
-	const handleColumnUpdate = async (colValue: { [key: string]: string | number }) => {
-		// setRowData({ ...rowData, ...colValue }); //state not updating
-		const dataObj = { ...rowData, ...colValue };
-
-		const inputValidation = headers.filter((it) => {
-			return (dataObj[it.value] === undefined || !dataObj[it.value] ) && !it.isReadOnly;
+	const setColumnValues = (colValue: { [key: string]: string | number }, saveData: boolean) => {
+		const dataObj = produce(rowData, (draft: any) => {
+			draft[Object.keys(colValue)[0]] = Object.values(colValue)[0];
 		});
+		setRowData(dataObj);
+		if (saveData) {
+			debugger;
+			const inputValidation = headers.filter((it) => {
+				return (dataObj[it.value] === undefined || !dataObj[it.value]) && !it.isReadOnly;
+			});
 
-		console.log('inputValidation', inputValidation);
-
-		if (inputValidation.length) {
-			dispatch(updateToasterMessage('All input field must be filled'));
-		} else {
-			handleUpdate(dataObj);
-			setResetData(true);
+			if (inputValidation.length) {
+				dispatch(updateToasterMessage('All input field must be filled'));
+			} else {
+				handleUpdate(dataObj);
+				setResetData(true);
+			}
 		}
 	};
 
@@ -47,10 +54,9 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
 						isNewCell={isCreateNewRow}
 						header={hIt}
 						data={hIt.value === 'id' && currentIndex ? currentIndex : rowData[hIt.value] || ''}
-						handleColumnUpdate={handleColumnUpdate}
 						isDataResetEnabled={isNewDataReseted} // For reset New Cell after submit
 						setResetData={() => setResetData(false)}
-						setRowData={(colValue) => setRowData((prev) => ({ ...prev, ...colValue }))} // For New column
+						setColumnValues={setColumnValues}
 					/>
 				);
 			})}

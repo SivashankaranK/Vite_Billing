@@ -49,6 +49,7 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
               return (
                 <CustomRow<T>
                   key={`tablRow${dIndex}`}
+                  currentIndex={dIndex + 1}
                   data={iterate}
                   headers={headers}
                   handleUpdate={handleUpdate}

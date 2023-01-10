@@ -37,7 +37,6 @@ function* createUpdateItem({
 		});
 		if (response && response.status >= 200 && response.status <= 300) {
 			let items: IItem[] = store.getState().items.itemList;
-			debugger;
 			if (payload.value.id) {
 				items = items.map((obj: IItem) => (obj.id === response.data.id ? response.data : obj));
 			} else {

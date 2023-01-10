@@ -5,6 +5,7 @@ export interface ICustomTableHeaderTypes {
 	label: string;
 	fieldType: IfieldType;
 	palceHolder: string;
+	regexPattern?: RegExp;
 	isReadOnly?: boolean;
 	isNumberOnly?: boolean;
 	isLastColumn?: boolean;

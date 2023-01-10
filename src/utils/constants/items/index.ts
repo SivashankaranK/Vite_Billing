@@ -1,33 +1,31 @@
 import { ICustomTableHeaderTypes } from '../../../types';
 export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 	{
-		label: 'Id',
+		label: 'S.No',
 		value: 'id',
 		fieldType: 'number',
 		isReadOnly: true,
-		palceHolder: '',
+		palceHolder: ''
 	},
 	{
 		label: 'Name',
 		value: 'name',
 		fieldType: 'string',
-		palceHolder: 'Enter Menu Name',
+		palceHolder: 'Enter Menu Name'
 	},
 	{
 		label: 'Price',
 		value: 'price',
 		fieldType: 'number',
 		palceHolder: 'Enter Item Price',
-		isNumberOnly: true,
-		isReadOnly: true,
+		isReadOnly: true
 	},
 	{
 		label: 'GST %',
 		value: 'gstValue',
 		fieldType: 'number',
-		palceHolder: 'Enter GST %',
+		palceHolder: 'Enter GST in %',
 		isLastColumn: true,
-		isNumberOnly: true,
-		isReadOnly: true,
+		isReadOnly: true
 	},
 ];

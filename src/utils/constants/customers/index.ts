@@ -19,7 +19,7 @@ export const CustomerTableHeaders: ICustomTableHeaderTypes[] = [
 		value: 'mobileNumber',
 		fieldType: 'number',
 		palceHolder: 'Add Mobile Number',
-		isNumberOnly: true,
+		regexPattern: /^\+?\d*$/,
 		isLastColumn: true,
 	},
 ];

@@ -76,8 +76,8 @@ export const CustomCell = ({
 					className='popover_button'
 					variant='success'
 					onMouseDown={() => {
+						// setRowData({ [header.value]: activeFieldValue });
 						handleColumnUpdate({ [header.value]: activeFieldValue });
-						stateReset();
 					}}>
 					Save
 				</Button>
@@ -95,11 +95,12 @@ export const CustomCell = ({
 				className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
 				onClick={() => {
 
-					if (!header.isReadOnly && !isFieldActive) {
+					if ((!header.isReadOnly || (isNewCell && header.palceHolder)) && !isFieldActive) {	// (isNewCell && header.palceHolder) ->to find ID cell and New Column
 						setActiveField(true);
 						setActiveFieldValue(data || '');
 						setPopOverState(true);
 					}
+
 					if (isNewCell && activeFieldValue && header.isLastColumn) {
 						setPopOverState(true);
 					}
@@ -112,11 +113,10 @@ export const CustomCell = ({
 						size='sm'
 						value={activeFieldValue}
 						onChange={(e) => {
-							const pattern = /^\+?\d*$/;
 							setPopOverState(false);
-							if (pattern.test(e.target.value) && header.isNumberOnly) {
+							if (header.regexPattern && header.regexPattern.test(e.target.value)) {
 								setActiveFieldValue(e.target.value);
-							} else if (!header.isNumberOnly) {
+							} else if (!header.regexPattern) {
 								setActiveFieldValue(e.target.value);
 							}
 						}}

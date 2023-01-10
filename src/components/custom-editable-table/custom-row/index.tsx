@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateToasterMessage } from '../../../reducers';
 import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types';
 import { CustomCell } from '../custom-cell';
 
@@ -6,23 +8,30 @@ interface ICustomRowProsp<T> {
 	isCreateNewRow?: boolean;
 	headers: ICustomTableHeaderTypes[];
 	data: T;
+	currentIndex?: number;
 	handleUpdate: (dataObj: any) => void;
 }
 
-export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNewRow, headers, handleUpdate }: ICustomRowProsp<T>) => {
+export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNewRow, headers, handleUpdate, currentIndex }: ICustomRowProsp<T>) => {
 	const [isNewDataReseted, setResetData] = useState(false);
 	const [rowData, setRowData] = useState(data);
 
+	const dispatch = useDispatch();
+
 	// useEffect(()=>{setRowData(data)},[data])
+
 	const handleColumnUpdate = async (colValue: { [key: string]: string | number }) => {
 		// setRowData({ ...rowData, ...colValue }); //state not updating
 		const dataObj = { ...rowData, ...colValue };
+
 		const inputValidation = headers.filter((it) => {
-			return dataObj[it.value] === undefined && !it.isReadOnly;
+			return (dataObj[it.value] === undefined || !dataObj[it.value] ) && !it.isReadOnly;
 		});
 
+		console.log('inputValidation', inputValidation);
+
 		if (inputValidation.length) {
-			console.log('All input field must be filled');
+			dispatch(updateToasterMessage('All input field must be filled'));
 		} else {
 			handleUpdate(dataObj);
 			setResetData(true);
@@ -37,7 +46,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
 						key={`tableCell${hIndex}`}
 						isNewCell={isCreateNewRow}
 						header={hIt}
-						data={data[hIt.value] || ''}
+						data={hIt.value === 'id' && currentIndex ? currentIndex : rowData[hIt.value] || ''}
 						handleColumnUpdate={handleColumnUpdate}
 						isDataResetEnabled={isNewDataReseted} // For reset New Cell after submit
 						setResetData={() => setResetData(false)}

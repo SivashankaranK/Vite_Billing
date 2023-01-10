@@ -36,16 +36,13 @@ function* createUpdateItem({
 			dataObj: payload.value,
 		});
 		if (response && response.status >= 200 && response.status <= 300) {
-			let items: IItem[] = [];
-			store.subscribe(() => {
-				items = store.getState().items.itemList;
-				const findIndex = items.findIndex((obj: IItem) => obj.id === response.data.id);
-				if (findIndex) {
-					items[findIndex] = response.data;
-				} else {
-					items.push(response.data);
-				}
-			});
+			let items: IItem[] = store.getState().items.itemList;
+			debugger;
+			if (payload.value.id) {
+				items = items.map((obj: IItem) => (obj.id === response.data.id ? response.data : obj));
+			} else {
+				items = [...items, response.data];
+			}
 			yield put(setItems(items));
 		} else {
 			yield put(updateToasterMessage('Error Occured in Items Request'));

@@ -20,7 +20,6 @@ const ItemsList = () => {
 		};
 		dispatch(createUpdateItem(dataRequest));
 	};
-
 	// const menuItems: IItem[] = [
 	// 	{
 	// 		id: 1,

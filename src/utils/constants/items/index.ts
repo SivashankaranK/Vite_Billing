@@ -23,7 +23,7 @@ export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 	},
 	{
 		label: 'GST %',
-		value: 'gst',
+		value: 'gstValue',
 		fieldType: 'number',
 		palceHolder: 'Enter GST %',
 		isLastColumn: true,

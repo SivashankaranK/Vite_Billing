@@ -89,18 +89,24 @@ export const CustomCell = ({
 		<OverlayTrigger
 			show={enablePopOver}
 			trigger='click'
-			placement={header.isLastColumn && isNewCell ? 'right' : 'top'}
+			placement={header.isLastColumn && isNewCell ? 'top-end' : 'top'}
 			overlay={popover}>
 			<td
 				className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
 				onClick={() => {
-					if (!header.isReadOnly && !isFieldActive) {
+					if (isNewCell) {
 						setActiveField(true);
 						setActiveFieldValue(data || '');
 						setPopOverState(true);
-					}
-					if (isNewCell && activeFieldValue && header.isLastColumn) {
-						setPopOverState(true);
+					} else {
+						if (!header.isReadOnly && !isFieldActive) {
+							setActiveField(true);
+							setActiveFieldValue(data || '');
+							setPopOverState(true);
+						}
+						if (isNewCell && activeFieldValue && header.isLastColumn) {
+							setPopOverState(true);
+						}
 					}
 				}}>
 				{isFieldActive ? (

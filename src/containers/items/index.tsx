@@ -21,20 +21,20 @@ const ItemsList = () => {
 		dispatch(createUpdateItem(dataRequest));
 	};
 
-	const menuItems: IItem[] = [
-		{
-			id: 1,
-			name: 'Chicken Briyani',
-			price: 200,
-			gst: 2.5,
-		},
-		{
-			id: 2,
-			name: 'Mutton Briyani',
-			price: 400,
-			gst: 3.5,
-		},
-	];
+	// const menuItems: IItem[] = [
+	// 	{
+	// 		id: 1,
+	// 		name: 'Chicken Briyani',
+	// 		price: 200,
+	// 		gst: 2.5,
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		name: 'Mutton Briyani',
+	// 		price: 400,
+	// 		gst: 3.5,
+	// 	},
+	// ];
 
 	return (
 		<Container>
@@ -47,7 +47,7 @@ const ItemsList = () => {
 			<Row>
 				<Col>
 					<CustomEditableTable<IItem>
-						data={menuItems}
+						data={itemList}
 						headers={ItemsTableHeaders}
 						handleUpdate={createUpdateItems}
 					/>

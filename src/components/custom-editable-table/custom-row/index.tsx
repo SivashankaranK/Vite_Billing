@@ -13,6 +13,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
 	const [isNewDataReseted, setResetData] = useState(false);
 	const [rowData, setRowData] = useState(data);
 
+	// useEffect(()=>{setRowData(data)},[data])
 	const handleColumnUpdate = async (colValue: { [key: string]: string | number }) => {
 		// setRowData({ ...rowData, ...colValue }); //state not updating
 		const dataObj = { ...rowData, ...colValue };
@@ -36,13 +37,11 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({ data, isCreateNew
 						key={`tableCell${hIndex}`}
 						isNewCell={isCreateNewRow}
 						header={hIt}
-						data={rowData[hIt.value] || ''}
+						data={data[hIt.value] || ''}
 						handleColumnUpdate={handleColumnUpdate}
-						// For reset New Cell after submit
-						isDataResetEnabled={isNewDataReseted}
+						isDataResetEnabled={isNewDataReseted} // For reset New Cell after submit
 						setResetData={() => setResetData(false)}
-						// For New column
-						setRowData={(colValue) => setRowData((prev) => ({ ...prev, ...colValue }))}
+						setRowData={(colValue) => setRowData((prev) => ({ ...prev, ...colValue }))} // For New column
 					/>
 				);
 			})}

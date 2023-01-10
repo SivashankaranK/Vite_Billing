@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../types/custom-table';
 import { CustomRow } from './custom-row';

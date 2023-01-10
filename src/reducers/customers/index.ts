@@ -3,8 +3,8 @@ import { ICustomer, ICustomerState } from '../../types';
 import { IActionWithOutPayload, IActionWithpayload, IApiRequest } from '../../types/store';
 
 const initialState: ICustomerState = {
-	isFetching: true,
-	customerListResponse: [],
+  isFetching: true,
+  customerListResponse: [],
 };
 
 export const customerReducer = createSlice({
@@ -26,14 +26,10 @@ export const customerReducer = createSlice({
     createUpdateCustomerRequest: (state: ICustomerState, _action: IActionWithpayload<IApiRequest<ICustomer>>) => {
       state.isFetching = true;
     },
-    createUpdateCustomerResponse: (state: ICustomerState, action: IActionWithpayload<ICustomer>) => {
+    createUpdateCustomerResponse: (state: ICustomerState, action: IActionWithpayload<ICustomer[]>) => {
       state.isFetching = false;
-      const findIndex = state.customerListResponse.findIndex((obj) => obj.id === action.payload.id);
-      if (findIndex) {
-        state.customerListResponse[findIndex] = action.payload;
-      } else {
-        state.customerListResponse.push(action.payload);
-      }
+      state.customerListResponse = action.payload;
+
     },
     createUpdateCustomerFailure: (state: ICustomerState, _action: IActionWithpayload<string>) => {
       state.isFetching = false;

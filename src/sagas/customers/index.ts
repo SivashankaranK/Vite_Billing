@@ -5,7 +5,8 @@ import { apiCall } from '../../utils/helpers/services';
 import { customerListResponse, createUpdateCustomerResponse, updateCustomerFetchingState, updateToasterMessage } from '../../reducers';
 import { ICustomer } from '../../types';
 import { IActionWithpayload, IApiRequest } from '../../types/store';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
+import store from '../../store';
 
 function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
@@ -37,7 +38,16 @@ function* createUpdateCustomerRequest({
 		});
 
 		if (response && response.status >= 200 && response.status <= 300) {
-			yield put(createUpdateCustomerResponse(response.data));
+			let customerList = store.getState().customers.customerListResponse;
+
+			if (payload.value.id) {
+				customerList = customerList.map((it) => {
+					return (it.id === response.data.id ? response.data : it);
+				})
+			} else {
+				customerList = [...customerList, response.data];
+			}
+			yield put(createUpdateCustomerResponse(customerList));
 		} else {
 			yield put(updateCustomerFetchingState());
 			yield put(updateToasterMessage('Error Occured in Customer Request'));

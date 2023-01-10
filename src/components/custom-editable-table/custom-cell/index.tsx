@@ -94,20 +94,16 @@ export const CustomCell = ({
 			<td
 				className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
 				onClick={() => {
-					if (isNewCell) {
+
+					if (!header.isReadOnly && !isFieldActive) {
 						setActiveField(true);
 						setActiveFieldValue(data || '');
 						setPopOverState(true);
-					} else {
-						if (!header.isReadOnly && !isFieldActive) {
-							setActiveField(true);
-							setActiveFieldValue(data || '');
-							setPopOverState(true);
-						}
-						if (isNewCell && activeFieldValue && header.isLastColumn) {
-							setPopOverState(true);
-						}
 					}
+					if (isNewCell && activeFieldValue && header.isLastColumn) {
+						setPopOverState(true);
+					}
+
 				}}>
 				{isFieldActive ? (
 					<Form.Control

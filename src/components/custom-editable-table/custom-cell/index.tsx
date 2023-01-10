@@ -58,6 +58,7 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 					className='popover_button'
 					variant='light'
 					onMouseDown={() => {
+						setRowData({ [header.value]: data });
 						stateReset();
 					}}>
 					Cancel

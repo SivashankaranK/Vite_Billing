@@ -2,7 +2,7 @@ import { ICustomTableHeaderTypes } from '../../../types';
 export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'S.No',
-		value: 'id',
+		value: 'sno',
 		fieldType: 'number',
 		isReadOnly: true,
 		palceHolder: ''

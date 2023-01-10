@@ -2,8 +2,8 @@ import { ICustomTableHeaderTypes } from '../../../types';
 
 export const CustomerTableHeaders: ICustomTableHeaderTypes[] = [
 	{
-		label: 'Id',
-		value: 'id',
+		label: 'S.No',
+		value: 'sno',
 		fieldType: 'number',
 		isReadOnly: true,
 		palceHolder: '',

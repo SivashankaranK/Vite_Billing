@@ -36,10 +36,14 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 				return (dataObj[it.value] === undefined || !dataObj[it.value]) && !it.isReadOnly;
 			});
 
-			if (inputValidation.length) {
-				dispatch(updateToasterMessage('All input field must be filled'));
-			} else {
-				handleUpdate(dataObj);
+		console.log('inputValidation', inputValidation);
+
+		if (inputValidation.length) {
+			dispatch(updateToasterMessage('All input field must be filled'));
+		} else {
+			handleUpdate(dataObj);
+			setRowData(data);
+			if (isCreateNewRow) {
 				setResetData(true);
 			}
 		}
@@ -53,7 +57,8 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 						key={`tableCell${hIndex}`}
 						isNewCell={isCreateNewRow}
 						header={hIt}
-						data={hIt.value === 'id' && currentIndex ? currentIndex : rowData[hIt.value] || ''}
+						data={hIt.value === 'sno' && currentIndex ? currentIndex : rowData[hIt.value] || ''}
+						handleColumnUpdate={handleColumnUpdate}
 						isDataResetEnabled={isNewDataReseted} // For reset New Cell after submit
 						setResetData={() => setResetData(false)}
 						setColumnValues={setColumnValues}

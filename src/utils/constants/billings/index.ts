@@ -1,6 +1,6 @@
 import { ICustomTableHeaderTypes } from '../../../types';
 
-export const generalOrderHeaders: ICustomTableHeaderTypes[] = [
+export const billingHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'S.No',
 		value: 'sno',

@@ -15,6 +15,6 @@ export const routersList: IRouteListItems[] = [
 	{
 		navLabel: 'General Orders',
 		path: '/general-orders',
-		component: lazy(() => import('../../../containers/general-orders')),
+		component: lazy(() => import('../../../containers/billings')),
 	},
 ];

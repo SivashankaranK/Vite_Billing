@@ -12,6 +12,6 @@ export interface ICustomTableHeaderTypes {
 }
 
 export interface ICustomIndexedTableBody {
-	[key: string]: number | string | undefined;
+	[key: string]: any;
 	className?: string;
 }

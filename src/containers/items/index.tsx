@@ -46,7 +46,7 @@ const ItemsList = () => {
 			<Row>
 				<Col>
 					<CustomEditableTable<IItem>
-						data={menuItems}
+						data={itemList}
 						headers={ItemsTableHeaders}
 						handleUpdate={createUpdateItems}
 					/>

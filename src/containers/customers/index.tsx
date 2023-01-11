@@ -56,7 +56,7 @@ const Customers = () => {
 			<Row>
 				<Col>
 					<CustomEditableTable<ICustomer>
-						data={customersData}
+						data={customers}
 						headers={CustomerTableHeaders}
 						handleUpdate={createUpdateCustomer}
 					/>

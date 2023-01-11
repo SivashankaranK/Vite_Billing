@@ -1,11 +1,24 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { CustomEditableTable } from '../../components';
-import { IgeneralOrder } from '../../types';
+import { IApiRequest, IStore, IgeneralOrder } from '../../types';
 import { generalOrderHeaders } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { createUpdateGeneralOrders, getGeneralOrders } from '../../reducers/general-orders';
 
 const GeneralOrders = () => {
-	const createUpdateOrders = (dataObj: any) => {
-		console.log('dataObj', dataObj);
+	const dispatch = useDispatch();
+	const billingList = useSelector((state: IStore) => state.generalOrders.generalOrders);
+
+	useEffect(() => {
+		dispatch(getGeneralOrders());
+	}, []);
+
+	const createUpdateBillings = (dataObj: IgeneralOrder) => {
+		const dataRequest: IApiRequest<IgeneralOrder> = {
+			value: dataObj,
+		};
+		dispatch(createUpdateGeneralOrders(dataRequest));
 	};
 
 	const generalOrderItems: IgeneralOrder[] = [
@@ -29,9 +42,9 @@ const GeneralOrders = () => {
 			<Row>
 				<Col>
 					<CustomEditableTable<IgeneralOrder>
-						data={generalOrderItems}
+						data={billingList}
 						headers={generalOrderHeaders}
-						handleUpdate={createUpdateOrders}
+						handleUpdate={createUpdateBillings}
 					/>
 				</Col>
 			</Row>

@@ -8,18 +8,28 @@ const GeneralOrders = () => {
 		console.log('dataObj', dataObj);
 	};
 
+	const generalOrderItems: IgeneralOrder[] = [
+		{
+			billDate: '2023-12-10',
+			customerId: 1,
+			id: 1,
+			menuItemId: 1,
+			quantity: 23,
+		},
+	];
+
 	return (
 		<Container>
 			<Row>
 				<Col>
-					<h3>Items</h3>
+					<h3>General Orders</h3>
 					<hr />
 				</Col>
 			</Row>
 			<Row>
 				<Col>
 					<CustomEditableTable<IgeneralOrder>
-						data={[]}
+						data={generalOrderItems}
 						headers={generalOrderHeaders}
 						handleUpdate={createUpdateOrders}
 					/>

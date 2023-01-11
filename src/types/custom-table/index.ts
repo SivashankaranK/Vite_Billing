@@ -1,4 +1,4 @@
-export type IfieldType = 'string' | 'number';
+export type IfieldType = 'string' | 'number' | 'date';
 
 export interface ICustomTableHeaderTypes {
 	value: string;

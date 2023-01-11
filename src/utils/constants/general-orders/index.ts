@@ -25,7 +25,7 @@ export const generalOrderHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'Bill Date',
 		value: 'billDate',
-		fieldType: 'string',
+		fieldType: 'date',
 		palceHolder: 'Enter Bill Date',
 	},
 	{

@@ -20,20 +20,20 @@ const ItemsList = () => {
 		};
 		dispatch(createUpdateItem(dataRequest));
 	};
-	const menuItems: IItem[] = [
-		{
-			id: 1,
-			name: 'Chicken Briyani',
-			price: 200,
-			gstValue: 2.5,
-		},
-		{
-			id: 2,
-			name: 'Mutton Briyani',
-			price: 400,
-			gstValue: 3.5,
-		},
-	];
+	// const menuItems: IItem[] = [
+	// 	{
+	// 		id: 1,
+	// 		name: 'Chicken Briyani',
+	// 		price: 200,
+	// 		gstValue: 2.5,
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		name: 'Mutton Briyani',
+	// 		price: 400,
+	// 		gstValue: 3.5,
+	// 	},
+	// ];
 
 	return (
 		<Container>

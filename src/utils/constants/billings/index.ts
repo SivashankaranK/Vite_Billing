@@ -10,14 +10,14 @@ export const billingHeaders: ICustomTableHeaderTypes[] = [
 	},
 	{
 		label: 'Item',
-		value: 'menuItemId',
+		value: 'menuItemName',
 		fieldType: 'string',
 		palceHolder: 'Select Item',
 		cellType: 'Dropdown',
 	},
 	{
 		label: 'Customer',
-		value: 'customerId',
+		value: 'customerName',
 		fieldType: 'string',
 		palceHolder: 'Select Customer',
 		cellType: 'Dropdown',
@@ -31,8 +31,15 @@ export const billingHeaders: ICustomTableHeaderTypes[] = [
 	{
 		label: 'Qantity',
 		value: 'quantity',
-		fieldType: 'string',
+		fieldType: 'number',
 		palceHolder: 'Enter Quantity',
+	},
+	{
+		label: 'Total Amount',
+		value: 'totalAmount',
+		fieldType: 'number',
+		palceHolder: '',
 		isLastColumn: true,
+		isReadOnly: true,
 	},
 ];

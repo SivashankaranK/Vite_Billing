@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { IActionWithpayload, IApiRequest, Ibilling } from '../../types';
+import { IActionWithpayload, IApiRequest, Ibilling, IbillingResponce } from '../../types';
 import { apiCall, apiProps } from '../../utils';
 import { PutEffect, put, takeLatest } from 'redux-saga/effects';
 import { updateToasterMessage } from '../../reducers';
@@ -9,7 +9,7 @@ import store from '../../store';
 
 function* getbillings(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
-		const response: AxiosResponse<Ibilling[]> = yield apiCall<Ibilling[]>({
+		const response: AxiosResponse<IbillingResponce[]> = yield apiCall<IbillingResponce[]>({
 			method: apiProps.orderList.method,
 			path: apiProps.orderList.path,
 		});
@@ -31,15 +31,15 @@ function* createUpdatebillings({
 	try {
 		const method = payload.value.id ? apiProps.updateOrder.method : apiProps.createOrder.method;
 		const path = payload.value.id ? apiProps.updateOrder.path.replace(':id', `${payload.value.id}`) : apiProps.createOrder.path;
-		const response: AxiosResponse<Ibilling> = yield apiCall({
+		const response: AxiosResponse<IbillingResponce> = yield apiCall({
 			method,
 			path,
 			dataObj: payload.value,
 		});
 		if (response && response.status >= 200 && response.status <= 300) {
-			let items: Ibilling[] = store.getState().billings.billings;
+			let items: IbillingResponce[] = store.getState().billings.billings;
 			if (payload.value.id) {
-				items = items.map((obj: Ibilling) => (obj.id === response.data.id ? response.data : obj));
+				items = items.map((obj: IbillingResponce) => (obj.id === response.data.id ? response.data : obj));
 			} else {
 				items = [...items, response.data];
 			}
@@ -60,7 +60,7 @@ function* getbillingById({
 	try {
 		const method = apiProps.orderById.method;
 		const path = apiProps.orderById.path.replace(':id', `${payload.value}`);
-		const response: AxiosResponse<Ibilling> = yield apiCall({
+		const response: AxiosResponse<IbillingResponce> = yield apiCall({
 			method,
 			path,
 		});

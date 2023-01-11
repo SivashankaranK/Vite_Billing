@@ -10,7 +10,15 @@ export interface Ibilling extends ICustomIndexedTableBody {
 	customerId: number;
 }
 
-export interface IbillingData extends ICustomIndexedTableBody {
+export interface IbillingRequest {
+	id: number;
+	billDate: string;
+	quantity: number;
+	menuItemId: number;
+	customerId: number;
+}
+
+export interface IbillingResponce {
 	id: number;
 	billDate: string;
 	customer: ICustomer;
@@ -19,8 +27,17 @@ export interface IbillingData extends ICustomIndexedTableBody {
 	totalAmount: number;
 }
 
+export interface IbillingView extends ICustomIndexedTableBody {
+	id: number;
+	billDate: string;
+	customerName: string;
+	menuItemName: string;
+	quantity: number;
+	totalAmount: number;
+}
+
 export interface IbillingState {
 	isFetching: boolean;
-	billings: Ibilling[];
-	billing: Ibilling;
+	billings: IbillingResponce[];
+	billing: IbillingResponce;
 }

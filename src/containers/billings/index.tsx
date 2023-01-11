@@ -1,18 +1,33 @@
+import dayjs from 'dayjs';
 import { Col, Container, Row } from 'react-bootstrap';
 import { CustomEditableTable } from '../../components';
-import { IApiRequest, IStore, IbillingData, Ibilling } from '../../types';
+import { IApiRequest, IStore, Ibilling, IbillingResponce, IbillingView } from '../../types';
 import { billingHeaders } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createUpdateBillings, getBillings } from '../../reducers/billings';
+dayjs().format();
 
 const billings = () => {
+	const [billingView, setBillingView] = useState<IbillingView[]>([]);
 	const dispatch = useDispatch();
 	const billingList = useSelector((state: IStore) => state.billings.billings);
 
 	useEffect(() => {
 		dispatch(getBillings());
 	}, []);
+
+	useEffect(() => {
+		const billingViewList: IbillingView[] = billingList.map((it: IbillingResponce) => {
+			return {
+				...it,
+				customerName: it.customer.name,
+				menuItemName: it.menuItem.name,
+				billDate: dayjs(it.billDate).format('DD-MMM-YYYY'),
+			};
+		});
+		setBillingView(billingViewList);
+	}, [billingList]);
 
 	const createUpdateBillingData = (dataObj: Ibilling) => {
 		const dataRequest: IApiRequest<Ibilling> = {
@@ -21,23 +36,14 @@ const billings = () => {
 		dispatch(createUpdateBillings(dataRequest));
 	};
 
-	// const billingItems: IbillingData[] = [
+	// const billingItems: IbillingView[] = [
 	// 	{
 	// 		billDate: '2023-12-10',
-	// 		customer: {
-	// 			mobileNumber: '4545454545',
-	// 			name: 'name',
-	// 			id: 1,
-	// 		},
-	// 		menuItem: {
-	// 			name: 'rtrtrt',
-	// 			price: 23,
-	// 			gst: 34,
-	// 			id: 1,
-	// 		},
 	// 		quantity: 23,
 	// 		id: 1,
 	// 		totalAmount: 2300,
+	// 		customerName: '',
+	// 		menuItemName: '',
 	// 	},
 	// ];
 
@@ -51,8 +57,8 @@ const billings = () => {
 			</Row>
 			<Row>
 				<Col>
-					<CustomEditableTable<Ibilling>
-						data={billingList}
+					<CustomEditableTable<IbillingView>
+						data={billingView}
 						headers={billingHeaders}
 						handleUpdate={createUpdateBillingData}
 					/>

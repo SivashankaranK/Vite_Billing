@@ -1,5 +1,5 @@
-import { Container, Nav, NavDropdown, Navbar, Image } from 'react-bootstrap';
-import { navBarItems } from '../../utils/constants';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import { routersList } from '../../utils/constants';
 import { useLocation, useNavigate } from 'react-router';
 
 export const BillingNavBar = () => {
@@ -18,14 +18,14 @@ export const BillingNavBar = () => {
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
 				<Navbar.Collapse id='responsive-navbar-nav'>
 					<Nav className='justify-content-center flex-grow-1 pe-3'>
-						{navBarItems.map((it, index) => {
+						{routersList.map((it, index) => {
 							return (
 								<Nav.Link
 									className='cur-pointer'
 									key={`nav${index}`}
-									active={location.pathname === `/${it.value}`}
-									onClick={() => navigate(`/${it.value}`)}>
-									{it.label}
+									active={location.pathname === it.path}
+									onClick={() => navigate(it.path)}>
+									{it.navLabel}
 								</Nav.Link>
 							);
 						})}

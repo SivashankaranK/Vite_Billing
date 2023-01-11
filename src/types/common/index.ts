@@ -8,3 +8,9 @@ export interface IApiCallProps {
 export interface ICommonReducerState {
   toasterMessage: string;
 }
+
+export interface IRouteListItems {
+  navLabel: string;
+  path: string;
+  component: React.LazyExoticComponent<() => JSX.Element>;
+}

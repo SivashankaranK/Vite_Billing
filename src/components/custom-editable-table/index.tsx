@@ -16,49 +16,49 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({ data, h
     return Obj;
   };
   return (
-    <Table
-      className='common-table'
-      bordered>
-      <thead className='table-head'>
-        <tr>
-          {headers.map((col, index) => {
-            return <th key={`tableHeader${index}`}>{col.label}</th>;
-          })}
-        </tr>
-      </thead>
-      <tbody className='table-body'>
-        {/* New Row */}
-        <CustomRow
-          isCreateNewRow
-          headers={headers}
-          data={ObjForCreateNewData()}
-          handleUpdate={handleUpdate}
-        />
+      <Table
+        className='common-table'
+        bordered>
+        <thead className='table-head'>
+          <tr>
+            {headers.map((col, index) => {
+              return <th key={`tableHeader${index}`}>{col.label}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody className='table-body'>
+          {/* New Row */}
+          <CustomRow
+            isCreateNewRow
+            headers={headers}
+            data={ObjForCreateNewData()}
+            handleUpdate={handleUpdate}
+          />
 
-        <>
-          {data && data.length === 0 ? (
-            <tr className='table-row'>
-              <td
-                colSpan={headers.length}
-                className='text-center'>
-                No data found...
-              </td>
-            </tr>
-          ) : (
-            data.map((iterate, dIndex) => {
-              return (
-                <CustomRow<T>
-                  key={`tablRow${dIndex}`}
-                  currentIndex={dIndex + 1}
-                  data={iterate}
-                  headers={headers}
-                  handleUpdate={handleUpdate}
-                />
-              );
-            })
-          )}
-        </>
-      </tbody>
-    </Table>
+          <>
+            {data && data.length === 0 ? (
+              <tr className='table-row'>
+                <td
+                  colSpan={headers.length}
+                  className='text-center'>
+                  No data found...
+                </td>
+              </tr>
+            ) : (
+              data.map((iterate, dIndex) => {
+                return (
+                  <CustomRow<T>
+                    key={`tablRow${dIndex}`}
+                    currentIndex={dIndex + 1}
+                    data={iterate}
+                    headers={headers}
+                    handleUpdate={handleUpdate}
+                  />
+                );
+              })
+            )}
+          </>
+        </tbody>
+      </Table>
   );
 };

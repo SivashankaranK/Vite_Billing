@@ -1,5 +1,6 @@
 import { ICommonReducerState } from '../common';
 import { ICustomerState } from '../customers';
+import { IgeneralOrderState } from '../general-orders';
 import { IItemState } from '../items';
 
 export interface IActionWithpayload<T> {
@@ -25,4 +26,5 @@ export interface IStore {
 	customers: ICustomerState;
 	common: ICommonReducerState;
 	items: IItemState;
+	generalOrders: IgeneralOrderState;
 }

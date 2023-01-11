@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Form, OverlayTrigger, Popover, Button } from 'react-bootstrap';
 import { ICustomTableHeaderTypes } from '../../../types';
 import { useDebounce } from '../../../utils';
+import dayjs from 'dayjs';
 
 interface ICustomCellProps {
 	isNewCell?: boolean;
@@ -15,7 +16,9 @@ interface ICustomCellProps {
 export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataResetEnabled, setResetRowData }: ICustomCellProps) => {
 	const [isFieldActive, setActiveField] = useState(false);
 
-	const [activeFieldValue, setActiveFieldValue] = useState<string | number>(data);
+	const [activeFieldValue, setActiveFieldValue] = useState<string | number>(
+		header.fieldType === 'date' ? dayjs(data).format('YYYY-MM-DD') : data,
+	);
 
 	const [enablePopOver, setPopOverState] = useState(false);
 
@@ -98,31 +101,42 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 					}
 				}}>
 				{isFieldActive ? (
-					<Form.Control
-						type={header.fieldType}
-						autoFocus
-						size='sm'
-						value={activeFieldValue}
-						onChange={(e) => {
-							setPopOverState(false);
-							if (header.regexPattern && header.regexPattern.test(e.target.value)) {
-								setActiveFieldValue(e.target.value);
-							} else if (!header.regexPattern) {
-								setActiveFieldValue(e.target.value);
-							}
-						}}
-						placeholder={header.palceHolder}
-						onBlur={() => {
-							if (isNewCell && activeFieldValue) {
-								setColumnValues({ [header.value]: activeFieldValue }, 'blur');
-								if (header.isLastColumn) {
-									setPopOverState(false);
+					header.cellType === 'Dropdown' ? (
+						<Form.Select
+							aria-label={`${data}`}
+							size='sm'>
+							<option>{data}</option>
+							<option value='1'>One</option>
+							<option value='2'>Two</option>
+							<option value='3'>Three</option>
+						</Form.Select>
+					) : (
+						<Form.Control
+							type={header.fieldType}
+							autoFocus
+							size='sm'
+							value={activeFieldValue}
+							onChange={(e) => {
+								setPopOverState(false);
+								if (header.regexPattern && header.regexPattern.test(e.target.value)) {
+									setActiveFieldValue(e.target.value);
+								} else if (!header.regexPattern) {
+									setActiveFieldValue(e.target.value);
 								}
-							} else {
-								stateReset();
-							}
-						}}
-					/>
+							}}
+							placeholder={header.palceHolder}
+							onBlur={() => {
+								if (isNewCell && activeFieldValue) {
+									setColumnValues({ [header.value]: activeFieldValue }, 'blur');
+									if (header.isLastColumn) {
+										setPopOverState(false);
+									}
+								} else {
+									stateReset();
+								}
+							}}
+						/>
+					)
 				) : (
 					<div>{isNewCell ? header.palceHolder : data}</div>
 				)}

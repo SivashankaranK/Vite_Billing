@@ -7,8 +7,8 @@ export interface ICustomTableHeaderTypes {
 	palceHolder: string;
 	regexPattern?: RegExp;
 	isReadOnly?: boolean;
-	isNumberOnly?: boolean;
 	isLastColumn?: boolean;
+	cellType?: 'Dropdown' | 'Checkbox';
 }
 
 export interface ICustomIndexedTableBody {

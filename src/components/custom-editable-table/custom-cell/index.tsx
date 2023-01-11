@@ -7,12 +7,12 @@ interface ICustomCellProps {
 	isNewCell?: boolean;
 	header: ICustomTableHeaderTypes;
 	data: string | number;
-	setColumnValues: (colValue: { [key: string]: string | number }, saveData: boolean) => void;
+	setColumnValues: (colValue: { [key: string]: string | number }, reqType: string) => void;
 	isDataResetEnabled: boolean;
-	setResetData: () => void;
+	setResetRowData: () => void;
 }
 
-export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataResetEnabled, setResetData }: ICustomCellProps) => {
+export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataResetEnabled, setResetRowData }: ICustomCellProps) => {
 	const [isFieldActive, setActiveField] = useState(false);
 
 	const [activeFieldValue, setActiveFieldValue] = useState<string | number>(data);
@@ -46,7 +46,7 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 	useEffect(() => {
 		if (isDataResetEnabled) {
 			stateReset();
-			setResetData();
+			setResetRowData();
 		}
 	}, [isDataResetEnabled]);
 
@@ -58,7 +58,8 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 					className='popover_button'
 					variant='light'
 					onMouseDown={() => {
-						setRowData({ [header.value]: data });
+						// setRowData({ [header.value]: data });
+						setColumnValues({}, 'reset');
 						stateReset();
 					}}>
 					Cancel
@@ -68,7 +69,7 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 					className='popover_button'
 					variant='success'
 					onMouseDown={() => {
-						setColumnValues({ [header.value]: activeFieldValue }, true);
+						setColumnValues({ [header.value]: activeFieldValue }, 'update');
 					}}>
 					Save
 				</Button>
@@ -113,7 +114,7 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 						placeholder={header.palceHolder}
 						onBlur={() => {
 							if (isNewCell && activeFieldValue) {
-								setColumnValues({ [header.value]: activeFieldValue }, false);
+								setColumnValues({ [header.value]: activeFieldValue }, 'blur');
 								if (header.isLastColumn) {
 									setPopOverState(false);
 								}

@@ -25,20 +25,18 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 
 	const dispatch = useDispatch();
 
-	const setColumnValues = (colValue: { [key: string]: string | number }, saveData: boolean) => {
+	const setColumnValues = (colValue: { [key: string]: string | number }, reqType: string) => {
 		const dataObj = produce(rowData, (draft: any) => {
 			draft[Object.keys(colValue)[0]] = Object.values(colValue)[0];
 		});
 		setRowData(dataObj);
-		if (saveData) {
-			debugger;
+		if (reqType === 'update') {
+
 			const inputValidation = headers.filter((it) => {
 				return (dataObj[it.value] === undefined || !dataObj[it.value]) && !it.isReadOnly;
 			});
 
-			console.log('inputValidation', inputValidation);
-
-			if (inputValidation.length) {
+			if (!!inputValidation.length) {
 				dispatch(updateToasterMessage('All input field must be filled'));
 			} else {
 				handleUpdate(dataObj);
@@ -47,6 +45,10 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 					setResetData(true);
 				}
 			}
+		}
+		else if (reqType === 'reset') {
+			setResetData(true);
+			setRowData(data);
 		}
 	};
 
@@ -60,7 +62,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 						header={hIt}
 						data={hIt.value === 'sno' && currentIndex ? currentIndex : rowData[hIt.value] || ''}
 						isDataResetEnabled={isNewDataReseted} // For reset New Cell after submit
-						setResetData={() => setResetData(false)}
+						setResetRowData={() => setResetData(false)}
 						setColumnValues={setColumnValues}
 					/>
 				);

@@ -1,4 +1,6 @@
-export interface IgeneralOrder {
+import { ICustomIndexedTableBody } from '../custom-table';
+
+export interface IgeneralOrder extends ICustomIndexedTableBody {
 	id: number;
 	billDate: string;
 	quantity: number;

@@ -10,14 +10,14 @@ export const BillingNavBar = () => {
 		<Navbar
 			collapseOnSelect
 			expand='lg'
-			bg='dark'
-			variant='dark'
+			bg='white'
+			variant='white'
 			className='py-3'>
 			<Container fluid>
-				<Navbar.Brand>App</Navbar.Brand>
+				<Navbar.Brand className='border-end px-4'>App</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
 				<Navbar.Collapse id='responsive-navbar-nav'>
-					<Nav className='justify-content-center flex-grow-1 pe-3'>
+					<Nav className='justify-content-around flex-grow-1 pe-3'>
 						{routersList.map((it, index) => {
 							return (
 								<Nav.Link

@@ -14,7 +14,7 @@ export const BillingNavBar = () => {
 			variant='dark'
 			className='py-3'>
 			<Container fluid>
-				<Navbar.Brand>Billing</Navbar.Brand>
+				<Navbar.Brand>App</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
 				<Navbar.Collapse id='responsive-navbar-nav'>
 					<Nav className='justify-content-center flex-grow-1 pe-3'>

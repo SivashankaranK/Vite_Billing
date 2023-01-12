@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Form, OverlayTrigger, Popover, Button } from 'react-bootstrap';
-import { ICustomTableHeaderTypes } from '../../../types';
+import { ICustomTableHeaderTypes, IDropDownOption } from '../../../types';
 import { useDebounce } from '../../../utils';
+import { CustomDropdown } from '../../custom-dropdown';
 import dayjs from 'dayjs';
 
 interface ICustomCellProps {
@@ -11,14 +12,21 @@ interface ICustomCellProps {
 	setColumnValues: (colValue: { [key: string]: string | number }, reqType: string) => void;
 	isDataResetEnabled: boolean;
 	setResetRowData: () => void;
+	dropDownData?: IDropDownOption[];
 }
 
-export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataResetEnabled, setResetRowData }: ICustomCellProps) => {
+export const CustomCell = ({
+	isNewCell,
+	header,
+	data,
+	setColumnValues,
+	isDataResetEnabled,
+	setResetRowData,
+	dropDownData,
+}: ICustomCellProps) => {
 	const [isFieldActive, setActiveField] = useState(false);
 
-	const [activeFieldValue, setActiveFieldValue] = useState<string | number>(
-		header.fieldType === 'date' ? dayjs(data).format('YYYY-MM-DD') : data,
-	);
+	const [activeFieldValue, setActiveFieldValue] = useState<string | number>(data);
 
 	const [enablePopOver, setPopOverState] = useState(false);
 
@@ -87,7 +95,7 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 			placement={header.isLastColumn && isNewCell ? 'top-end' : 'top'}
 			overlay={popover}>
 			<td
-				className={`${isNewCell ? 'opacity-50' : ''} ${header.isReadOnly ? '' : 'cur-pointer'}`}
+				className={`${header.isReadOnly ? '' : 'cur-pointer'}`}
 				onClick={() => {
 					if ((!header.isReadOnly || (isNewCell && header.palceHolder)) && !isFieldActive) {
 						// (isNewCell && header.palceHolder) ->to find ID cell and New Column
@@ -102,14 +110,22 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 				}}>
 				{isFieldActive ? (
 					header.cellType === 'Dropdown' ? (
-						<Form.Select
-							aria-label={`${data}`}
-							size='sm'>
-							<option>{data}</option>
-							<option value='1'>One</option>
-							<option value='2'>Two</option>
-							<option value='3'>Three</option>
-						</Form.Select>
+						<CustomDropdown
+							toggleText={activeFieldValue ? `${activeFieldValue}` : 'Select'}
+							itemData={dropDownData ? dropDownData : []}
+							getSelectedValue={(value: IDropDownOption) => {
+								setPopOverState(false);
+								setActiveFieldValue(value.value);
+								if (isNewCell && activeFieldValue) {
+									setColumnValues({ [header.value]: value.value }, 'blur');
+									if (header.isLastColumn) {
+										setPopOverState(false);
+									}
+								} else {
+									setColumnValues({ [header.value]: value.value }, 'blur');
+								}
+							}}
+						/>
 					) : (
 						<Form.Control
 							type={header.fieldType}
@@ -127,7 +143,7 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 							placeholder={header.palceHolder}
 							onBlur={() => {
 								if (isNewCell && activeFieldValue) {
-									setColumnValues({ [header.value]: activeFieldValue }, 'blur');
+									setColumnValues({ [header.value]: dayjs(activeFieldValue).format('YYYY/MM/DD') }, 'blur');
 									if (header.isLastColumn) {
 										setPopOverState(false);
 									}
@@ -138,7 +154,7 @@ export const CustomCell = ({ isNewCell, header, data, setColumnValues, isDataRes
 						/>
 					)
 				) : (
-					<div>{isNewCell ? header.palceHolder : data}</div>
+					<div className={`${isNewCell ? 'opacity-50' : ''}`}>{isNewCell ? header.palceHolder : data}</div>
 				)}
 			</td>
 		</OverlayTrigger>

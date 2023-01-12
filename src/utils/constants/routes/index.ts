@@ -13,8 +13,8 @@ export const routersList: IRouteListItems[] = [
 		component: lazy(() => import('../../../containers/items')),
 	},
 	{
-		navLabel: 'General Orders',
-		path: '/general-orders',
+		navLabel: 'Billing',
+		path: '/billings',
 		component: lazy(() => import('../../../containers/billings')),
 	},
 ];

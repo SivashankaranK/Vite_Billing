@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateToasterMessage } from '../../../reducers';
-import { ICustomIndexedTableBody, ICustomTableHeaderTypes } from '../../../types';
+import { ICustomIndexedTableBody, ICustomTableHeaderTypes, IDropDownList } from '../../../types';
 import { CustomCell } from '../custom-cell';
 import produce from 'immer';
 
@@ -11,6 +11,7 @@ interface ICustomRowProsp<T> {
 	data: T;
 	currentIndex?: number;
 	handleUpdate: (dataObj: any) => void;
+	requiredData?: IDropDownList;
 }
 
 export const CustomRow = <T extends ICustomIndexedTableBody>({
@@ -19,6 +20,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 	headers,
 	handleUpdate,
 	currentIndex,
+	requiredData,
 }: ICustomRowProsp<T>) => {
 	const [isNewDataReseted, setResetData] = useState(false);
 	const [rowData, setRowData] = useState(data);
@@ -31,7 +33,6 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 		});
 		setRowData(dataObj);
 		if (reqType === 'update') {
-
 			const inputValidation = headers.filter((it) => {
 				return (dataObj[it.value] === undefined || !dataObj[it.value]) && !it.isReadOnly;
 			});
@@ -45,8 +46,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 					setResetData(true);
 				}
 			}
-		}
-		else if (reqType === 'reset') {
+		} else if (reqType === 'reset') {
 			setResetData(true);
 			setRowData(data);
 		}
@@ -60,10 +60,17 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 						key={`tableCell${hIndex}`}
 						isNewCell={isCreateNewRow}
 						header={hIt}
-						data={hIt.value === 'sno' && currentIndex ? currentIndex : rowData[hIt.value] || ''}
+						data={
+							hIt.value === 'sno' && currentIndex
+								? currentIndex
+								: hIt.cellType === 'Dropdown'
+								? requiredData && requiredData[`${hIt.value}`].find((x) => x.value == rowData[hIt.value])?.text
+								: rowData[hIt.value] || ''
+						}
 						isDataResetEnabled={isNewDataReseted} // For reset New Cell after submit
 						setResetRowData={() => setResetData(false)}
 						setColumnValues={setColumnValues}
+						dropDownData={requiredData !== undefined ? requiredData[`${hIt.value}`] : []}
 					/>
 				);
 			})}

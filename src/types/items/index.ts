@@ -1,7 +1,7 @@
 import { ICustomIndexedTableBody } from '../custom-table';
 
 export interface IItem extends ICustomIndexedTableBody {
-	id?: number;
+	id: number;
 	name: string;
 	price: number;
 	gst?: number;

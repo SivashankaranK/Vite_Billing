@@ -1,3 +1,4 @@
+@import 'bootstrap/scss/bootstrap.scss';
 @font-face {
 	font-family: monda;
 	src: url(../fonts/IBMPlexSerif-Medium.ttf);
@@ -7,7 +8,28 @@ body {
 	margin: 0;
 	font-family: monda;
 	letter-spacing: 0.05rem;
-	background-color: #f0f2f5;
+	background-color: $gray-100;
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 10px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
 }
 
 .cur-pointer {
@@ -27,11 +49,11 @@ body {
 
 .common-table {
 	.table-head {
+		background-color: #fff;
 		position: sticky;
 		top: 0;
 		z-index: 1;
 		height: 5rem;
-		background-color: #fff;
 	}
 
 	.table-body {
@@ -91,4 +113,10 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
 	-moz-appearance: textfield;
+}
+
+.navbar-nav {
+	.active {
+		background-color: $gray-200;
+	}
 }

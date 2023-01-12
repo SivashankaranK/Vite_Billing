@@ -154,7 +154,7 @@ export const CustomCell = ({
 						/>
 					)
 				) : (
-					<div className={`${isNewCell ? 'opacity-50' : ''}`}>{isNewCell ? header.palceHolder : data}</div>
+					<div className={`ps-2 ${isNewCell ? 'opacity-50' : ''}`}>{isNewCell ? header.palceHolder : data}</div>
 				)}
 			</td>
 		</OverlayTrigger>

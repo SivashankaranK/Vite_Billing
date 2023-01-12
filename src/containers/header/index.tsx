@@ -12,7 +12,7 @@ export const BillingNavBar = () => {
 			expand='lg'
 			bg='white'
 			variant='white'
-			className='py-3'>
+			className='pt-3 pb-0'>
 			<Container fluid>
 				<Navbar.Brand className='border-end px-4'>App</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
@@ -21,7 +21,7 @@ export const BillingNavBar = () => {
 						{routersList.map((it, index) => {
 							return (
 								<Nav.Link
-									className='cur-pointer'
+									className='cur-pointer w-100 text-center rounded-top py-3'
 									key={`nav${index}`}
 									active={location.pathname === it.path}
 									onClick={() => navigate(it.path)}>
@@ -31,7 +31,7 @@ export const BillingNavBar = () => {
 						})}
 					</Nav>
 					<Nav>
-						<div className='text-white'>Developer</div>
+						<div className='px-3'>Developer</div>
 					</Nav>
 					{/* <Nav>
             <NavDropdown title={userTitle} menuVariant='light'>

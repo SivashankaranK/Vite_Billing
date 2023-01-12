@@ -20,12 +20,17 @@ body {
 	margin: 3rem;
 }
 
-.common-table {
-	// border-collapse: collapse;
-	// border: none;
+.table-container {
+	overflow: auto;
+	height: calc(100vh - 200px);
+}
 
+.common-table {
 	.table-head {
-		height: 4rem;
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		height: 5rem;
 		background-color: #fff;
 	}
 

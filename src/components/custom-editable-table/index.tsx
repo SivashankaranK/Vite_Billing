@@ -23,51 +23,52 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({
 		return Obj;
 	};
 	return (
-		<Table
-			className='common-table'
-			bordered>
-			<thead className='table-head'>
-				<tr>
-					{headers.map((col, index) => {
-						return <th key={`tableHeader${index}`}>{col.label}</th>;
-					})}
-				</tr>
-			</thead>
-			<tbody className='table-body'>
-				{/* New Row */}
-				<CustomRow
-					isCreateNewRow
-					headers={headers}
-					data={ObjForCreateNewData()}
-					handleUpdate={handleUpdate}
-					requiredData={requiredData}
-				/>
-
-				<>
-					{data && data.length === 0 ? (
-						<tr className='table-row'>
-							<td
-								colSpan={headers.length}
-								className='text-center'>
-								No data found...
-							</td>
-						</tr>
-					) : (
-						data.map((iterate, dIndex) => {
-							return (
-								<CustomRow<T>
-									key={`tablRow${dIndex}`}
-									currentIndex={dIndex + 1}
-									data={iterate}
-									headers={headers}
-									handleUpdate={handleUpdate}
-									requiredData={requiredData}
-								/>
-							);
-						})
-					)}
-				</>
-			</tbody>
-		</Table>
+		<div className='table-container'>
+			<Table
+				className='common-table'
+				bordered>
+				<thead className='table-head'>
+					<tr>
+						{headers.map((col, index) => {
+							return <th key={`tableHeader${index}`}>{col.label}</th>;
+						})}
+					</tr>
+					{/* New Row */}
+					<CustomRow
+						isCreateNewRow
+						headers={headers}
+						data={ObjForCreateNewData()}
+						handleUpdate={handleUpdate}
+						requiredData={requiredData}
+					/>
+				</thead>
+				<tbody className='table-body'>
+					<>
+						{data && data.length === 0 ? (
+							<tr className='table-row'>
+								<td
+									colSpan={headers.length}
+									className='text-center'>
+									No data found...
+								</td>
+							</tr>
+						) : (
+							data.map((iterate, dIndex) => {
+								return (
+									<CustomRow<T>
+										key={`tablRow${dIndex}`}
+										currentIndex={dIndex + 1}
+										data={iterate}
+										headers={headers}
+										handleUpdate={handleUpdate}
+										requiredData={requiredData}
+									/>
+								);
+							})
+						)}
+					</>
+				</tbody>
+			</Table>
+		</div>
 	);
 };

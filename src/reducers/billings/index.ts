@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IActionWithOutPayload, IActionWithpayload, IApiRequest, IbillingRequest, IbillingResponce, IbillingState } from '../../types';
 const initialState: IbillingState = {
-	billings: [],
+	billingList: [],
 	billing: {} as IbillingResponce,
 	isBillingFetching: false,
 };
@@ -13,7 +13,7 @@ export const billingsReducer = createSlice({
 			state.isBillingFetching = true;
 		},
 		setBillings: (state: IbillingState, action: IActionWithpayload<IbillingResponce[]>) => {
-			state.billings = action.payload;
+			state.billingList = action.payload;
 			state.isBillingFetching = false;
 		},
 		createUpdateBillings: (state: IbillingState, _action: IActionWithpayload<IApiRequest<IbillingRequest>>) => {
@@ -30,6 +30,11 @@ export const billingsReducer = createSlice({
 		updateBillingsIsFetching: (state: IbillingState, _action: IActionWithOutPayload) => {
 			state.isBillingFetching = false;
 		},
+		resetData: (state: IbillingState, action: IActionWithpayload<string>) => {
+			if (action.payload === 'billings') {
+				state.billingList = []
+			}
+		}
 	},
 });
 

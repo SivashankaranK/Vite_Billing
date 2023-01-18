@@ -36,6 +36,11 @@ export const customerReducer = createSlice({
 		updateCustomerFetchingState: (state: ICustomerState, _action: IActionWithOutPayload) => {
 			state.isCustomerFetching = false;
 		},
+		resetData: (state: ICustomerState, action: IActionWithpayload<string>) => {
+			if (action.payload === 'customers') {
+				state.customerListResponse = []
+			}
+		}
 	},
 });
 
@@ -46,5 +51,5 @@ export const {
 	createUpdateCustomerRequest,
 	createUpdateCustomerFailure,
 	createUpdateCustomerResponse,
-	updateCustomerFetchingState,
+	updateCustomerFetchingState
 } = customerReducer.actions;

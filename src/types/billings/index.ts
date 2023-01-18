@@ -38,6 +38,6 @@ export interface IbillingView extends ICustomIndexedTableBody {
 
 export interface IbillingState {
 	isBillingFetching: boolean;
-	billings: IbillingResponce[];
+	billingList: IbillingResponce[];
 	billing: IbillingResponce;
 }

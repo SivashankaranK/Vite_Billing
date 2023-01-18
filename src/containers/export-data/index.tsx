@@ -43,17 +43,21 @@ export const ExportData = () => {
 				</Row>
 				<Row className='mb-3'>
 					<Col>
-						<CustomDropdown
-							itemData={customerListResponse.map(
-								(it) =>
-									({
-										text: it.name,
-										value: it.id,
-									} as any),
-							)}
-							toggleText='Customers'
-							getSelectedValue={(option: IDropDownOption) => setCustomerId(Number(option.value))}
-						/>
+						{isCustomerFetching ? (
+							<span className='form-control'>Loading customers list...</span>
+						) : (
+							<CustomDropdown
+								itemData={customerListResponse.map(
+									(it) =>
+										({
+											text: it.name,
+											value: it.id,
+										} as any),
+								)}
+								toggleText='Customers'
+								getSelectedValue={(option: IDropDownOption) => setCustomerId(Number(option.value))}
+							/>
+						)}
 					</Col>
 					<Col>
 						<Form.Control
@@ -71,7 +75,11 @@ export const ExportData = () => {
 						/>
 					</Col>
 					<Col>
-						<Button onClick={() => getExportData()}>Filter</Button>
+						<Button
+							onClick={() => getExportData()}
+							disabled={customerId !== 0 && startDate && endDate ? false : true}>
+							Filter
+						</Button>
 					</Col>
 				</Row>
 				<Row>
@@ -92,7 +100,7 @@ export const ExportData = () => {
 									{exportDataList.map((it, index) => (
 										<tr>
 											<td>{++index}</td>
-											<td>{it.billDate}</td>
+											<td>{dayjs(it.billDate).format('DD MMM YYYY')}</td>
 											<td>{it.customer.name}</td>
 											<td>{it.menuItem.name}</td>
 											<td>{it.quantity}</td>

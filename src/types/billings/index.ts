@@ -2,14 +2,6 @@ import { ICustomIndexedTableBody } from '../custom-table';
 import { ICustomer } from '../customers';
 import { IItem } from '../items';
 
-// export interface Ibilling extends ICustomIndexedTableBody {
-// 	id: number;
-// 	billDate: string;
-// 	quantity: number;
-// 	menuItemId: number;
-// 	customerId: number;
-// }
-
 export interface IbillingRequest {
 	id: number;
 	billDate: string;

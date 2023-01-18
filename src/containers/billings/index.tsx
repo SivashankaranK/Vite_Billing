@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { createUpdateBillings, getBillings } from '../../reducers/billings';
 import { customerListRequest, getItems } from '../../reducers';
-dayjs().format();
 
 const Billings = () => {
 	const [billingView, setBillingView] = useState<IbillingView[]>([]);
@@ -28,7 +27,7 @@ const Billings = () => {
 				id: it.id,
 				customerId: it.customer.id,
 				menuItemId: it.menuItem.id,
-				billDate: dayjs(it.billDate).format('YYYY/MM/DD'),
+				billDate: dayjs(it.billDate).format('YYYY-MM-DD'),
 				quantity: it.quantity,
 				totalAmount: it.totalAmount,
 			};

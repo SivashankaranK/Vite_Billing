@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { IActionWithpayload, IApiRequest, Ibilling, IbillingResponce } from '../../types';
+import { IActionWithpayload, IApiRequest, IbillingRequest, IbillingResponce } from '../../types';
 import { apiCall, apiProps } from '../../utils';
 import { PutEffect, put, takeLatest } from 'redux-saga/effects';
 import { updateToasterMessage } from '../../reducers';
@@ -27,7 +27,7 @@ function* getbillings(): Generator<Promise<AxiosResponse | void> | PutEffect, vo
 
 function* createUpdatebillings({
 	payload,
-}: IActionWithpayload<IApiRequest<Ibilling>>): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
+}: IActionWithpayload<IApiRequest<IbillingRequest>>): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
 		const method = payload.value.id ? apiProps.updateOrder.method : apiProps.createOrder.method;
 		const path = payload.value.id ? apiProps.updateOrder.path.replace(':id', `${payload.value.id}`) : apiProps.createOrder.path;

@@ -137,13 +137,21 @@ export const CustomCell = ({
 								if (header.regexPattern && header.regexPattern.test(e.target.value)) {
 									setActiveFieldValue(e.target.value);
 								} else if (!header.regexPattern) {
-									setActiveFieldValue(e.target.value);
+									if (header.fieldType === 'date') {
+										setActiveFieldValue(dayjs(e.target.value).format('YYYY-MM-DD'));
+									} else {
+										setActiveFieldValue(e.target.value);
+									}
 								}
 							}}
 							placeholder={header.palceHolder}
 							onBlur={() => {
 								if (isNewCell && activeFieldValue) {
-									setColumnValues({ [header.value]: dayjs(activeFieldValue).format('YYYY/MM/DD') }, 'blur');
+									if (header.fieldType === 'date') {
+										setColumnValues({ [header.value]: dayjs(activeFieldValue).format('YYYY/MM/DD') }, 'blur');
+									} else {
+										setColumnValues({ [header.value]: activeFieldValue }, 'blur');
+									}
 									if (header.isLastColumn) {
 										setPopOverState(false);
 									}

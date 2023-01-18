@@ -17,18 +17,18 @@ body {
 
 	/* Track */
 	::-webkit-scrollbar-track {
-		background: #f1f1f1;
+		background: $gray-300;
 	}
 
 	/* Handle */
 	::-webkit-scrollbar-thumb {
-		background: #888;
+		background: $gray-500;
 		border-radius: 10px;
 	}
 
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
-		background: #555;
+		background: $gray-600;
 	}
 }
 
@@ -53,7 +53,7 @@ body {
 		position: sticky;
 		top: 0;
 		z-index: 1;
-		height: 5rem;
+		height: 4rem;
 	}
 
 	.table-body {

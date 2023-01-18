@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IActionWithOutPayload, IActionWithpayload, IApiRequest, IItem, IItemState } from '../../types';
 const initialState: IItemState = {
-	isFetching: false,
+	isItemFetching: false,
 	itemList: [],
 };
 export const itemsReducers = createSlice({
@@ -9,17 +9,17 @@ export const itemsReducers = createSlice({
 	initialState,
 	reducers: {
 		getItems: (state: IItemState, _action: IActionWithOutPayload) => {
-			state.isFetching = true;
+			state.isItemFetching = true;
 		},
 		setItems: (state: IItemState, action: IActionWithpayload<IItem[]>) => {
 			state.itemList = action.payload;
-			state.isFetching = false;
+			state.isItemFetching = false;
 		},
 		createUpdateItem: (state: IItemState, _action: IActionWithpayload<IApiRequest<IItem>>) => {
-			state.isFetching = true;
+			state.isItemFetching = true;
 		},
 		updateItemsFetchingState: (state: IItemState, _action: IActionWithOutPayload) => {
-			state.isFetching = false;
+			state.isItemFetching = false;
 		},
 	},
 });

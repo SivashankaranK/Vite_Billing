@@ -8,6 +8,6 @@ export interface IItem extends ICustomIndexedTableBody {
 }
 
 export interface IItemState {
-	isFetching: boolean;
+	isItemFetching: boolean;
 	itemList: IItem[];
 }

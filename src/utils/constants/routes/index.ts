@@ -17,4 +17,9 @@ export const routersList: IRouteListItems[] = [
 		path: '/billings',
 		component: lazy(() => import('../../../containers/billings')),
 	},
+	{
+		navLabel: 'Export',
+		path: '/export',
+		component: lazy(() => import('../../../containers/export-data')),
+	},
 ];

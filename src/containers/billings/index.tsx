@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Col, Container, Row } from 'react-bootstrap';
-import { CustomEditableTable } from '../../components';
+import { CustomEditableTable, ProgressBar } from '../../components';
 import { IApiRequest, IDropDownList, IDropDownOption, IStore, IbillingRequest, IbillingResponce, IbillingView } from '../../types';
 import { billingHeaders } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,13 +9,16 @@ import { createUpdateBillings, getBillings } from '../../reducers/billings';
 import { customerListRequest, getItems } from '../../reducers';
 dayjs().format();
 
-const billings = () => {
+const Billings = () => {
 	const [billingView, setBillingView] = useState<IbillingView[]>([]);
 	const dispatch = useDispatch();
-	const billingList = useSelector((state: IStore) => state.billings.billings);
-	const customersList = useSelector((state: IStore) => state.customers.customerListResponse);
-	const itemsList = useSelector((state: IStore) => state.items.itemList);
-
+	const { billings, isBillingFetching } = useSelector((state: IStore) => state.billings);
+	const { customerListResponse, isCustomerFetching } = useSelector((state: IStore) => state.customers);
+	const { isItemFetching, itemList } = useSelector((state: IStore) => state.items);
+	const [isFetching, setIsFetching] = useState(false);
+	useEffect(() => {
+		setIsFetching(isBillingFetching || isCustomerFetching || isItemFetching);
+	}, [isBillingFetching, isCustomerFetching, isItemFetching]);
 	useEffect(() => {
 		dispatch(getBillings());
 		dispatch(customerListRequest());
@@ -23,7 +26,7 @@ const billings = () => {
 	}, []);
 
 	useEffect(() => {
-		const billingViewList: IbillingView[] = billingList.map((it: IbillingResponce) => {
+		const billingViewList: IbillingView[] = billings.map((it: IbillingResponce) => {
 			return {
 				id: it.id,
 				customerId: it.customer.id,
@@ -34,7 +37,7 @@ const billings = () => {
 			};
 		});
 		setBillingView(billingViewList);
-	}, [billingList]);
+	}, [billings]);
 
 	const createUpdateBillingData = (dataObj: IbillingRequest) => {
 		const dataRequest: IApiRequest<IbillingRequest> = {
@@ -44,8 +47,8 @@ const billings = () => {
 	};
 
 	const requiredDataList: IDropDownList = {
-		customerId: customersList.map((it) => ({ value: `${it.id}`, text: it.name } as IDropDownOption)),
-		menuItemId: itemsList.map((it) => ({ value: `${it.id}`, text: it.name } as IDropDownOption)),
+		customerId: customerListResponse.map((it) => ({ value: `${it.id}`, text: it.name } as IDropDownOption)),
+		menuItemId: itemList.map((it) => ({ value: `${it.id}`, text: it.name } as IDropDownOption)),
 	};
 
 	// const billingItems: IbillingView[] = [
@@ -54,18 +57,18 @@ const billings = () => {
 	// 		quantity: 23,
 	// 		id: 1,
 	// 		totalAmount: 2300,
-	// 		customerName: 'customerName 1',
-	// 		menuItemName: 'menuItemName 1',
+	// 		customerId: 1,
+	// 		menuItemId: 1,
 	// 	},
 	// ];
 	// const requiredDataList: IDropDownList = {
-	// 	customerName: [
+	// 	customerId: [
 	// 		{
 	// 			value: '1',
 	// 			text: 'Aximsoft India PVT LTD',
 	// 		},
 	// 	],
-	// 	menuItemName: [
+	// 	menuItemId: [
 	// 		{
 	// 			value: '1',
 	// 			text: 'Chicken Briyani',
@@ -74,25 +77,28 @@ const billings = () => {
 	// };
 
 	return (
-		<Container>
-			<Row>
-				<Col>
-					<h3>Billing</h3>
-					<hr />
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<CustomEditableTable<IbillingView>
-						data={billingView}
-						headers={billingHeaders}
-						handleUpdate={createUpdateBillingData}
-						requiredData={requiredDataList}
-					/>
-				</Col>
-			</Row>
-		</Container>
+		<>
+			<ProgressBar isLoading={isFetching} />
+			<Container>
+				<Row>
+					<Col>
+						<h3>Billing</h3>
+						<hr />
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<CustomEditableTable<IbillingView>
+							data={billingView}
+							headers={billingHeaders}
+							handleUpdate={createUpdateBillingData}
+							requiredData={requiredDataList}
+						/>
+					</Col>
+				</Row>
+			</Container>
+		</>
 	);
 };
 
-export default billings;
+export default Billings;

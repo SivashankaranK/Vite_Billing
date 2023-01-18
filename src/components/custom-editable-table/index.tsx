@@ -24,26 +24,24 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({
 	};
 	return (
 		<div className='table-container'>
-			<Table
-				className='common-table'
-				bordered>
+			<Table className='common-table'>
 				<thead className='table-head'>
 					<tr>
 						{headers.map((col, index) => {
 							return <th key={`tableHeader${index}`}>{col.label}</th>;
 						})}
 					</tr>
-					{/* New Row */}
-					<CustomRow
-						isCreateNewRow
-						headers={headers}
-						data={ObjForCreateNewData()}
-						handleUpdate={handleUpdate}
-						requiredData={requiredData}
-					/>
 				</thead>
 				<tbody className='table-body'>
 					<>
+						{/* New Row */}
+						<CustomRow
+							isCreateNewRow
+							headers={headers}
+							data={ObjForCreateNewData()}
+							handleUpdate={handleUpdate}
+							requiredData={requiredData}
+						/>
 						{data && data.length === 0 ? (
 							<tr className='table-row'>
 								<td

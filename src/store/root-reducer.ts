@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { commonReducer, customerReducer, itemsReducers } from '../reducers';
+import { commonReducer, customerReducer, exportDataReducer, itemsReducers } from '../reducers';
 import { billingsReducer } from '../reducers/billings';
 
 export const rootReducer = combineReducers({
@@ -7,4 +7,5 @@ export const rootReducer = combineReducers({
 	common: commonReducer.reducer,
 	items: itemsReducers.reducer,
 	billings: billingsReducer.reducer,
+	exportData: exportDataReducer.reducer,
 });

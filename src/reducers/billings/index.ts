@@ -3,32 +3,32 @@ import { IActionWithOutPayload, IActionWithpayload, IApiRequest, IbillingRequest
 const initialState: IbillingState = {
 	billings: [],
 	billing: {} as IbillingResponce,
-	isFetching: false,
+	isBillingFetching: false,
 };
 export const billingsReducer = createSlice({
 	name: 'billings',
 	initialState,
 	reducers: {
 		getBillings: (state: IbillingState, _action: IActionWithOutPayload) => {
-			state.isFetching = true;
+			state.isBillingFetching = true;
 		},
 		setBillings: (state: IbillingState, action: IActionWithpayload<IbillingResponce[]>) => {
 			state.billings = action.payload;
-			state.isFetching = false;
+			state.isBillingFetching = false;
 		},
 		createUpdateBillings: (state: IbillingState, _action: IActionWithpayload<IApiRequest<IbillingRequest>>) => {
-			state.isFetching = true;
+			state.isBillingFetching = true;
 		},
 		getBillingById: (state: IbillingState, _action: IActionWithpayload<IApiRequest<number>>) => {
-			state.isFetching = true;
+			state.isBillingFetching = true;
 			state.billing = {} as IbillingResponce;
 		},
 		setBillingById: (state: IbillingState, action: IActionWithpayload<IbillingResponce>) => {
 			state.billing = action.payload;
-			state.isFetching = false;
+			state.isBillingFetching = false;
 		},
 		updateBillingsIsFetching: (state: IbillingState, _action: IActionWithOutPayload) => {
-			state.isFetching = false;
+			state.isBillingFetching = false;
 		},
 	},
 });

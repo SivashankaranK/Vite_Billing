@@ -2,17 +2,14 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { CustomEditableTable, ProgressBar } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { IApiRequest, IItem, IStore } from '../../types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ItemsTableHeaders } from '../../utils';
 import { getItems, createUpdateItem } from '../../reducers';
 
 const ItemsList = () => {
 	const dispatch = useDispatch();
-	const { isItemFetching, itemList } = useSelector((state: IStore) => state.items);
-	const [isFetching, setIsFetching] = useState(false);
-	useEffect(() => {
-		setIsFetching(isItemFetching);
-	}, [isItemFetching]);
+	const itemList = useSelector((state: IStore) => state.items.itemList);
+	const isItemFetching = useSelector((state: IStore) => state.items.isItemFetching);
 	useEffect(() => {
 		dispatch(getItems());
 	}, []);
@@ -32,8 +29,8 @@ const ItemsList = () => {
 
 	return (
 		<>
-			<ProgressBar isLoading={isFetching} />
-			<Container>
+			{isItemFetching ? <ProgressBar isLoading={true} /> : null}
+			<Container fluid>
 				<Row>
 					<Col>
 						<h3>Items</h3>

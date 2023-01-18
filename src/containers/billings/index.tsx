@@ -15,10 +15,7 @@ const Billings = () => {
 	const { billings, isBillingFetching } = useSelector((state: IStore) => state.billings);
 	const { customerListResponse, isCustomerFetching } = useSelector((state: IStore) => state.customers);
 	const { isItemFetching, itemList } = useSelector((state: IStore) => state.items);
-	const [isFetching, setIsFetching] = useState(false);
-	useEffect(() => {
-		setIsFetching(isBillingFetching || isCustomerFetching || isItemFetching);
-	}, [isBillingFetching, isCustomerFetching, isItemFetching]);
+
 	useEffect(() => {
 		dispatch(getBillings());
 		dispatch(customerListRequest());
@@ -78,8 +75,9 @@ const Billings = () => {
 
 	return (
 		<>
-			<ProgressBar isLoading={isFetching} />
-			<Container>
+			{isBillingFetching || isCustomerFetching || isItemFetching ? <ProgressBar isLoading={true} /> : null}
+
+			<Container fluid>
 				<Row>
 					<Col>
 						<h3>Billing</h3>

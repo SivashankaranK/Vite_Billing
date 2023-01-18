@@ -12,7 +12,7 @@ function* getExportDataList({
 		const response: AxiosResponse<IExportDataList[], IExportDataRequest> = yield apiCall({
 			method: apiProps.exportData.method,
 			path: apiProps.exportData.path.replace(':id', payload.value.customerId + ''),
-			paramsObj: payload.value,
+			paramsObj: { start_date: payload.value.startDate, end_date: payload.value.endDate },
 		});
 		if (response && response.status >= 200 && response.status <= 300) {
 			yield put(setExportDataList(response.data));

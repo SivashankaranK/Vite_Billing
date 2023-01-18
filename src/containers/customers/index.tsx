@@ -1,6 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { createUpdateCustomerRequest, customerListRequest } from '../../reducers';
 import { CustomEditableTable, ProgressBar } from '../../components';
 import { ICustomer, IApiRequest, IStore } from '../../types';
@@ -9,11 +9,8 @@ import { useSelector } from 'react-redux';
 
 const Customers = () => {
 	const dispatch = useDispatch();
-	const { customerListResponse, isCustomerFetching } = useSelector((state: IStore) => state.customers);
-	const [isFetching, setIsFetching] = useState(false);
-	useEffect(() => {
-		setIsFetching(isCustomerFetching);
-	}, [isCustomerFetching]);
+	const customerListResponse = useSelector((state: IStore) => state.customers.customerListResponse);
+	const isCustomerFetching = useSelector((state: IStore) => state.customers.isCustomerFetching);
 	useEffect(() => {
 		dispatch(customerListRequest());
 	}, []);
@@ -33,8 +30,9 @@ const Customers = () => {
 
 	return (
 		<>
-			<ProgressBar isLoading={isFetching} />
-			<Container>
+			{isCustomerFetching ? <ProgressBar isLoading={true} /> : null}
+
+			<Container fluid>
 				<Row>
 					<Col>
 						<h3>Customers</h3>

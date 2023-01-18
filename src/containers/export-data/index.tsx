@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { customerListRequest, getExportDataList } from '../../reducers';
 import { Col, Container, Row, Table, Form, Button } from 'react-bootstrap';
 import { CustomDropdown, ProgressBar } from '../../components';
+import dayjs from 'dayjs';
 
 export const ExportData = () => {
 	const disptch = useDispatch();
@@ -13,10 +14,6 @@ export const ExportData = () => {
 	const [customerId, setCustomerId] = useState(0);
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
-	const [isFetching, setIsFetching] = useState(false);
-	useEffect(() => {
-		setIsFetching(isExaportDataFetching || isCustomerFetching);
-	}, [isExaportDataFetching, isCustomerFetching]);
 
 	useEffect(() => {
 		disptch(customerListRequest());
@@ -26,8 +23,8 @@ export const ExportData = () => {
 		const params: IApiRequest<IExportDataRequest> = {
 			value: {
 				customerId: customerId,
-				endDate: startDate,
-				startDate: endDate,
+				startDate: dayjs(startDate).format('YYYY/MM/DD'),
+				endDate: dayjs(endDate).format('YYYY/MM/DD'),
 			},
 		};
 		disptch(getExportDataList(params));
@@ -35,9 +32,16 @@ export const ExportData = () => {
 
 	return (
 		<>
-			<ProgressBar isLoading={isFetching} />
+			{isExaportDataFetching || isCustomerFetching ? <ProgressBar isLoading={true} /> : null}
+
 			<Container fluid>
 				<Row>
+					<Col>
+						<h3>Export</h3>
+						<hr />
+					</Col>
+				</Row>
+				<Row className='mb-3'>
 					<Col>
 						<CustomDropdown
 							itemData={customerListResponse.map(
@@ -62,6 +66,7 @@ export const ExportData = () => {
 						<Form.Control
 							type='date'
 							value={endDate}
+							min={startDate}
 							onChange={(e) => setEndDate(e.target.value)}
 						/>
 					</Col>
@@ -86,7 +91,7 @@ export const ExportData = () => {
 								<tbody className='table-body'>
 									{exportDataList.map((it, index) => (
 										<tr>
-											<td>{index++}</td>
+											<td>{++index}</td>
 											<td>{it.billDate}</td>
 											<td>{it.customer.name}</td>
 											<td>{it.menuItem.name}</td>

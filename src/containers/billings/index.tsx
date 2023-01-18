@@ -11,7 +11,7 @@ import { customerListRequest, getItems } from '../../reducers';
 const Billings = () => {
 	const [billingView, setBillingView] = useState<IbillingView[]>([]);
 	const dispatch = useDispatch();
-	const { billings, isBillingFetching } = useSelector((state: IStore) => state.billings);
+	const { billingList, isBillingFetching } = useSelector((state: IStore) => state.billings);
 	const { customerListResponse, isCustomerFetching } = useSelector((state: IStore) => state.customers);
 	const { isItemFetching, itemList } = useSelector((state: IStore) => state.items);
 
@@ -19,10 +19,11 @@ const Billings = () => {
 		dispatch(getBillings());
 		dispatch(customerListRequest());
 		dispatch(getItems());
-	}, []);
+
+	}, [dispatch]);
 
 	useEffect(() => {
-		const billingViewList: IbillingView[] = billings.map((it: IbillingResponce) => {
+		const billingViewList: IbillingView[] = billingList.map((it: IbillingResponce) => {
 			return {
 				id: it.id,
 				customerId: it.customer.id,
@@ -33,7 +34,7 @@ const Billings = () => {
 			};
 		});
 		setBillingView(billingViewList);
-	}, [billings]);
+	}, [billingList]);
 
 	const createUpdateBillingData = (dataObj: IbillingRequest) => {
 		const dataRequest: IApiRequest<IbillingRequest> = {

@@ -21,6 +21,11 @@ export const itemsReducers = createSlice({
 		updateItemsFetchingState: (state: IItemState, _action: IActionWithOutPayload) => {
 			state.isItemFetching = false;
 		},
+		resetData: (state: IItemState, action: IActionWithpayload<string>) => {
+			if (action.payload === 'items') {
+				state.itemList = []
+			}
+		}
 	},
 });
 

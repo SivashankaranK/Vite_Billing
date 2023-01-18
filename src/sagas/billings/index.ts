@@ -37,7 +37,7 @@ function* createUpdatebillings({
 			dataObj: payload.value,
 		});
 		if (response && response.status >= 200 && response.status <= 300) {
-			let items: IbillingResponce[] = store.getState().billings.billings;
+			let items: IbillingResponce[] = store.getState().billings.billingList;
 			if (payload.value.id) {
 				items = items.map((obj: IbillingResponce) => (obj.id === response.data.id ? response.data : obj));
 			} else {

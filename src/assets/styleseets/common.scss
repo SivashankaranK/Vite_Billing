@@ -120,3 +120,11 @@ input[type='number'] {
 		background-color: $gray-200;
 	}
 }
+
+.catering-invoice {
+	--bs-gutter-x: 10rem !important;
+}
+
+.invoice-container {
+	--bs-gutter-x: 30rem !important;
+}

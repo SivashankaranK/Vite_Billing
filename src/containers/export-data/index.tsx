@@ -6,6 +6,7 @@ import { customerListRequest, getExportDataList } from '../../reducers';
 import { Col, Container, Row, Table, Form, Button } from 'react-bootstrap';
 import { CustomDropdown, ProgressBar } from '../../components';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 
 export const ExportData = () => {
 	const disptch = useDispatch();
@@ -76,10 +77,18 @@ export const ExportData = () => {
 					</Col>
 					<Col>
 						<Button
+							className='btn-secondary'
 							onClick={() => getExportData()}
 							disabled={customerId !== 0 && startDate && endDate ? false : true}>
 							Filter
 						</Button>
+						<span className='px-4'></span>
+						{/* <Button hidden={!exportDataList ? true : false}>Download</Button> */}
+						<Link
+							to={'/invoice'}
+							className='btn btn-secondary'>
+							Download
+						</Link>
 					</Col>
 				</Row>
 				<Row>

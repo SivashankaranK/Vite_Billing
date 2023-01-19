@@ -1,0 +1,137 @@
+import logo from '../../assets/images/logo.jpg';
+import signature from '../../assets/images/signature.jpg';
+import jsPDF from 'jspdf';
+import { useEffect, useState } from 'react';
+import autoTable, { RowInput } from 'jspdf-autotable';
+import { consolaBold, consolaNormal } from '../../utils';
+import dayjs from 'dayjs';
+interface IinvoiceProps {
+	customerName: string;
+	billNo: number;
+}
+export const Invoice = ({ customerName = 'Aximsoft India PVT LTD', billNo = 435 }: IinvoiceProps) => {
+	const [invoiceDoc, setInvoiceDoc] = useState('');
+	useEffect(() => {
+		createPDF();
+	}, []);
+
+	const generateTableData = (): RowInput[] => {
+		const rowInputs: RowInput[] = Array.from({ length: 25 }).map((_it, index) => [
+			`${++index}`,
+			`${dayjs().format('DD-MM-YYYY')}`,
+			'Chapathi',
+			'65',
+			'66.66',
+			'3.34',
+			4550,
+		]);
+		const sumOfAmount = rowInputs.map((it: any) => it.slice(-1)[0] || 0).reduce((sum, it) => sum + it);
+
+		const tableData: RowInput[] = [
+			...rowInputs,
+			[{ content: 'Rupees', colSpan: 6, styles: { halign: 'right' } }, { content: `${sumOfAmount}` }],
+		];
+		return tableData;
+	};
+
+	const createPDF = async () => {
+		let doc = new jsPDF('p', 'mm', 'A4');
+		const pageSize = doc.internal.pageSize;
+		const pdfHeight = pageSize.getHeight();
+		const getTextWidth = (text: string) => {
+			return doc.getTextWidth(text);
+		};
+		doc.addFileToVFS('CONSOLAB-bold.ttf', consolaBold);
+		doc.addFont('CONSOLAB-bold.ttf', 'CONSOLAB', 'bold');
+		doc.addFileToVFS('CONSOLA-normal.ttf', consolaNormal);
+		doc.addFont('CONSOLA-normal.ttf', 'CONSOLA', 'normal');
+		const docHeader = () => {
+			doc.addImage(logo, 'JPEG', 25, 15, 35, 35);
+			doc.setFont('CONSOLAB', 'bold');
+			doc.setFontSize(27);
+			doc.text('Siva Sakthi Catering', 75, 25);
+			doc.setFont('CONSOLA', 'normal');
+			doc.setFontSize(11);
+			doc.text('2/8, Mariamman Koil Street,', 75, 35);
+			doc.text('Kavundampalayam,', 75, 40);
+			doc.text('Coimbatore - 641030', 75, 45);
+		};
+
+		// docHeader();
+		doc.setFontSize(12);
+		doc.setFont('CONSOLAB', 'bold');
+		doc.text('To: ', 25, 65);
+		doc.setFont('CONSOLA', 'normal');
+		doc.text(`${customerName}`, 25 + getTextWidth('To: '), 65);
+		doc.setFont('CONSOLAB', 'bold');
+		doc.text('Bill No: ', 25, 75);
+		doc.setFont('CONSOLA', 'normal');
+		doc.text(`${billNo}`, 25 + getTextWidth('Bill No: '), 75);
+		doc.setFont('CONSOLAB', 'bold');
+		doc.text('PAN: ', 25, 80);
+		doc.setFont('CONSOLA', 'normal');
+		doc.text('AKKPU6903G', 25 + getTextWidth('PAN: '), 80);
+		doc.setFont('CONSOLAB', 'bold');
+		doc.text('Date: ', 25, 85);
+		doc.setFont('CONSOLA', 'normal');
+		doc.text(`${dayjs().format('DD/MM/YYYY')}`, 25 + getTextWidth('Date: '), 85);
+		doc.setFont('CONSOLAB', 'bold');
+		doc.text('GSTIN: ', 25, 90);
+		doc.setFont('CONSOLA', 'normal');
+		doc.text('33AKKPU6903G1ZZ', 25 + getTextWidth('GSTIN: '), 90);
+		autoTable(doc, {
+			theme: 'grid',
+			startY: 100,
+			margin: { horizontal: 25, top: 60 },
+			styles: {
+				// font: 'courier',
+			},
+			headStyles: {
+				fillColor: '#FFFFFF',
+				textColor: '#000000',
+				lineWidth: 0.4,
+				minCellHeight: 10,
+				halign: 'center',
+				valign: 'middle',
+				lineColor: '#000000',
+			},
+			bodyStyles: {
+				valign: 'middle',
+				minCellHeight: 10,
+				halign: 'center',
+				textColor: '#000000',
+				lineColor: '#000000',
+			},
+			didDrawPage: () => {
+				docHeader();
+			},
+			head: [['No', 'Date', 'Items', 'Qty', 'Price', 'GST', 'Amount']],
+			body: generateTableData(),
+		});
+		doc.setFont('CONSOLAB', 'bold');
+		doc.text('Account Details:', 25, pdfHeight - 65);
+		doc.setFont('CONSOLA', 'normal');
+		doc.text('Bank Name: Karur Vysya Bank', 25, pdfHeight - 60);
+		doc.text('A/C No: 1675155000009498', 25, pdfHeight - 55);
+		doc.text('IFSC Code: KVBL0001675', 25, pdfHeight - 50);
+		doc.addImage(signature, 'JPEG', 25, pdfHeight - 35, 40, 6);
+		doc.setFont('CONSOLAB', 'bold');
+		doc.text('Signature', 25, pdfHeight - 25);
+		setInvoiceDoc(`${doc.output('bloburi')}`);
+	};
+
+	return (
+		<>
+			<iframe
+				id='invoiceContainer'
+				itemType='application/pdf'
+				style={{
+					width: '100%',
+					height: 'calc(100vh - 110px)',
+				}}
+				src={invoiceDoc}></iframe>
+		</>
+	);
+};
+
+export default Invoice;

@@ -5,6 +5,7 @@ import { setItems, updateItemsFetchingState, updateToasterMessage } from '../../
 import { CREATE_UPDATE_ITEM, GET_ITEMS } from '../../actions-types';
 import { IActionWithpayload, IApiRequest, IItem } from '../../types';
 import store from '../../store';
+import { fakeItems } from '../../faker';
 
 function* getItems(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
@@ -15,6 +16,7 @@ function* getItems(): Generator<Promise<AxiosResponse | void> | PutEffect, void,
 		if (response && response.status >= 200 && response.status <= 300) {
 			yield put(setItems(response.data));
 		} else {
+			yield put(setItems(fakeItems()));
 			yield put(updateToasterMessage('Error Occured in Items Request'));
 			yield put(updateItemsFetchingState());
 		}

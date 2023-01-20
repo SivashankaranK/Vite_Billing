@@ -5,27 +5,27 @@ export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 		value: 'sno',
 		fieldType: 'number',
 		isReadOnly: true,
-		palceHolder: ''
+		palceHolder: '',
 	},
 	{
 		label: 'Name',
 		value: 'name',
 		fieldType: 'string',
-		palceHolder: 'Enter Menu Name'
+		palceHolder: 'Enter Menu Name',
 	},
 	{
 		label: 'Price',
 		value: 'price',
 		fieldType: 'number',
 		palceHolder: 'Enter Item Price',
-		isReadOnly: true
+		isReadOnly: true,
 	},
 	{
 		label: 'GST %',
-		value: 'gstValue',
+		value: 'gst', //gstValue
 		fieldType: 'number',
 		palceHolder: 'Enter GST in %',
 		isLastColumn: true,
-		isReadOnly: true
+		isReadOnly: true,
 	},
 ];

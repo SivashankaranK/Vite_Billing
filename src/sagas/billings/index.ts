@@ -6,6 +6,7 @@ import { updateToasterMessage } from '../../reducers';
 import { setBillingById, setBillings, updateBillingsIsFetching } from '../../reducers/billings';
 import { CREATE_UPDATE_GENERAL_ORDERS, GET_GENERAL_ORDERS, GET_GENERAL_ORDER_BY_ID } from '../../actions-types';
 import store from '../../store';
+import { fakeBillingData } from '../../faker';
 
 function* getbillings(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
@@ -16,6 +17,7 @@ function* getbillings(): Generator<Promise<AxiosResponse | void> | PutEffect, vo
 		if (response && response.status >= 200 && response.status <= 300) {
 			yield put(setBillings(response.data));
 		} else {
+			yield put(setBillings(fakeBillingData()));
 			yield put(updateToasterMessage('Error Occured in Items Request'));
 			yield put(updateBillingsIsFetching());
 		}

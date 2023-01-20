@@ -36,14 +36,16 @@ const CustomMenu = React.forwardRef(({ children, style, className }: ICustomMenu
 			ref={ref}
 			style={style}
 			className={className}>
-			<Form.Control
-				autoFocus
-				className='m-2 w-auto'
-				placeholder='search'
-				onChange={(e) => setValue(e.target.value)}
-				value={value}
-				size='sm'
-			/>
+			<div className='w-100 position-relative pb-5'>
+				<Form.Control
+					autoFocus
+					className='m-2 w-auto position-absolute top-0 start-0 end-0'
+					placeholder='search'
+					onChange={(e) => setValue(e.target.value)}
+					value={value}
+					size='sm'
+				/>
+			</div>
 			<ul
 				className='list-unstyled overflow-auto'
 				style={{ height: '200px' }}>

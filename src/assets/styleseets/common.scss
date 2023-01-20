@@ -42,25 +42,25 @@ body {
 	margin: 3rem;
 }
 
-.table-container {
-	overflow: auto;
-	height: calc(100vh - 200px);
+tbody {
+	display: block;
+	max-height: calc(100vh - 230px);
+	overflow-y: scroll;
+}
+thead,
+tr {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+thead {
+	width: calc(100% - 1em);
+	position: relative;
 }
 
-.common-table {
-	.table-head {
-		background-color: #fff;
-		position: sticky;
-		top: 0;
-		z-index: 1;
-		height: 4rem;
-	}
-
-	.table-body {
-		.table-row {
-			height: 3rem;
-			background-color: #fff;
-		}
+.export-data-table {
+	tbody {
+		max-height: calc(100vh - 285px) !important;
 	}
 }
 
@@ -127,4 +127,21 @@ input[type='number'] {
 
 .invoice-container {
 	--bs-gutter-x: 30rem !important;
+}
+
+input[type='date'] {
+	position: relative;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+	position: absolute;
+	background: transparent;
+	color: transparent;
+	cursor: pointer;
+	height: auto;
+	width: auto;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
 }

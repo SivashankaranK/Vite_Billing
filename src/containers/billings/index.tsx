@@ -19,7 +19,6 @@ const Billings = () => {
 		dispatch(getBillings());
 		dispatch(customerListRequest());
 		dispatch(getItems());
-
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -47,31 +46,6 @@ const Billings = () => {
 		customerId: customerListResponse.map((it) => ({ value: `${it.id}`, text: it.name } as IDropDownOption)),
 		menuItemId: itemList.map((it) => ({ value: `${it.id}`, text: it.name } as IDropDownOption)),
 	};
-
-	// const billingItems: IbillingView[] = [
-	// 	{
-	// 		billDate: '2023-12-10',
-	// 		quantity: 23,
-	// 		id: 1,
-	// 		totalAmount: 2300,
-	// 		customerId: 1,
-	// 		menuItemId: 1,
-	// 	},
-	// ];
-	// const requiredDataList: IDropDownList = {
-	// 	customerId: [
-	// 		{
-	// 			value: '1',
-	// 			text: 'Aximsoft India PVT LTD',
-	// 		},
-	// 	],
-	// 	menuItemId: [
-	// 		{
-	// 			value: '1',
-	// 			text: 'Chicken Briyani',
-	// 		},
-	// 	],
-	// };
 
 	return (
 		<>

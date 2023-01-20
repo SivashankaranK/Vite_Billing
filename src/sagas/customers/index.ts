@@ -7,6 +7,7 @@ import { ICustomer } from '../../types';
 import { IActionWithpayload, IApiRequest } from '../../types/store';
 import { AxiosResponse } from 'axios';
 import store from '../../store';
+import { fakeCustomersList } from '../../faker';
 
 function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
@@ -17,6 +18,7 @@ function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffec
 		if (response && response.status >= 200 && response.status <= 300) {
 			yield put(customerListResponse(response.data));
 		} else {
+			yield put(customerListResponse(fakeCustomersList()));
 			yield put(updateCustomerFetchingState());
 			yield put(updateToasterMessage('Error Occured in Customer Request'));
 		}
@@ -29,7 +31,9 @@ function* createUpdateCustomerRequest({
 	payload,
 }: IActionWithpayload<IApiRequest<ICustomer>>): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
-		const apiPath = `${payload.value.id ? apiProps.updateCustomer.path.replace(':id', `${payload.value.id}`) : apiProps.createCustomer.path}`;
+		const apiPath = `${
+			payload.value.id ? apiProps.updateCustomer.path.replace(':id', `${payload.value.id}`) : apiProps.createCustomer.path
+		}`;
 
 		const response: AxiosResponse = yield apiCall({
 			method: payload.value?.id ? apiProps.updateCustomer.method : apiProps.createCustomer.method,
@@ -42,8 +46,8 @@ function* createUpdateCustomerRequest({
 
 			if (payload.value.id) {
 				customerList = customerList.map((it) => {
-					return (it.id === response.data.id ? response.data : it);
-				})
+					return it.id === response.data.id ? response.data : it;
+				});
 			} else {
 				customerList = [...customerList, response.data];
 			}

@@ -5,6 +5,7 @@ import { IApiRequest, IItem, IStore } from '../../types';
 import { useEffect } from 'react';
 import { ItemsTableHeaders } from '../../utils';
 import { getItems, createUpdateItem } from '../../reducers';
+import { fakeItems } from '../../faker';
 
 const ItemsList = () => {
 	const dispatch = useDispatch();
@@ -20,12 +21,6 @@ const ItemsList = () => {
 		};
 		dispatch(createUpdateItem(dataRequest));
 	};
-	// const menuItems: IItem[] = Array.from({ length: 20 }, () => ({
-	// 	id: 1,
-	// 	name: Math.random().toString(36).substr(2, 15),
-	// 	price: Number(Math.random().toString(9).substr(2, 3)),
-	// 	gstValue: Number(`14.${Math.random().toString(9).substr(2, 2)}`),
-	// }));
 
 	return (
 		<>
@@ -41,6 +36,7 @@ const ItemsList = () => {
 					<Col>
 						<CustomEditableTable<IItem>
 							data={itemList}
+							// data={fakeItems()}
 							headers={ItemsTableHeaders}
 							handleUpdate={createUpdateItems}
 						/>

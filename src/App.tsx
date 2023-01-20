@@ -1,7 +1,6 @@
 import { AppRoutes } from './routes';
 import { Provider } from 'react-redux';
 import store from './store';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col, Container, Row, ThemeProvider } from 'react-bootstrap';
 import { BrowserRouter } from 'react-router-dom';
 import { BillingNavBar } from './containers/header';

@@ -6,13 +6,14 @@ import { customerListRequest, getExportDataList } from '../../reducers';
 import { Col, Container, Row, Table, Form, Button } from 'react-bootstrap';
 import { CustomDropdown, ProgressBar } from '../../components';
 import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
+import { genareteInvoice } from '../../components';
 
 export const ExportData = () => {
 	const disptch = useDispatch();
 	const { exportDataList, isExaportDataFetching } = useSelector((state: IStore) => state.exportData);
 	const { customerListResponse, isCustomerFetching } = useSelector((state: IStore) => state.customers);
 	const [customerId, setCustomerId] = useState(0);
+	const [customerName, setCustomerName] = useState('');
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
 
@@ -56,7 +57,10 @@ export const ExportData = () => {
 										} as any),
 								)}
 								toggleText='Customers'
-								getSelectedValue={(option: IDropDownOption) => setCustomerId(Number(option.value))}
+								getSelectedValue={(option: IDropDownOption) => {
+									setCustomerId(Number(option.value));
+									setCustomerName(option.text);
+								}}
 							/>
 						)}
 					</Col>
@@ -83,18 +87,18 @@ export const ExportData = () => {
 							Filter
 						</Button>
 						<span className='px-4'></span>
-						{/* <Button hidden={!exportDataList ? true : false}>Download</Button> */}
-						<Link
-							to={'/invoice'}
-							className='btn btn-secondary'>
+						<Button
+							className='btn-dark'
+							hidden={!exportDataList ? true : false}
+							onClick={() => genareteInvoice({ billNo: Math.random(), customerName })}>
 							Download
-						</Link>
+						</Button>
 					</Col>
 				</Row>
 				<Row>
 					<Col>
 						<div className='table-container'>
-							<Table className='common-table'>
+							<Table className='common-table export-data-table'>
 								<thead className='table-head'>
 									<tr>
 										<th>S.No</th>
@@ -106,16 +110,26 @@ export const ExportData = () => {
 									</tr>
 								</thead>
 								<tbody className='table-body'>
-									{exportDataList.map((it, index) => (
+									{exportDataList.length ? (
+										exportDataList.map((it, index) => (
+											<tr>
+												<td>{++index}</td>
+												<td>{dayjs(it.billDate).format('DD MMM YYYY')}</td>
+												<td>{it.customer.name}</td>
+												<td>{it.menuItem.name}</td>
+												<td>{it.quantity}</td>
+												<td>{it.totalAmount}</td>
+											</tr>
+										))
+									) : (
 										<tr>
-											<td>{++index}</td>
-											<td>{dayjs(it.billDate).format('DD MMM YYYY')}</td>
-											<td>{it.customer.name}</td>
-											<td>{it.menuItem.name}</td>
-											<td>{it.quantity}</td>
-											<td>{it.totalAmount}</td>
+											<td
+												colSpan={6}
+												className='text-center'>
+												<span>No data found...</span>
+											</td>
 										</tr>
-									))}
+									)}
 								</tbody>
 							</Table>
 						</div>

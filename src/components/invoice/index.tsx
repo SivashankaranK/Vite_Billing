@@ -23,7 +23,8 @@ export const genareteInvoice = ({ customerName, invoiceNo }: IinvoiceProps) => {
 					`${it.totalAmount}`,
 			  ])
 			: [['No Items']];
-		const sumOfAmount = tableData.map((it: any) => it.slice(-1)[0] || 0).reduce((sum, it) => Number(sum) + Number(it));
+		let sumOfAmount = tableData.map((it: any) => it.slice(-1)[0] || 0).reduce((sum, it) => Number(sum) + Number(it));
+		sumOfAmount = Intl.NumberFormat('en-IN').format(sumOfAmount);
 
 		const rowInputs: RowInput[] = [
 			...tableData,
@@ -53,8 +54,6 @@ export const genareteInvoice = ({ customerName, invoiceNo }: IinvoiceProps) => {
 		doc.text('Kavundampalayam,', 75, 40);
 		doc.text('Coimbatore - 641030', 75, 45);
 	};
-
-	// docHeader();
 	doc.setFontSize(12);
 	doc.setFont('CONSOLAB', 'bold');
 	doc.text('To: ', 25, 65);

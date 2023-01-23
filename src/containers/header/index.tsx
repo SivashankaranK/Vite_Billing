@@ -12,7 +12,7 @@ export const BillingNavBar = () => {
 			expand='lg'
 			bg='white'
 			variant='white'
-			className='pt-3 pb-0'>
+			className='pb-0'>
 			<Container fluid>
 				<Navbar.Brand className='border-end px-4'>App</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />

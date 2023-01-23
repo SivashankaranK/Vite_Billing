@@ -5,7 +5,6 @@ import { IApiRequest, IItem, IStore } from '../../types';
 import { useEffect } from 'react';
 import { ItemsTableHeaders } from '../../utils';
 import { getItems, createUpdateItem } from '../../reducers';
-import { fakeItems } from '../../faker';
 
 const ItemsList = () => {
 	const dispatch = useDispatch();
@@ -36,7 +35,6 @@ const ItemsList = () => {
 					<Col>
 						<CustomEditableTable<IItem>
 							data={itemList}
-							// data={fakeItems()}
 							headers={ItemsTableHeaders}
 							handleUpdate={createUpdateItems}
 						/>

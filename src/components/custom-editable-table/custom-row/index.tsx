@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateToasterMessage } from '../../../reducers';
 import { ICustomIndexedTableBody, ICustomTableHeaderTypes, IDropDownList } from '../../../types';
@@ -23,7 +23,10 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 	requiredData,
 }: ICustomRowProsp<T>) => {
 	const [isNewDataReseted, setResetData] = useState(false);
-	const [rowData, setRowData] = useState(data);
+	const [rowData, setRowData] = useState<T>({} as T);
+	useEffect(() => {
+		setRowData(data);
+	}, [data]);
 
 	const dispatch = useDispatch();
 

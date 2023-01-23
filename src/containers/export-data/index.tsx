@@ -53,10 +53,10 @@ export const ExportData = () => {
 							<CustomDropdown
 								itemData={customerListResponse.map(
 									(it) =>
-									({
-										text: it.name,
-										value: it.id,
-									} as any),
+										({
+											text: it.name,
+											value: it.id,
+										} as any),
 								)}
 								toggleText='Customers'
 								getSelectedValue={(option: IDropDownOption) => {
@@ -112,7 +112,7 @@ export const ExportData = () => {
 								genareteInvoice({
 									invoiceNo,
 									customerName,
-									data: exportDataList.filter((it) => selected.includes(it.id))
+									data: selected.length ? exportDataList.filter((it) => selected.includes(it.id)) : exportDataList,
 								});
 							}}>
 							Download
@@ -126,23 +126,19 @@ export const ExportData = () => {
 								<thead className='table-head'>
 									<tr>
 										<th>
-											<div className="d-flex">
-												<span className='pe-3'>Select All</span>
-												<span>
-													<Form.Check
-														type="checkbox"
-														value="all"
-														onChange={(event) => {
-															if (!event.target.checked) {
-																setSelected([]);
-															} else {
-																setSelected(exportDataList.map((it) => it.id));
-															}
-														}}
-														checked={selected.length > 0 && selected.length === exportDataList.length}
-													/>
-												</span>
-											</div>
+											<Form.Check
+												type='checkbox'
+												onChange={(event) => {
+													if (!event.target.checked) {
+														setSelected([]);
+													} else {
+														setSelected(exportDataList.map((it) => it.id));
+													}
+												}}
+												checked={selected.length > 0 && selected.length === exportDataList.length}
+												label={'Select All'}
+												id='select-all'
+											/>
 										</th>
 										<th>S.No</th>
 										<th>Bill Date</th>
@@ -158,7 +154,7 @@ export const ExportData = () => {
 											<tr key={`tableRow${index}`}>
 												<td>
 													<Form.Check
-														type="checkbox"
+														type='checkbox'
 														value={it.id}
 														checked={selected.includes(it.id)}
 														onChange={(event) => {

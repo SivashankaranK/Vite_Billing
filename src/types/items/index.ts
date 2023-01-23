@@ -4,7 +4,7 @@ export interface IItem extends ICustomIndexedTableBody {
 	id: number;
 	name: string;
 	price: number;
-	gst?: number;
+	gstValue?: number;
 }
 
 export interface IItemState {

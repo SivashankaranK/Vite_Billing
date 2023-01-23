@@ -7,7 +7,6 @@ import { ICustomer } from '../../types';
 import { IActionWithpayload, IApiRequest } from '../../types/store';
 import { AxiosResponse } from 'axios';
 import store from '../../store';
-import { fakeCustomersList } from '../../faker';
 
 function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffect, void, AxiosResponse> {
 	try {
@@ -18,7 +17,6 @@ function* getCustomersList(): Generator<Promise<AxiosResponse | void> | PutEffec
 		if (response && response.status >= 200 && response.status <= 300) {
 			yield put(customerListResponse(response.data));
 		} else {
-			yield put(customerListResponse(fakeCustomersList()));
 			yield put(updateCustomerFetchingState());
 			yield put(updateToasterMessage('Error Occured in Customer Request'));
 		}

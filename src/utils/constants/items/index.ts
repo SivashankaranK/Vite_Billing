@@ -22,10 +22,9 @@ export const ItemsTableHeaders: ICustomTableHeaderTypes[] = [
 	},
 	{
 		label: 'GST %',
-		value: 'gst', //gstValue
+		value: 'gstValue',
 		fieldType: 'number',
 		palceHolder: 'Enter GST in %',
 		isLastColumn: true,
-		isReadOnly: true,
 	},
 ];

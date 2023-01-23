@@ -16,6 +16,7 @@ export const ExportData = () => {
 	const [customerName, setCustomerName] = useState('');
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
+	const [invoiceNo, setInvoiceNo] = useState('');
 
 	useEffect(() => {
 		disptch(customerListRequest());
@@ -79,18 +80,30 @@ export const ExportData = () => {
 							onChange={(e) => setEndDate(e.target.value)}
 						/>
 					</Col>
-					<Col>
+					<Col className='d-flex'>
 						<Button
 							className='btn-secondary'
 							onClick={() => getExportData()}
 							disabled={customerId !== 0 && startDate && endDate ? false : true}>
 							Filter
 						</Button>
-						<span className='px-4'></span>
+						<span className='px-2'></span>
+						<Form.Control
+							size='sm'
+							className='w-50'
+							placeholder='Invoice No'
+							value={invoiceNo}
+							hidden={exportDataList && exportDataList.length === 0 ? true : false}
+							onChange={(e) => setInvoiceNo(e.target.value)}
+						/>
+						<span className='px-2'></span>
 						<Button
 							className='btn-dark'
-							hidden={!exportDataList ? true : false}
-							onClick={() => genareteInvoice({ billNo: Math.random(), customerName })}>
+							hidden={invoiceNo === '' ? true : false}
+							onClick={() => {
+								getExportData();
+								genareteInvoice({ invoiceNo, customerName });
+							}}>
 							Download
 						</Button>
 					</Col>
@@ -112,7 +125,7 @@ export const ExportData = () => {
 								<tbody className='table-body'>
 									{exportDataList.length ? (
 										exportDataList.map((it, index) => (
-											<tr>
+											<tr key={`tableRow${index}`}>
 												<td>{++index}</td>
 												<td>{dayjs(it.billDate).format('DD MMM YYYY')}</td>
 												<td>{it.customer.name}</td>

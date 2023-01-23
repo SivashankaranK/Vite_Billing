@@ -7,9 +7,9 @@ import dayjs from 'dayjs';
 import store from '../../store';
 interface IinvoiceProps {
 	customerName: string;
-	billNo: number;
+	invoiceNo: string;
 }
-export const genareteInvoice = ({ customerName, billNo }: IinvoiceProps) => {
+export const genareteInvoice = ({ customerName, invoiceNo }: IinvoiceProps) => {
 	const prepareTableData = (): RowInput[] => {
 		const exportDataList = store.getState().exportData.exportDataList;
 		const tableData = exportDataList.length
@@ -19,11 +19,11 @@ export const genareteInvoice = ({ customerName, billNo }: IinvoiceProps) => {
 					`${it.menuItem.name}`,
 					`${it.quantity}`,
 					`${it.menuItem.price}`,
-					`${it.menuItem.gst}`,
+					`${it.menuItem.gstValue}`,
 					`${it.totalAmount}`,
 			  ])
 			: [['No Items']];
-		const sumOfAmount = tableData.map((it: any) => it.slice(-1)[0] || 0).reduce((sum, it) => sum + it);
+		const sumOfAmount = tableData.map((it: any) => it.slice(-1)[0] || 0).reduce((sum, it) => Number(sum) + Number(it));
 
 		const rowInputs: RowInput[] = [
 			...tableData,
@@ -63,7 +63,7 @@ export const genareteInvoice = ({ customerName, billNo }: IinvoiceProps) => {
 	doc.setFont('CONSOLAB', 'bold');
 	doc.text('Bill No: ', 25, 75);
 	doc.setFont('CONSOLA', 'normal');
-	doc.text(`${billNo}`, 25 + getTextWidth('Bill No: '), 75);
+	doc.text(`${invoiceNo}`, 25 + getTextWidth('Bill No: '), 75);
 	doc.setFont('CONSOLAB', 'bold');
 	doc.text('PAN: ', 25, 80);
 	doc.setFont('CONSOLA', 'normal');
@@ -80,9 +80,6 @@ export const genareteInvoice = ({ customerName, billNo }: IinvoiceProps) => {
 		theme: 'grid',
 		startY: 100,
 		margin: { horizontal: 25, top: 60 },
-		styles: {
-			// font: 'courier',
-		},
 		headStyles: {
 			fillColor: '#FFFFFF',
 			textColor: '#000000',
@@ -118,19 +115,3 @@ export const genareteInvoice = ({ customerName, billNo }: IinvoiceProps) => {
 	// return `${doc.output('bloburi')}`;
 	return doc.output('dataurlnewwindow');
 };
-
-// export default function Invoice() {
-// 	const invoiceDoc = genareteInvoice({ billNo: 23, customerName: 'kumar' });
-// 	return (
-// 		<>
-// 			<iframe
-// 				id='invoiceContainer'
-// 				itemType='application/pdf'
-// 				style={{
-// 					width: '100%',
-// 					height: 'calc(100vh - 110px)',
-// 				}}
-// 				src={invoiceDoc}></iframe>
-// 		</>
-// 	);
-// }

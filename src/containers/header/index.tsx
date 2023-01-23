@@ -30,9 +30,9 @@ export const BillingNavBar = () => {
 							);
 						})}
 					</Nav>
-					<Nav>
+					{/* <Nav>
 						<div className='px-3'>Developer</div>
-					</Nav>
+					</Nav> */}
 					{/* <Nav>
             <NavDropdown title={userTitle} menuVariant='light'>
               <NavDropdown.Item>My Profile</NavDropdown.Item>

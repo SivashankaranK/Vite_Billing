@@ -3,9 +3,15 @@
     "tslint:recommended",
     "tslint-react"
   ],
-  
   "rules": {
     "jsx-no-lambda": false,
-    "no-console": true
+    "no-console": [
+      true,
+      "debug",
+      "log",
+      "time",
+      "timeEnd",
+      "trace"
+    ]
   }
 }

@@ -13,7 +13,7 @@ export const BillingNavBar = () => {
 			bg='white'
 			variant='white'
 			className='pb-0'>
-			<Container fluid>
+			<Container fluid={true}>
 				<Navbar.Brand className='border-end px-4'>
 					<img
 						src={logo}

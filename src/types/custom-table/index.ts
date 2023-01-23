@@ -4,7 +4,7 @@ export interface ICustomTableHeaderTypes {
 	value: string;
 	label: string;
 	fieldType: IfieldType;
-	palceHolder: string;
+	placeHolder: string;
 	regexPattern?: RegExp;
 	isReadOnly?: boolean;
 	isLastColumn?: boolean;

@@ -97,8 +97,8 @@ export const CustomCell = ({
 			<td
 				className={`${header.isReadOnly ? '' : 'cur-pointer'}`}
 				onClick={() => {
-					if ((!header.isReadOnly || (isNewCell && header.palceHolder)) && !isFieldActive) {
-						// (isNewCell && header.palceHolder) ->to find ID cell and New Column
+					if ((!header.isReadOnly || (isNewCell && header.placeHolder)) && !isFieldActive) {
+						// (isNewCell && header.placeHolder) ->to find ID cell and New Column
 						setActiveField(true);
 						setActiveFieldValue(data || '');
 						setPopOverState(true);
@@ -144,7 +144,7 @@ export const CustomCell = ({
 									}
 								}
 							}}
-							placeholder={header.palceHolder}
+							placeholder={header.placeHolder}
 							onBlur={() => {
 								if (isNewCell && activeFieldValue) {
 									if (header.fieldType === 'date') {
@@ -162,7 +162,7 @@ export const CustomCell = ({
 						/>
 					)
 				) : (
-					<div className={`ps-2 ${isNewCell ? 'opacity-50' : ''}`}>{isNewCell ? header.palceHolder : data}</div>
+					<div className={`ps-2 ${isNewCell ? 'opacity-50' : ''}`}>{isNewCell ? header.placeHolder : data}</div>
 				)}
 			</td>
 		</OverlayTrigger>

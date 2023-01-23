@@ -10,7 +10,7 @@ interface IinvoiceProps {
 	invoiceNo: string;
 	data: IExportDataList[];
 }
-export const genareteInvoice = ({ customerName, invoiceNo, data }: IinvoiceProps) => {
+export const generateInvoice = ({ customerName, invoiceNo, data }: IinvoiceProps) => {
 	const prepareTableData = (): RowInput[] => {
 		const tableData = data.length
 			? data.map((it, index) => [

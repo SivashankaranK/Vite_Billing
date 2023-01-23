@@ -6,7 +6,7 @@ import { customerListRequest, getExportDataList } from '../../reducers';
 import { Col, Container, Row, Table, Form, Button } from 'react-bootstrap';
 import { CustomDropdown, ProgressBar } from '../../components';
 import dayjs from 'dayjs';
-import { genareteInvoice } from '../../components';
+import { generateInvoice } from '../../components';
 
 export const ExportData = () => {
 	const disptch = useDispatch();
@@ -109,7 +109,7 @@ export const ExportData = () => {
 							className='btn-dark'
 							hidden={invoiceNo === '' ? true : false}
 							onClick={() => {
-								genareteInvoice({
+								generateInvoice({
 									invoiceNo,
 									customerName,
 									data: selected.length ? exportDataList.filter((it) => selected.includes(it.id)) : exportDataList,

@@ -29,7 +29,7 @@ export const billingHeaders: ICustomTableHeaderTypes[] = [
 		placeHolder: 'Enter Bill Date',
 	},
 	{
-		label: 'Qantity',
+		label: 'Quantity',
 		value: 'quantity',
 		fieldType: 'number',
 		placeHolder: 'Enter Quantity',

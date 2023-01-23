@@ -28,7 +28,10 @@ export const genareteInvoice = ({ customerName, invoiceNo }: IinvoiceProps) => {
 
 		const rowInputs: RowInput[] = [
 			...tableData,
-			[{ content: 'Rupees', colSpan: 6, styles: { halign: 'right' } }, { content: `${sumOfAmount}` }],
+			[
+				{ content: 'Rupees', colSpan: 6, styles: { halign: 'right' } },
+				{ content: `${sumOfAmount}`, styles: { fontStyle: 'bold' } },
+			],
 		];
 		return rowInputs;
 	};

@@ -136,11 +136,10 @@ export const ExportData = () => {
 													}
 												}}
 												checked={selected.length > 0 && selected.length === exportDataList.length}
-												label={'Select All'}
-												id='select-all'
+												label={'S.No'}
+												id='select-all-id'
 											/>
 										</th>
-										<th>S.No</th>
 										<th>Bill Date</th>
 										<th>Customer Name</th>
 										<th>Item Name</th>
@@ -156,6 +155,8 @@ export const ExportData = () => {
 													<Form.Check
 														type='checkbox'
 														value={it.id}
+														label={++index}
+														id={`data-check-${it.id}`}
 														checked={selected.includes(it.id)}
 														onChange={(event) => {
 															if (!event.target.checked) {
@@ -166,7 +167,6 @@ export const ExportData = () => {
 														}}
 													/>
 												</td>
-												<td>{++index}</td>
 												<td>{dayjs(it.billDate).format('DD MMM YYYY')}</td>
 												<td>{it.customer.name}</td>
 												<td>{it.menuItem.name}</td>

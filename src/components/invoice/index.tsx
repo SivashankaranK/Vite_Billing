@@ -4,16 +4,16 @@ import jsPDF from 'jspdf';
 import autoTable, { RowInput } from 'jspdf-autotable';
 import { consolaBold, consolaNormal } from '../../utils';
 import dayjs from 'dayjs';
-import store from '../../store';
+import { IExportDataList } from '../../types';
 interface IinvoiceProps {
 	customerName: string;
 	invoiceNo: string;
+	data: IExportDataList[];
 }
-export const genareteInvoice = ({ customerName, invoiceNo }: IinvoiceProps) => {
+export const genareteInvoice = ({ customerName, invoiceNo, data }: IinvoiceProps) => {
 	const prepareTableData = (): RowInput[] => {
-		const exportDataList = store.getState().exportData.exportDataList;
-		const tableData = exportDataList.length
-			? exportDataList.map((it, index) => [
+		const tableData = data.length
+			? data.map((it, index) => [
 					++index,
 					`${dayjs(it.billDate).format('DD-MM-YYYY')}`,
 					`${it.menuItem.name}`,
@@ -85,7 +85,7 @@ export const genareteInvoice = ({ customerName, invoiceNo }: IinvoiceProps) => {
 		headStyles: {
 			fillColor: '#FFFFFF',
 			textColor: '#000000',
-			lineWidth: 0.4,
+			lineWidth: 0.2,
 			minCellHeight: 10,
 			halign: 'center',
 			valign: 'middle',
@@ -95,6 +95,7 @@ export const genareteInvoice = ({ customerName, invoiceNo }: IinvoiceProps) => {
 			valign: 'middle',
 			minCellHeight: 10,
 			halign: 'center',
+			lineWidth: 0.2,
 			textColor: '#000000',
 			lineColor: '#000000',
 		},

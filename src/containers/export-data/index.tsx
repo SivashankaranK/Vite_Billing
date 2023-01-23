@@ -17,6 +17,7 @@ export const ExportData = () => {
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
 	const [invoiceNo, setInvoiceNo] = useState('');
+	const [selected, setSelected] = useState<Array<number>>([]);
 
 	useEffect(() => {
 		disptch(customerListRequest());
@@ -52,10 +53,10 @@ export const ExportData = () => {
 							<CustomDropdown
 								itemData={customerListResponse.map(
 									(it) =>
-										({
-											text: it.name,
-											value: it.id,
-										} as any),
+									({
+										text: it.name,
+										value: it.id,
+									} as any),
 								)}
 								toggleText='Customers'
 								getSelectedValue={(option: IDropDownOption) => {
@@ -108,7 +109,11 @@ export const ExportData = () => {
 							className='btn-dark'
 							hidden={invoiceNo === '' ? true : false}
 							onClick={() => {
-								genareteInvoice({ invoiceNo, customerName });
+								genareteInvoice({
+									invoiceNo,
+									customerName,
+									data: exportDataList.filter((it) => selected.includes(it.id))
+								});
 							}}>
 							Download
 						</Button>
@@ -120,6 +125,25 @@ export const ExportData = () => {
 							<Table className='common-table export-data-table'>
 								<thead className='table-head'>
 									<tr>
+										<th>
+											<div className="d-flex">
+												<span className='pe-3'>Select All</span>
+												<span>
+													<Form.Check
+														type="checkbox"
+														value="all"
+														onChange={(event) => {
+															if (!event.target.checked) {
+																setSelected([]);
+															} else {
+																setSelected(exportDataList.map((it) => it.id));
+															}
+														}}
+														checked={selected.length > 0 && selected.length === exportDataList.length}
+													/>
+												</span>
+											</div>
+										</th>
 										<th>S.No</th>
 										<th>Bill Date</th>
 										<th>Customer Name</th>
@@ -132,6 +156,20 @@ export const ExportData = () => {
 									{exportDataList.length ? (
 										exportDataList.map((it, index) => (
 											<tr key={`tableRow${index}`}>
+												<td>
+													<Form.Check
+														type="checkbox"
+														value={it.id}
+														checked={selected.includes(it.id)}
+														onChange={(event) => {
+															if (!event.target.checked) {
+																setSelected((prevState) => prevState.filter((s) => s !== it.id));
+															} else {
+																setSelected((prevState) => [...prevState, it.id]);
+															}
+														}}
+													/>
+												</td>
 												<td>{++index}</td>
 												<td>{dayjs(it.billDate).format('DD MMM YYYY')}</td>
 												<td>{it.customer.name}</td>

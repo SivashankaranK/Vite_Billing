@@ -83,25 +83,31 @@ export const ExportData = () => {
 					<Col className='d-flex'>
 						<Button
 							className='btn-secondary'
-							onClick={() => getExportData()}
+							onClick={() => {
+								setInvoiceNo('');
+								getExportData();
+							}}
 							disabled={customerId !== 0 && startDate && endDate ? false : true}>
 							Filter
 						</Button>
 						<span className='px-2'></span>
 						<Form.Control
+							type='number'
 							size='sm'
 							className='w-50'
 							placeholder='Invoice No'
 							value={invoiceNo}
 							hidden={exportDataList && exportDataList.length === 0 ? true : false}
-							onChange={(e) => setInvoiceNo(e.target.value)}
+							onChange={(e) => {
+								setInvoiceNo(e.target.value);
+								getExportData();
+							}}
 						/>
 						<span className='px-2'></span>
 						<Button
 							className='btn-dark'
 							hidden={invoiceNo === '' ? true : false}
 							onClick={() => {
-								getExportData();
 								genareteInvoice({ invoiceNo, customerName });
 							}}>
 							Download

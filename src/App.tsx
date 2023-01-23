@@ -14,7 +14,7 @@ const App = () => {
 				minBreakpoint='xxs'>
 				<BrowserRouter>
 					<BillingNavBar />
-					<Container fluid>
+					<Container fluid={true}>
 						<Row>
 							<Col className='m-3'>
 								<AppRoutes />

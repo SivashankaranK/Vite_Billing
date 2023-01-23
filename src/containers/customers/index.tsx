@@ -6,7 +6,6 @@ import { CustomEditableTable, ProgressBar } from '../../components';
 import { ICustomer, IApiRequest, IStore } from '../../types';
 import { CustomerTableHeaders } from '../../utils';
 import { useSelector } from 'react-redux';
-import { fakeCustomersList } from '../../faker';
 
 const Customers = () => {
 	const dispatch = useDispatch();
@@ -27,7 +26,7 @@ const Customers = () => {
 		<>
 			{isCustomerFetching ? <ProgressBar isLoading={true} /> : null}
 
-			<Container fluid>
+			<Container fluid={true}>
 				<Row>
 					<Col>
 						<h3>Customers</h3>
@@ -38,7 +37,6 @@ const Customers = () => {
 					<Col>
 						<CustomEditableTable<ICustomer>
 							data={customerListResponse}
-							// data={fakeCustomersList()}
 							headers={CustomerTableHeaders}
 							handleUpdate={createUpdateCustomer}
 						/>

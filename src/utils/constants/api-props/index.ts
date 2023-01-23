@@ -21,6 +21,6 @@ export const apiProps: IapiProps = {
 	orderById: { method: 'GET', path: 'generalOrder/:id' },
 	createOrder: { method: 'POST', path: 'generalOrder/create' },
 	updateOrder: { method: 'PUT', path: 'generalOrder/:id' },
-	//Export Data
+	// Export Data
 	exportData: { method: 'GET', path: 'generalOrder/byDateRange/:id' },
 };

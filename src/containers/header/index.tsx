@@ -8,12 +8,12 @@ export const BillingNavBar = () => {
 
 	return (
 		<Navbar
-			collapseOnSelect
+			collapseOnSelect={true}
 			expand='lg'
 			bg='white'
 			variant='white'
 			className='pb-0'>
-			<Container fluid>
+			<Container fluid={true}>
 				<Navbar.Brand className='border-end px-4'>App</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
 				<Navbar.Collapse id='responsive-navbar-nav'>

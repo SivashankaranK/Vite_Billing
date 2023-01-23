@@ -36,7 +36,7 @@ export const genareteInvoice = ({ customerName, invoiceNo, data }: IinvoiceProps
 		return rowInputs;
 	};
 
-	let doc = new jsPDF('p', 'mm', 'A4');
+	const doc = new jsPDF('p', 'mm', 'A4');
 	const pageSize = doc.internal.pageSize;
 	const pdfHeight = pageSize.getHeight();
 	const getTextWidth = (text: string) => {

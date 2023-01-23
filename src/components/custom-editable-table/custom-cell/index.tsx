@@ -129,7 +129,7 @@ export const CustomCell = ({
 					) : (
 						<Form.Control
 							type={header.fieldType}
-							autoFocus
+							autoFocus={true}
 							size='sm'
 							value={activeFieldValue}
 							onChange={(e) => {

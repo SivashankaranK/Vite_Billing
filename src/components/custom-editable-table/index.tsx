@@ -16,7 +16,7 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({
 	requiredData,
 }: ICustomTableProps<T>) => {
 	const ObjForCreateNewData = () => {
-		let Obj: any = {};
+		const Obj: any = {};
 		for (const key of headers) {
 			Obj[key.value] = '';
 		}
@@ -36,7 +36,7 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({
 					<>
 						{/* New Row */}
 						<CustomRow
-							isCreateNewRow
+							isCreateNewRow={true}
 							headers={headers}
 							data={ObjForCreateNewData()}
 							handleUpdate={handleUpdate}

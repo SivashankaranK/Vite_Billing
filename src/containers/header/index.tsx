@@ -8,7 +8,7 @@ export const BillingNavBar = () => {
 
 	return (
 		<Navbar
-			collapseOnSelect
+			collapseOnSelect={true}
 			expand='lg'
 			bg='white'
 			variant='white'

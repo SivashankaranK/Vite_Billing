@@ -51,7 +51,7 @@ const Billings = () => {
 		<>
 			{isBillingFetching || isCustomerFetching || isItemFetching ? <ProgressBar isLoading={true} /> : null}
 
-			<Container fluid>
+			<Container fluid={true}>
 				<Row>
 					<Col>
 						<h3>Billing</h3>

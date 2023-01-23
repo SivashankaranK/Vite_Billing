@@ -18,7 +18,7 @@ export const Toastifier = ({ position }: IToastifierProps) => {
 			className='p-3 toaster__container'
 			position={position || 'bottom-end'}>
 			<Toast
-				autohide
+				autohide={true}
 				delay={4000}
 				show={!!toasterMessage}
 				onClose={() => dispatch(updateToasterMessage(''))}

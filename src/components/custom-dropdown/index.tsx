@@ -38,7 +38,7 @@ const CustomMenu = React.forwardRef(({ children, style, className }: ICustomMenu
 			className={className}>
 			<div className='w-100 position-relative pb-5'>
 				<Form.Control
-					autoFocus
+					autoFocus={true}
 					className='m-2 w-auto position-absolute top-0 start-0 end-0'
 					placeholder='search'
 					onChange={(e) => setValue(e.target.value)}

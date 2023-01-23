@@ -24,7 +24,7 @@ const ItemsList = () => {
 	return (
 		<>
 			{isItemFetching ? <ProgressBar isLoading={true} /> : null}
-			<Container fluid>
+			<Container fluid={true}>
 				<Row>
 					<Col>
 						<h3>Items</h3>

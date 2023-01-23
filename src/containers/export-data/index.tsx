@@ -17,7 +17,7 @@ export const ExportData = () => {
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
 	const [invoiceNo, setInvoiceNo] = useState('');
-	const [selected, setSelected] = useState<Array<number>>([]);
+	const [selected, setSelected] = useState<number[]>([]);
 
 	useEffect(() => {
 		disptch(customerListRequest());
@@ -26,7 +26,7 @@ export const ExportData = () => {
 	const getExportData = () => {
 		const params: IApiRequest<IExportDataRequest> = {
 			value: {
-				customerId: customerId,
+				customerId,
 				startDate: dayjs(startDate).format('YYYY/MM/DD'),
 				endDate: dayjs(endDate).format('YYYY/MM/DD'),
 			},
@@ -38,7 +38,7 @@ export const ExportData = () => {
 		<>
 			{isExaportDataFetching || isCustomerFetching ? <ProgressBar isLoading={true} /> : null}
 
-			<Container fluid>
+			<Container fluid={true}>
 				<Row>
 					<Col>
 						<h3>Export</h3>
@@ -91,7 +91,7 @@ export const ExportData = () => {
 							disabled={customerId !== 0 && startDate && endDate ? false : true}>
 							Filter
 						</Button>
-						<span className='px-2'></span>
+						<span className='px-2'/>
 						<Form.Control
 							type='number'
 							size='sm'
@@ -104,7 +104,7 @@ export const ExportData = () => {
 								getExportData();
 							}}
 						/>
-						<span className='px-2'></span>
+						<span className='px-2'/>
 						<Button
 							className='btn-dark'
 							hidden={invoiceNo === '' ? true : false}

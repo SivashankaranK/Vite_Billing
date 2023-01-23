@@ -26,7 +26,7 @@ const Customers = () => {
 		<>
 			{isCustomerFetching ? <ProgressBar isLoading={true} /> : null}
 
-			<Container fluid>
+			<Container fluid={true}>
 				<Row>
 					<Col>
 						<h3>Customers</h3>

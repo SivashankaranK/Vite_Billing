@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-react"
+  ],
+  
+  "rules": {
+    "jsx-no-lambda": false,
+    "no-console": true
+  }
+}

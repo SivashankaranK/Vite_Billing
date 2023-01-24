@@ -65,7 +65,7 @@ export const CustomDropdown = ({ getSelectedValue, itemData, toggleText }: ICust
 	return (
 		<Dropdown>
 			<Dropdown.Toggle as={CustomToggle}>{toggleTextValue}</Dropdown.Toggle>
-			<Dropdown.Menu as={CustomMenu}>
+			<Dropdown.Menu as={CustomMenu} className='dropdown__menu'>
 				{itemData.map((it, index) => (
 					<Dropdown.Item
 						className='py-2'

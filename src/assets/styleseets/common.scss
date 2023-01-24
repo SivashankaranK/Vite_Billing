@@ -54,7 +54,7 @@ tr {
 	width: 100%;
 }
 thead {
-	width: calc(100% - 1em);
+	width: calc(100% - 10px);
 	position: relative;
 }
 
@@ -146,6 +146,6 @@ input[type='date']::-webkit-calendar-picker-indicator {
 	top: 0;
 }
 
-.dropdown__menu{
+.dropdown__menu {
 	width: 100%;
 }

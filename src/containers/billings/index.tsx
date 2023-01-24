@@ -30,7 +30,7 @@ const Billings = () => {
 				id: it.id,
 				customerId: it.customer.id,
 				menuItemId: it.menuItem.id,
-				billDate: dayjs(it.billDate).format('YYYY-MM-DD'),
+				billDate: dayjs(it.billDate).format('DD MMM YYYY'),
 				quantity: it.quantity,
 				totalAmount: it.totalAmount,
 			};
@@ -40,7 +40,7 @@ const Billings = () => {
 
 	const createUpdateBillingData = (dataObj: IbillingRequest) => {
 		const dataRequest: IApiRequest<IbillingRequest> = {
-			value: dataObj,
+			value: { ...dataObj, billDate: dayjs(dataObj.billDate).format("YYYY/MM/DD") },
 		};
 		dispatch(createUpdateBillings(dataRequest));
 	};

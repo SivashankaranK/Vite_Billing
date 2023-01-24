@@ -19,12 +19,7 @@ export interface IbillingResponce {
 	totalAmount: number;
 }
 
-export interface IbillingView extends ICustomIndexedTableBody {
-	id: number;
-	billDate: string;
-	customerId: number;
-	menuItemId: number;
-	quantity: number;
+export interface IbillingView extends ICustomIndexedTableBody, IbillingRequest {
 	totalAmount: number;
 }
 

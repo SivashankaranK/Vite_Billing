@@ -28,7 +28,11 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({
 				<thead className='table-head'>
 					<tr>
 						{headers.map((col, index) => {
-							return <th key={`tableHeader${index}`}>{col.label}</th>;
+							return (
+								<th key={`tableHeader${index}`}>
+									<span className='ps-2'>{col.label}</span>
+								</th>
+							);
 						})}
 					</tr>
 				</thead>

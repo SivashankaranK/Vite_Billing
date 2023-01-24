@@ -11,9 +11,12 @@ import { customerListRequest, getItems } from '../../reducers';
 const Billings = () => {
 	const [billingView, setBillingView] = useState<IbillingView[]>([]);
 	const dispatch = useDispatch();
-	const { billingList, isBillingFetching } = useSelector((state: IStore) => state.billings);
-	const { customerListResponse, isCustomerFetching } = useSelector((state: IStore) => state.customers);
-	const { isItemFetching, itemList } = useSelector((state: IStore) => state.items);
+	const isBillingFetching = useSelector((state: IStore) => state.billings.isBillingFetching);
+	const billingList = useSelector((state: IStore) => state.billings.billingList);
+	const isCustomerFetching = useSelector((state: IStore) => state.customers.isCustomerFetching);
+	const customerListResponse = useSelector((state: IStore) => state.customers.customerListResponse);
+	const isItemFetching = useSelector((state: IStore) => state.items.isItemFetching);
+	const itemList = useSelector((state: IStore) => state.items.itemList);
 
 	useEffect(() => {
 		dispatch(getBillings());

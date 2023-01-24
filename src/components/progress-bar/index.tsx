@@ -10,7 +10,7 @@ export const ProgressBar = ({ customizeProgressBar, isLoading }: IProgressBarPro
 		<Loader
 			height={'3px'}
 			isLoading={isLoading}
-			color='#e53f31'
+			color='#FD7203'
 			useBoxShadow={false}
 			className={`progress-bar ${customizeProgressBar}`}
 		/>

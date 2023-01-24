@@ -67,7 +67,7 @@ export const CustomRow = <T extends ICustomIndexedTableBody>({
 							hIt.value === 'sno' && currentIndex
 								? currentIndex
 								: hIt.cellType === 'Dropdown'
-								? requiredData && requiredData[`${hIt.value}`].find((x) => x.value === rowData[hIt.value])?.text
+								? requiredData && requiredData[`${hIt.value}`].find((x) => String(x.value) === String(rowData[hIt.value]))?.text
 								: rowData[hIt.value] || ''
 						}
 						isDataResetEnabled={isNewDataReseted} // For reset New Cell after submit

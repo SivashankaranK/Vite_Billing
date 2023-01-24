@@ -1,4 +1,5 @@
 @import 'bootstrap/scss/bootstrap.scss';
+
 @font-face {
 	font-family: monda;
 	src: url(../fonts/IBMPlexSerif-Medium.ttf);
@@ -32,6 +33,15 @@ body {
 	}
 }
 
+.custome-disabled {
+	pointer-events: none;
+	cursor: default;
+}
+
+.op-5{
+	opacity: .5;
+}
+
 .cur-pointer {
 	cursor: pointer;
 }
@@ -44,15 +54,21 @@ body {
 
 tbody {
 	display: block;
+	height: 50rem;
 	max-height: calc(100vh - 230px);
+}
+
+.overflow_update {
 	overflow-y: scroll;
 }
+
 thead,
 tr {
 	display: table;
 	table-layout: fixed;
 	width: 100%;
 }
+
 thead {
 	width: calc(100% - 1em);
 	position: relative;
@@ -146,6 +162,11 @@ input[type='date']::-webkit-calendar-picker-indicator {
 	top: 0;
 }
 
-.dropdown__menu{
+.dropdown__menu {
 	width: 100%;
+
+	.dropdown__menu_items {
+		height: auto !important;
+		max-height: 200px;
+	}
 }

@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface IApiCallProps {
 	method: string;
 	path: string;
@@ -24,4 +26,10 @@ export interface IDropDownOption {
 
 export interface IDropDownList {
 	[key: string]: IDropDownOption[];
+}
+
+export interface ICustomDropDown {
+	toggleText: string;
+	itemData: IDropDownOption[];
+	getSelectedValue: (value: IDropDownOption) => void;
 }

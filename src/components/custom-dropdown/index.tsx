@@ -1,12 +1,19 @@
 import React, { ReactNode, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
-import { IDropDownOption } from '../../types';
+import { ICustomDropDown } from '../../types';
 
 interface ICustomToggle {
 	children: ReactNode;
 	onClick: (e: React.MouseEvent<any, MouseEvent>) => void;
 }
+
+interface ICustomMenu {
+	children: ReactNode;
+	style: React.CSSProperties;
+	className: string;
+}
+
 const CustomToggle = React.forwardRef(({ children, onClick }: ICustomToggle, ref: React.ForwardedRef<any>) => {
 	return (
 		<div
@@ -22,11 +29,6 @@ const CustomToggle = React.forwardRef(({ children, onClick }: ICustomToggle, ref
 	);
 });
 
-interface ICustomMenu {
-	children: ReactNode;
-	style: React.CSSProperties;
-	className: string;
-}
 
 const CustomMenu = React.forwardRef(({ children, style, className }: ICustomMenu, ref: React.ForwardedRef<any>) => {
 	const [value, setValue] = useState('');
@@ -47,7 +49,7 @@ const CustomMenu = React.forwardRef(({ children, style, className }: ICustomMenu
 				/>
 			</div>
 			<ul
-				className='list-unstyled overflow-auto'
+				className='list-unstyled overflow-auto dropdown__menu_items'
 				style={{ height: '200px' }}>
 				{React.Children.toArray(children).filter((child: any) => !value || child.props.children.toLowerCase().startsWith(value))}
 			</ul>
@@ -55,18 +57,13 @@ const CustomMenu = React.forwardRef(({ children, style, className }: ICustomMenu
 	);
 });
 
-interface ICustomDropDown {
-	toggleText: string;
-	itemData: IDropDownOption[];
-	getSelectedValue: (value: IDropDownOption) => void;
-}
 export const CustomDropdown = ({ getSelectedValue, itemData, toggleText }: ICustomDropDown) => {
 	const [toggleTextValue, setToggleText] = useState(toggleText);
 	return (
 		<Dropdown>
 			<Dropdown.Toggle as={CustomToggle}>{toggleTextValue}</Dropdown.Toggle>
-			<Dropdown.Menu as={CustomMenu} className='dropdown__menu'>
-				{itemData.map((it, index) => (
+			<Dropdown.Menu as={CustomMenu} className={`dropdown__menu ${itemData.length === 0 ? 'custome-disabled' : ''}`}>
+				{itemData.length > 0 ? itemData.map((it, index) => (
 					<Dropdown.Item
 						className='py-2'
 						key={`dropDownItem${index}`}
@@ -74,10 +71,12 @@ export const CustomDropdown = ({ getSelectedValue, itemData, toggleText }: ICust
 							e.preventDefault();
 							setToggleText(it.text);
 							return getSelectedValue(it);
-						}}>
+						}}
+					>
 						{it.text}
 					</Dropdown.Item>
-				))}
+				)) : <Dropdown.Item className='op-5'> No datas to list</Dropdown.Item>
+				}	
 			</Dropdown.Menu>
 		</Dropdown>
 	);

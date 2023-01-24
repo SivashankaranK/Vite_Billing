@@ -32,7 +32,7 @@ export const CustomEditableTable = <T extends ICustomIndexedTableBody>({
 						})}
 					</tr>
 				</thead>
-				<tbody className='table-body'>
+				<tbody className={`table-body ${data.length !== 0 ? 'overflow_update' : ''}`}>
 					<>
 						{/* New Row */}
 						<CustomRow

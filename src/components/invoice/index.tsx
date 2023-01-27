@@ -11,17 +11,19 @@ interface IinvoiceProps {
 	data: IExportDataList[];
 }
 export const generateInvoice = ({ customerName, invoiceNo, data }: IinvoiceProps) => {
+	const sortedData = [...data];
+	sortedData.sort((a, b) => new Date(a.billDate).getDate() - new Date(b.billDate).getDate());
 	const prepareTableData = (): RowInput[] => {
-		const tableData = data.length
-			? data.map((it, index) => [
-					++index,
-					`${dayjs(it.billDate).format('DD-MM-YYYY')}`,
-					`${it.menuItem.name}`,
-					`${it.quantity}`,
-					`${it.menuItem.price}`,
-					`${it.menuItem.gstValue}`,
-					`${it.totalAmount}`,
-			  ])
+		const tableData = sortedData.length
+			? sortedData.map((it, index) => [
+				++index,
+				`${dayjs(it.billDate).format('DD-MM-YYYY')}`,
+				`${it.menuItem.name}`,
+				`${it.quantity}`,
+				`${it.menuItem.price}`,
+				`${it.menuItem.gstValue}`,
+				`${it.totalAmount}`,
+			])
 			: [['No Items']];
 		let sumOfAmount = tableData.map((it: any) => it.slice(-1)[0] || 0).reduce((sum, it) => Number(sum) + Number(it));
 		sumOfAmount = Intl.NumberFormat('en-IN').format(sumOfAmount);

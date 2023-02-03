@@ -12,7 +12,7 @@ interface IinvoiceProps {
 }
 export const generateInvoice = ({ customerName, invoiceNo, data }: IinvoiceProps) => {
 	const sortedData = [...data];
-	sortedData.sort((a, b) => new Date(a.billDate).getDate() - new Date(b.billDate).getDate());
+	sortedData.sort((a, b) => new Date(a.billDate).getTime() - new Date(b.billDate).getTime());
 	const prepareTableData = (): RowInput[] => {
 		const tableData = sortedData.length
 			? sortedData.map((it, index) => [
